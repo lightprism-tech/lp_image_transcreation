@@ -1,0 +1,223 @@
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dll
+.Python
+
+# Distribution / Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# ============================================
+# Virtual Environments
+# ============================================
+venv/
+ENV/
+env/
+.venv
+.env/
+env.bak/
+venv.bak/
+pyvenv.cfg
+
+# ============================================
+# IDE & Editors
+# ============================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# OS Files
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================
+# Testing & Coverage
+# ============================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+*.cover
+*.py,cover
+.hypothesis/
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# ============================================
+# Environment & Configuration
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.env
+
+# ============================================
+# Project Specific - Models & Cache
+# ============================================
+# Model weights (large files - auto-downloaded)
+models/
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.h5
+
+# Cache directories
+cache/
+.cache/
+__pypackages__/
+
+# HuggingFace cache
+.huggingface/
+transformers_cache/
+
+# ============================================
+# Project Specific - Data & Outputs
+# ============================================
+# Output directories
+data/output/
+data/temp/
+outputs/
+results/
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Keep sample input data
+!data/input/
+!data/input/samples/
+!data/input/samples/**
+
+# ============================================
+# Docker
+# ============================================
+.dockerignore
+docker-compose.override.yml
+*.dockerfile
+
+# ============================================
+# Jupyter Notebooks
+# ============================================
+.ipynb_checkpoints/
+*.ipynb
+!docs/**/*.ipynb
+
+# ============================================
+# Documentation Build
+# ============================================
+docs/_build/
+docs/.doctrees/
+site/
+
+# ============================================
+# Cloud & Deployment
+# ============================================
+# AWS
+.aws/
+*.pem
+
+# Google Cloud
+.gcloud/
+*.json.gcp
+
+# Azure
+.azure/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Kubernetes
+*.kubeconfig
+
+# ============================================
+# Temporary & System Files
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================
+# Legacy / Deprecated
+# ============================================
+# Old structure (remove after migration verified)
+stage1_perception/
+old/
+deprecated/
+backup/
+
+

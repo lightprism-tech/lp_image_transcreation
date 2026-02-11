@@ -1,0 +1,57 @@
+# Stage-1 Perception Pipeline - Requirements (Production-Ready)
+# All packages pinned for compatibility - Last verified: 2026-02-10
+# Core stack: NumPy 1.x, PyTorch 2.0-2.1, PaddleOCR 2.7.0.3, Ultralytics 8.0.196
+
+# ============================================================================
+# CORE DEPENDENCIES (NumPy 1.x ecosystem)
+# ============================================================================
+numpy>=1.21.0,<2.0.0           # Pin to 1.x - required for OpenCV/PyTorch compatibility
+opencv-python>=4.5.0,<4.10.0   # Compatible with NumPy 1.x
+Pillow>=9.0.0,<11.0.0          # Image handling
+
+# ============================================================================
+# DEEP LEARNING (PyTorch with NumPy 1.x)
+# ============================================================================
+torch>=2.0.0,<2.2.0            # PyTorch CPU - compatible with NumPy 1.x
+torchvision>=0.15.0,<0.17.0    # Vision utilities - matches torch version
+
+# ============================================================================
+# OBJECT DETECTION
+# ============================================================================
+ultralytics==8.0.196           # YOLOv8x - stable version with YOLO class
+
+# ============================================================================
+# OCR - PaddleOCR (CPU-only, stable version)
+# ============================================================================
+paddlepaddle>=2.5.0,<3.0.0     # PaddlePaddle CPU version
+paddleocr==2.7.0.3             # CRITICAL: v2.7.0.3 avoids PaddleX/oneDNN bugs
+
+# ============================================================================
+# VISION-LANGUAGE MODELS (BLIP-2, CLIP)
+# ============================================================================
+huggingface-hub>=0.19.3,<1.0.0     # Model hub - required by transformers and accelerate
+transformers==4.36.2               # BLIP-2 & CLIP - compatible with PyTorch 2.0-2.1
+tokenizers==0.15.2                 # Tokenizer library - compatible with transformers 4.36.2
+accelerate>=0.20.0,<1.0.0      # Faster inference
+sentencepiece>=0.1.99,<1.0.0   # Tokenizer for BLIP-2
+
+# ============================================================================
+# IMAGE PROCESSING
+# ============================================================================
+scikit-image>=0.19.0,<0.23.0   # Image analysis - compatible with NumPy 1.x
+
+# ============================================================================
+# UTILITIES
+# ============================================================================
+tqdm>=4.65.0,<5.0.0            # Progress bars
+pyyaml>=6.0,<7.0.0             # Config files
+jsonschema>=4.17.0,<5.0.0      # JSON validation
+
+# ============================================================================
+# COMPATIBILITY NOTES
+# ============================================================================
+# - NumPy 2.x breaks OpenCV, PyTorch, and scikit-image - MUST use 1.x
+# - PaddleOCR >=2.8.0 uses PaddleX with oneDNN bugs - MUST use 2.7.0.3
+# - Ultralytics latest has import issues - pinned to 8.0.196
+# - PyTorch 2.2+ may have NumPy 2.x deps - stay on 2.0-2.1
+# - All upper bounds prevent future breaking changes

@@ -1,0 +1,58 @@
+services:
+  perception:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stage1_perception
+    
+    # Volume mounts
+    volumes:
+      # Mount models directory (persistent storage for downloaded models)
+      - ./models:/app/models
+      
+      # Mount outputs directory (for generated JSON and debug images)
+      - ./outputs:/app/outputs
+      
+      # Mount input images directory (optional - map your images here)
+      - ./input_images:/app/input_images
+      
+      # Mount application code (enables hot-reload - no rebuild needed for code changes)
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./pyproject.toml:/app/pyproject.toml
+      
+      # Mount model caches (prevents re-downloading on rebuild)
+      - ./cache/huggingface:/root/.cache/huggingface
+      - ./cache/paddleocr:/root/.paddleocr
+    
+    # Environment variables
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OMP_NUM_THREADS=4  # Optimize CPU threading
+      # PaddlePaddle settings - disable oneDNN to avoid compatibility issues
+      - FLAGS_use_mkldnn=false
+      - PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True
+    
+    # Resource limits (adjust based on your system)
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 16G
+        reservations:
+          cpus: '2.0'
+          memory: 8G
+    
+    # Command to run - starts interactive bash shell
+    # Override with: docker-compose run perception python main.py /app/input_images/test.jpg
+    command: ["/bin/bash"]
+    
+    # Enable interactive terminal
+    stdin_open: true
+    tty: true
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Network mode
+    network_mode: bridge

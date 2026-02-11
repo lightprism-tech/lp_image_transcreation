@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "perception"
+version = "0.1.0"
+description = "Stage-1 Perception Pipeline for Image Transcreation"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["computer-vision", "perception", "image-analysis", "yolo", "blip", "ocr"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "numpy>=1.21.0,<2.0.0",
+    "opencv-python>=4.5.0,<4.10.0",
+    "Pillow>=9.0.0,<11.0.0",
+    "torch>=2.0.0,<2.2.0",
+    "torchvision>=0.15.0,<0.17.0",
+    "ultralytics==8.0.196",
+    "paddlepaddle>=2.5.0,<3.0.0",
+    "paddleocr==2.7.0.3",
+    "transformers==4.36.2",
+    "tokenizers==0.15.2",
+    "huggingface-hub>=0.19.3,<1.0.0",
+    "accelerate>=0.20.0,<1.0.0",
+    "sentencepiece>=0.1.99,<1.0.0",
+    "scikit-image>=0.19.0,<0.23.0",
+    "python-dotenv>=0.19.0",
+    "pyyaml>=6.0,<7.0.0",
+    "jsonschema>=4.17.0,<5.0.0",
+    "tqdm>=4.65.0,<5.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=0.990",
+]
+
+[project.scripts]
+perception = "perception.core.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["perception*"]
+exclude = ["tests*", "docs*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=perception --cov-report=html --cov-report=term"
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
