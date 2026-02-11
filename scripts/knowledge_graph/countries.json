@@ -1,0 +1,2725 @@
+[
+    {
+        "id": "IND",
+        "label": "India",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Chapati",
+                "Biryani",
+                "Samosa",
+                "Dosa",
+                "Idli",
+                "Butter Chicken",
+                "Pani Puri",
+                "Chole Bhature",
+                "Vada Pav",
+                "Rogal Josh",
+                "Pulao",
+                "Kheer",
+                "Gulab Jamun",
+                "Jalebi",
+                "Rasam",
+                "Dal Makhani",
+                "Naan",
+                "Tandoori Chicken",
+                "Fish Curry",
+                "Lassi"
+            ],
+            "sport": [
+                "Cricket",
+                "Hockey",
+                "Kabaddi",
+                "Badminton",
+                "Wrestling",
+                "Shooting",
+                "Archery",
+                "Football"
+            ],
+            "clothing": [
+                "Saree",
+                "Kurta",
+                "Dhoti",
+                "Sherwani",
+                "Lehenga",
+                "Salwar Kameez",
+                "Turban",
+                "Dupatta",
+                "Lungi",
+                "Nehru Jacket"
+            ],
+            "architecture": [
+                "Temple",
+                "Palace",
+                "Fort",
+                "Stupa",
+                "Haveli",
+                "Stepwell",
+                "Ghat",
+                "Dravidian Style",
+                "Mughal Architecture"
+            ],
+            "landmark": [
+                "Taj Mahal",
+                "Qutub Minar",
+                "Red Fort",
+                "India Gate",
+                "Hawa Mahal",
+                "Golden Temple",
+                "Gateway of India",
+                "Ajanta Caves",
+                "Ellora Caves",
+                "Konark Sun Temple"
+            ],
+            "currency": [
+                "Indian Rupee"
+            ],
+            "language": [
+                "Hindi",
+                "English",
+                "Tamil",
+                "Bengali",
+                "Telugu",
+                "Marathi",
+                "Gujarati",
+                "Kannada",
+                "Malayalam",
+                "Punjabi"
+            ],
+            "animal": [
+                "Tiger",
+                "Elephant",
+                "Peacock",
+                "Cobra",
+                "Rhino",
+                "Lion",
+                "Leopard",
+                "Langur"
+            ],
+            "festival": [
+                "Diwali",
+                "Holi",
+                "Eid",
+                "Christmas",
+                "Navratri",
+                "Durga Puja",
+                "Ganesh Chaturthi",
+                "Pongal",
+                "Onam",
+                "Raksha Bandhan"
+            ],
+            "dance": [
+                "Kathak",
+                "Bharatanatyam",
+                "Bhangra",
+                "Odissi",
+                "Kuchipudi",
+                "Manipuri",
+                "Kathakali",
+                "Garba"
+            ],
+            "history": [
+                "Mughal Empire",
+                "British Raj",
+                "Mauryan Empire",
+                "Gupta Empire",
+                "Chola Dynasty",
+                "Indus Valley Civilization"
+            ],
+            "geography": [
+                "Himalayas",
+                "Ganges River",
+                "Thar Desert",
+                "Western Ghats",
+                "Indian Ocean",
+                "Deccan Plateau"
+            ],
+            "music": [
+                "Sitar",
+                "Tabla",
+                "Raga",
+                "Carnatic Music",
+                "Hindustani Classical",
+                "Bollywood Music"
+            ],
+            "climate": [
+                "Tropical Monsoon",
+                "Hot Dry",
+                "Humid Subtropical"
+            ],
+            "living_style": [
+                "Multi-generational homes",
+                "Urban apartments",
+                "Courtyard living"
+            ],
+            "home_feature": [
+                "Veranda",
+                "Courtyard (Aangan)",
+                "Flat roof"
+            ],
+            "outdoor_activity": [
+                "Cricket",
+                "Yoga",
+                "Evening walk"
+            ]
+        }
+    },
+    {
+        "id": "USA",
+        "label": "United States",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Hamburger",
+                "Hot Dog",
+                "Apple Pie",
+                "BBQ Ribs",
+                "Mac and Cheese",
+                "Fried Chicken",
+                "Pizza",
+                "Bagel",
+                "Donut",
+                "Pancakes",
+                "Clam Chowder",
+                "Buffalo Wings",
+                "Reuben Sandwich",
+                "Philly Cheesesteak",
+                "Jambalaya",
+                "Gumbo",
+                "Cornbread",
+                "Biscuits and Gravy",
+                "Smores",
+                "Brownies"
+            ],
+            "sport": [
+                "American Football",
+                "Basketball",
+                "Baseball",
+                "Ice Hockey",
+                "Soccer",
+                "Golf",
+                "Tennis",
+                "NASCAR",
+                "Boxing",
+                "Volleyball"
+            ],
+            "clothing": [
+                "Jeans",
+                "T-shirt",
+                "Cowboy Hat",
+                "Sneakers",
+                "Baseball Cap",
+                "Hoodie",
+                "Flannel Shirt",
+                "Leather Jacket",
+                "Suit",
+                "Boots"
+            ],
+            "architecture": [
+                "Skyscraper",
+                "Colonial House",
+                "Ranch Style",
+                "Suburban Home",
+                "Victorian House",
+                "Art Deco",
+                "Prairie Style",
+                "Log Cabin"
+            ],
+            "landmark": [
+                "Statue of Liberty",
+                "Grand Canyon",
+                "White House",
+                "Golden Gate Bridge",
+                "Mount Rushmore",
+                "Empire State Building",
+                "Yellowstone",
+                "Yosemite",
+                "Hollywood Sign",
+                "Times Square"
+            ],
+            "currency": [
+                "US Dollar"
+            ],
+            "language": [
+                "English",
+                "Spanish"
+            ],
+            "animal": [
+                "Bald Eagle",
+                "Bison",
+                "Grizzly Bear",
+                "Mustang",
+                "Alligator",
+                "Moose",
+                "Mountain Lion",
+                "Raccoon"
+            ],
+            "festival": [
+                "Thanksgiving",
+                "Independence Day",
+                "Halloween",
+                "Christmas",
+                "Super Bowl Sunday",
+                "Memorial Day",
+                "Labor Day",
+                "Veterans Day",
+                "Mardi Gras",
+                "St. Patrick's Day"
+            ],
+            "dance": [
+                "Hip Hop",
+                "Square Dance",
+                "Swing",
+                "Jazz",
+                "Tap Dance",
+                "Breakdancing",
+                "Country Line Dance"
+            ],
+            "history": [
+                "American Revolution",
+                "Civil War",
+                "Gold Rush",
+                "Great Depression",
+                "Civil Rights Movement",
+                "Space Race"
+            ],
+            "geography": [
+                "Rocky Mountains",
+                "Mississippi River",
+                "Grand Canyon",
+                "Great Lakes",
+                "Everglades",
+                "Death Valley"
+            ],
+            "music": [
+                "Jazz",
+                "Blues",
+                "Rock and Roll",
+                "Country",
+                "Hip Hop",
+                "R&B",
+                "Pop",
+                "Gospel"
+            ],
+            "climate": [
+                "Continental",
+                "Temperate",
+                "Tropical (Florida/Hawaii)"
+            ],
+            "living_style": [
+                "Suburban lifestyle",
+                "Car-centric",
+                "Backyard grilling"
+            ],
+            "home_feature": [
+                "Backyard",
+                "Basement",
+                "Garage",
+                "Front porch"
+            ],
+            "outdoor_activity": [
+                "Camping",
+                "Hiking",
+                "Baseball",
+                "Tailgating"
+            ]
+        }
+    },
+    {
+        "id": "JPN",
+        "label": "Japan",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Sushi",
+                "Ramen",
+                "Tempura",
+                "Udon",
+                "Sashimi",
+                "Miso Soup",
+                "Onigiri",
+                "Takoyaki",
+                "Yakitori",
+                "Matcha",
+                "Soba",
+                "Donburi",
+                "Okonomiyaki",
+                "Gyoza",
+                "Mochi",
+                "Wagyu Beef",
+                "Fugu",
+                "Natto",
+                "Oden",
+                "Katsu Curry"
+            ],
+            "sport": [
+                "Sumo",
+                "Judo",
+                "Karate",
+                "Baseball",
+                "Kendo",
+                "Aikido",
+                "Soccer",
+                "Table Tennis"
+            ],
+            "clothing": [
+                "Kimono",
+                "Yukata",
+                "Hakama",
+                "Tabi",
+                "Geta",
+                "Zori",
+                "Haori",
+                "Obi",
+                "Happi",
+                "School Uniform"
+            ],
+            "architecture": [
+                "Pagoda",
+                "Shrine",
+                "Torii Gate",
+                "Tea House",
+                "Castle",
+                "Machiya",
+                "Minka",
+                "Modernist"
+            ],
+            "landmark": [
+                "Mount Fuji",
+                "Tokyo Tower",
+                "Kinkaku-ji",
+                "Himeji Castle",
+                "Fushimi Inari Natasha",
+                "Shibuya Crossing",
+                "Hiroshima Peace Memorial",
+                "Todai-ji",
+                "Itsukushima Shrine",
+                "Arashiyama Bamboo Grove"
+            ],
+            "currency": [
+                "Yen"
+            ],
+            "language": [
+                "Japanese"
+            ],
+            "animal": [
+                "Koi Fish",
+                "Crane",
+                "Macaque",
+                "Tanuki",
+                "Shiba Inu",
+                "Akita Inu",
+                "Deer (Nara)",
+                "Giant Salamander"
+            ],
+            "festival": [
+                "Cherry Blossom Festival",
+                "Gion Matsuri",
+                "Obon",
+                "Tanabata",
+                "New Year",
+                "Setsubun",
+                "Hina Matsuri",
+                "Children's Day",
+                "Sapporo Snow Festival"
+            ],
+            "dance": [
+                "Bon Odori",
+                "Kabuki",
+                "Noh",
+                "Butoh",
+                "Yosakoi"
+            ],
+            "history": [
+                "Samurai",
+                "Edo Period",
+                "Meiji Restoration",
+                "Shogunate"
+            ],
+            "geography": [
+                "Mount Fuji",
+                "Japanese Alps",
+                "Biwa Lake",
+                "Seto Inland Sea"
+            ],
+            "art": [
+                "Anime",
+                "Manga",
+                "Origami",
+                "Ikebana",
+                "Ukiyo-e",
+                "Calligraphy",
+                "Tea Ceremony"
+            ],
+            "climate": [
+                "Temperate",
+                "Humid subtropical",
+                "Cool temperate"
+            ],
+            "living_style": [
+                "Minimalist",
+                "High-density urban",
+                "Shoes-off culture"
+            ],
+            "home_feature": [
+                "Tatami mats",
+                "Shoji screens",
+                "Genkan (Entryway)",
+                "Futon"
+            ],
+            "outdoor_activity": [
+                "Cherry blossom viewing (Hanami)",
+                "Hot springs (Onsen)",
+                "Hiking"
+            ]
+        }
+    },
+    {
+        "id": "FRA",
+        "label": "France",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Baguette",
+                "Croissant",
+                "Cheese",
+                "Wine",
+                "Escargot",
+                "Ratatouille",
+                "Crepe",
+                "Macaron",
+                "Foie Gras",
+                "Quiche",
+                "Coq au Vin",
+                "Bouillabaisse",
+                "Beef Bourguignon",
+                "Cassoulet",
+                "Souffle",
+                "Profiterole",
+                "Eclair",
+                "Madeleine",
+                "Brioche",
+                "Tarte Tatin"
+            ],
+            "sport": [
+                "Soccer",
+                "Rugby",
+                "Cycling",
+                "Tennis",
+                "Handball",
+                "Basketball",
+                "Judo",
+                "Fencing"
+            ],
+            "clothing": [
+                "Beret",
+                "Scarf",
+                "Haute Couture",
+                "Striped Shirt",
+                "Trench Coat",
+                "Little Black Dress",
+                "Silk Scarf",
+                "Espadrilles"
+            ],
+            "architecture": [
+                "Gothic Cathedral",
+                "Chateau",
+                "Haussmann Building",
+                "Romanesque",
+                "Baroque",
+                "Art Nouveau"
+            ],
+            "landmark": [
+                "Eiffel Tower",
+                "Louvre Museum",
+                "Notre Dame",
+                "Arc de Triomphe",
+                "Versailles Palace",
+                "Mont Saint-Michel",
+                "Sacre-Coeur",
+                "Champs-Elysees",
+                "Riviera",
+                "Provence"
+            ],
+            "currency": [
+                "Euro"
+            ],
+            "language": [
+                "French"
+            ],
+            "animal": [
+                "Rooster",
+                "Alpine Ibex",
+                "Marmot",
+                "Chamois"
+            ],
+            "festival": [
+                "Bastille Day",
+                "Cannes Film Festival",
+                "Nice Carnival",
+                "Fete de la Musique",
+                "Tour de France"
+            ],
+            "dance": [
+                "Ballet",
+                "Cancan",
+                "Minuet",
+                "Gavotte"
+            ],
+            "art": [
+                "Impressionism",
+                "Romanticism",
+                "Cubism",
+                "Surrealism",
+                "Art Deco"
+            ],
+            "history": [
+                "French Revolution",
+                "Napoleon",
+                "World Wars",
+                "Joan of Arc",
+                "Louis XIV"
+            ],
+            "geography": [
+                "Alps",
+                "Pyrenees",
+                "Riviera",
+                "Loire Valley",
+                "Seine River"
+            ],
+            "climate": [
+                "Oceanic",
+                "Mediterranean",
+                "Continental"
+            ],
+            "living_style": [
+                "Cafe culture",
+                "Apartment living",
+                "Long lunches"
+            ],
+            "home_feature": [
+                "Balcony",
+                "Shutters",
+                "Fireplace",
+                "Courtyard"
+            ],
+            "outdoor_activity": [
+                "Cycling",
+                "Petanque",
+                "Picnicking"
+            ]
+        }
+    },
+    {
+        "id": "ITA",
+        "label": "Italy",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Pizza",
+                "Pasta",
+                "Gelato",
+                "Risotto",
+                "Lasagna",
+                "Tiramisu",
+                "Espresso",
+                "Cannoli",
+                "Focaccia",
+                "Pesto",
+                "Carbonara",
+                "Ravioli",
+                "Gnocchi",
+                "Bruschetta",
+                "Caprese Salad",
+                "Prosciutto",
+                "Parmesan",
+                "Mozzarella",
+                "Biscotti",
+                "Panettone"
+            ],
+            "sport": [
+                "Soccer",
+                "Formula 1",
+                "Cycling",
+                "Volleyball",
+                "Basketball",
+                "Rugby",
+                "Tennis",
+                "Skiing"
+            ],
+            "clothing": [
+                "Designer Suit",
+                "Leather Jacket",
+                "Sunglasses",
+                "Loafers",
+                "Fedora",
+                "Silk Tie",
+                "Stilettos"
+            ],
+            "architecture": [
+                "Roman Forum",
+                "Renaissance Palace",
+                "Villa",
+                "Church",
+                "Aqueduct",
+                "Colosseum",
+                "Duomo"
+            ],
+            "landmark": [
+                "Colosseum",
+                "Leaning Tower of Pisa",
+                "Venice Canals",
+                "Vatican City",
+                "Pompeii",
+                "Pantheon",
+                "Trevi Fountain",
+                "Florence Cathedral",
+                "Amalfi Coast",
+                "Cinque Terre"
+            ],
+            "currency": [
+                "Euro"
+            ],
+            "language": [
+                "Italian"
+            ],
+            "animal": [
+                "Wolf",
+                "Bear",
+                "Chamois",
+                "Golden Eagle"
+            ],
+            "festival": [
+                "Venice Carnival",
+                "Ferragosto",
+                "Siena Palio",
+                "Sanremo Music Festival"
+            ],
+            "dance": [
+                "Tarantella",
+                "Pizzica"
+            ],
+            "art": [
+                "Renaissance Art",
+                "Baroque Art",
+                "Roman Art",
+                "Futurism"
+            ],
+            "history": [
+                "Roman Empire",
+                "Renaissance",
+                "Risorgimento",
+                "Vatican"
+            ],
+            "geography": [
+                "Alps",
+                "Appennines",
+                "Mediterranean Sea",
+                "Tuscany",
+                "Sicily",
+                "Sardinia"
+            ],
+            "music": [
+                "Opera",
+                "Vivaldi",
+                "Pavarotti",
+                "Verdi"
+            ],
+            "climate": [
+                "Mediterranean",
+                "Humid subtropical",
+                "Oceanic"
+            ],
+            "living_style": [
+                "Piazza culture",
+                "Slow living",
+                "Family-centric"
+            ],
+            "home_feature": [
+                "Terrace",
+                "Shutters",
+                "Tile floors",
+                "Courtyard"
+            ],
+            "outdoor_activity": [
+                "Soccer",
+                "Evening stroll (Passeggiata)",
+                "Beach"
+            ]
+        }
+    },
+    {
+        "id": "BRA",
+        "label": "Brazil",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Feijoada",
+                "Pao de Queijo",
+                "Brigadeiro",
+                "Acai",
+                "Coxinha",
+                "Pastel",
+                "Churrasco",
+                "Moqueca",
+                "Farofa",
+                "Guarana",
+                "Vatapa",
+                "Quindim",
+                "Tapioca",
+                "Acaraje",
+                "Cachaca",
+                "Caipirinha"
+            ],
+            "sport": [
+                "Soccer",
+                "Volleyball",
+                "MMA",
+                "Capoeira",
+                "Futsal",
+                "Surfing",
+                "Basketball",
+                "Jiu-Jitsu"
+            ],
+            "clothing": [
+                "Bikini",
+                "Havaianas",
+                "Canga",
+                "Carnival Costume",
+                "Baiana Dress",
+                "Sungas"
+            ],
+            "architecture": [
+                "Modernist",
+                "Colonial",
+                "Favela",
+                "Baroque"
+            ],
+            "landmark": [
+                "Christ the Redeemer",
+                "Sugarloaf Mountain",
+                "Amazon Rainforest",
+                "Iguazu Falls",
+                "Copacabana Beach",
+                "Pantanal",
+                "Fernando de Noronha",
+                "Lencois Maranhenses",
+                "Pelourinho",
+                "Brasilia Cathedral"
+            ],
+            "currency": [
+                "Brazilian Real"
+            ],
+            "language": [
+                "Portuguese"
+            ],
+            "animal": [
+                "Jaguar",
+                "Toucan",
+                "Macaw",
+                "Capybara",
+                "Sloth",
+                "Armadillo",
+                "Anteater",
+                "Piranha",
+                "Anaconda",
+                "Golden Lion Tamarin"
+            ],
+            "festival": [
+                "Carnival",
+                "Reveillon",
+                "Festa Junina",
+                "Parintins Folklore Festival"
+            ],
+            "dance": [
+                "Samba",
+                "Bossa Nova",
+                "Forro",
+                "Frevo",
+                "Axe",
+                "Lambada"
+            ],
+            "music": [
+                "Samba",
+                "Bossa Nova",
+                "MPB",
+                "Tropicalia",
+                "Funk Carioca"
+            ],
+            "geography": [
+                "Amazon River",
+                "Atlantic Forest",
+                "Cerrado",
+                "Caatinga"
+            ],
+            "climate": [
+                "Tropical",
+                "Equatorial",
+                "Semi-arid"
+            ],
+            "living_style": [
+                "Outdoor living",
+                "Social gatherings",
+                "Beach culture"
+            ],
+            "home_feature": [
+                "Hammock",
+                "Veranda",
+                "BBQ area (Churrasqueira)",
+                "Tile floors"
+            ],
+            "outdoor_activity": [
+                "Beach soccer",
+                "Surfing",
+                "Capoeira",
+                "Carnival"
+            ]
+        }
+    },
+    {
+        "id": "CHN",
+        "label": "China",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Dumplings",
+                "Peking Duck",
+                "Spring Rolls",
+                "Fried Rice",
+                "Chow Mein",
+                "Hot Pot",
+                "Dim Sum",
+                "Baozi",
+                "Tofu",
+                "Tea",
+                "Kung Pao Chicken",
+                "Mapo Tofu",
+                "Wonton",
+                "Mooncake",
+                "Zongzi",
+                "Congee",
+                "Char Siu",
+                "Bubble Tea",
+                "Sichuan Pepper"
+            ],
+            "sport": [
+                "Table Tennis",
+                "Badminton",
+                "Martial Arts",
+                "Basketball",
+                "Diving",
+                "Gymnastics",
+                "Soccer",
+                "Volleyball"
+            ],
+            "clothing": [
+                "Cheongsam",
+                "Hanfu",
+                "Tang Suit",
+                "Mao Suit",
+                "Qipao",
+                "Silk Robe"
+            ],
+            "architecture": [
+                "Great Wall",
+                "Pagoda",
+                "Courtyard House",
+                "Temple",
+                "Tulou",
+                "Forbidden City Style",
+                "Garden Architecture"
+            ],
+            "landmark": [
+                "Great Wall",
+                "Forbidden City",
+                "Terracotta Warriors",
+                "The Bund",
+                "Potala Palace",
+                "West Lake",
+                "Yellow Mountain",
+                "Li River",
+                "Victoria Harbour",
+                "Summer Palace"
+            ],
+            "currency": [
+                "Renminbi"
+            ],
+            "language": [
+                "Mandarin",
+                "Cantonese"
+            ],
+            "animal": [
+                "Panda",
+                "Dragon (Mythical)",
+                "Tiger",
+                "Crane",
+                "Phoenix (Mythical)",
+                "Monkey",
+                "Yak",
+                "Snow Leopard"
+            ],
+            "festival": [
+                "Chinese New Year",
+                "Mid-Autumn Festival",
+                "Dragon Boat Festival",
+                "Lantern Festival",
+                "Qingming Festival",
+                "Double Ninth Festival"
+            ],
+            "dance": [
+                "Dragon Dance",
+                "Lion Dance",
+                "Fan Dance",
+                "Ribbon Dance"
+            ],
+            "history": [
+                "Dynasties",
+                "Silk Road",
+                "Three Kingdoms",
+                "Cultural Revolution"
+            ],
+            "geography": [
+                "Yangtze River",
+                "Yellow River",
+                "Gobi Desert",
+                "Himalayas",
+                "Tibetan Plateau"
+            ],
+            "art": [
+                "Calligraphy",
+                "Ink Wash Painting",
+                "Porcelain",
+                "Jade Carving",
+                "Paper Cutting"
+            ],
+            "climate": [
+                "Diverse",
+                "Tropical",
+                "Subarctic"
+            ],
+            "living_style": [
+                "Communal dining",
+                "Urban high-rise",
+                "Tea culture"
+            ],
+            "home_feature": [
+                "Courtyard (Siheyuan)",
+                "Feng Shui principles",
+                "Round table"
+            ],
+            "outdoor_activity": [
+                "Tai Chi",
+                "Square dancing",
+                "Ping Pong",
+                "Kite flying"
+            ]
+        }
+    },
+    {
+        "id": "DEU",
+        "label": "Germany",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Bratwurst",
+                "Sauerkraut",
+                "Pretzel",
+                "Schnitzel",
+                "Beer",
+                "Potato Salad",
+                "Currywurst",
+                "Black Forest Cake",
+                "Sauerbraten",
+                "Lebkuchen",
+                "Spiaetzle",
+                "Rouladen",
+                "Kartoffelpuffer",
+                "Weisswurst",
+                "Stollen",
+                "Gluhwein",
+                "Riesling",
+                "Marzipan"
+            ],
+            "sport": [
+                "Soccer",
+                "Handball",
+                "Tennis",
+                "Skiing",
+                "Formula 1",
+                "Ice Hockey",
+                "Basketball",
+                "Cycling"
+            ],
+            "clothing": [
+                "Lederhosen",
+                "Dirndl",
+                "Tracht",
+                "Birkenstock"
+            ],
+            "architecture": [
+                "Timber-framed House",
+                "Gothic Cathedral",
+                "Bauhaus",
+                "Modernist",
+                "Castles"
+            ],
+            "landmark": [
+                "Brandenburg Gate",
+                "Neuschwanstein Castle",
+                "Cologne Cathedral",
+                "Berlin Wall",
+                "Reichstag",
+                "Black Forest",
+                "Rhine Valley",
+                "Oktoberfest Grounds",
+                "Zugspitze"
+            ],
+            "currency": [
+                "Euro"
+            ],
+            "language": [
+                "German"
+            ],
+            "animal": [
+                "Eagle",
+                "Bear",
+                "Boar",
+                "Deer"
+            ],
+            "festival": [
+                "Oktoberfest",
+                "Christmas Markets",
+                "Carnival (Fasching)",
+                "Berlin Film Festival"
+            ],
+            "dance": [
+                "Schuhplattler",
+                "Waltz",
+                "Polka"
+            ],
+            "music": [
+                "Classical",
+                "Techno",
+                "Beethoven",
+                "Bach",
+                "Wagner",
+                "Electronic"
+            ],
+            "history": [
+                "Holy Roman Empire",
+                "Prussia",
+                "Reunification",
+                "World Wars"
+            ],
+            "geography": [
+                "Alps",
+                "Rhine River",
+                "Danube River",
+                "North Sea",
+                "Baltic Sea"
+            ],
+            "philosophy": [
+                "Kant",
+                "Nietzsche",
+                "Hegel",
+                "Marx"
+            ],
+            "climate": [
+                "Temperate",
+                "Marine",
+                "Continental"
+            ],
+            "living_style": [
+                "Ordnung (Order)",
+                "Eco-conscious",
+                "Gemütlichkeit"
+            ],
+            "home_feature": [
+                "Balcony",
+                "Garden (Schrebergarten)",
+                "Cellar",
+                "Shutters"
+            ],
+            "outdoor_activity": [
+                "Hiking (Wandern)",
+                "Cycling",
+                "Soccer",
+                "Beer garden"
+            ]
+        }
+    },
+    {
+        "id": "AUS",
+        "label": "Australia",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Vegemite",
+                "Meat Pie",
+                "Lamington",
+                "Pavlova",
+                "Tim Tam",
+                "Fish and Chips",
+                "Damper",
+                "Anzac Biscuit",
+                "Barramundi",
+                "Kangaroo meat",
+                "Beetroot on Burger",
+                "Flat White",
+                "Chicken Parma",
+                "Sausage Sizzle",
+                "Fairy Bread",
+                "Weet-Bix",
+                "Witchetty Grub"
+            ],
+            "sport": [
+                "Cricket",
+                "Rugby",
+                "AFL",
+                "Surfing",
+                "Tennis",
+                "Swimming",
+                "Netball",
+                "Soccer",
+                "Golf",
+                "Horse Racing"
+            ],
+            "clothing": [
+                "Boardshorts",
+                "Thongs (Flip-flops)",
+                "Akubra Hat",
+                "Driza-Bone",
+                "Bathers",
+                "Rashie",
+                "Blundstones"
+            ],
+            "architecture": [
+                "Queenslander",
+                "Sydney Opera House",
+                "Federation Style",
+                "Terrace House",
+                "Beach House"
+            ],
+            "landmark": [
+                "Sydney Opera House",
+                "Uluru",
+                "Great Barrier Reef",
+                "Sydney Harbour Bridge",
+                "Bondi Beach",
+                "Twelve Apostles",
+                "Blue Mountains",
+                "Kakadu National Park",
+                "Daintree Rainforest"
+            ],
+            "currency": [
+                "Australian Dollar"
+            ],
+            "language": [
+                "English"
+            ],
+            "animal": [
+                "Kangaroo",
+                "Koala",
+                "Emu",
+                "Wombat",
+                "Platypus",
+                "Echidna",
+                "Dingo",
+                "Tasmanian Devil",
+                "Crocodile",
+                "Kookaburra",
+                "Wallaby",
+                "Quokka"
+            ],
+            "festival": [
+                "Australia Day",
+                "Mardi Gras",
+                "Melbourne Cup",
+                "Anzac Day",
+                "Vivid Sydney"
+            ],
+            "dance": [
+                "Bush Dance",
+                "Indigenous Dance",
+                "Corroboree"
+            ],
+            "geography": [
+                "Outback",
+                "Great Dividing Range",
+                "Simpson Desert",
+                "Gold Coast"
+            ],
+            "history": [
+                "Aboriginal Culture",
+                "Convict History",
+                "Gold Rush",
+                "Federation"
+            ],
+            "climate": [
+                "Warm temperate",
+                "Tropical north",
+                "Arid outback"
+            ],
+            "living_style": [
+                "Beach lifestyle",
+                "Suburban backyard culture"
+            ],
+            "home_feature": [
+                "Veranda",
+                "Outdoor BBQ area"
+            ],
+            "outdoor_activity": [
+                "Barbecue",
+                "Camping",
+                "Beach swimming"
+            ]
+        }
+    },
+    {
+        "id": "EGY",
+        "label": "Egypt",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Koshary",
+                "Ful Medames",
+                "Falafel",
+                "Shawarma",
+                "Mahshi",
+                "Fattah",
+                "Mulukhiyah",
+                "Baklava",
+                "Kunafa",
+                "Basbousa",
+                "Hawawshi",
+                "Roz Bel Laban",
+                "Umm Ali",
+                "Feseekh",
+                "Tea",
+                "Hibiscus Tea"
+            ],
+            "sport": [
+                "Soccer",
+                "Squash",
+                "Handball",
+                "Basketball",
+                "Swimming"
+            ],
+            "clothing": [
+                "Galabeya",
+                "Hijab",
+                "Kaftan",
+                "Abaya",
+                "Tarboush"
+            ],
+            "architecture": [
+                "Pyramid",
+                "Temple",
+                "Mosque",
+                "Mud Brick House",
+                "Islamic Architecture",
+                "Coptic Architecture"
+            ],
+            "landmark": [
+                "Pyramids of Giza",
+                "Sphinx",
+                "Nile River",
+                "Luxor Temple",
+                "Karnak Temple",
+                "Valley of the Kings",
+                "Abu Simbel",
+                "Cairo Citadel",
+                "Egyptian Museum",
+                "Red Sea",
+                "Suez Canal"
+            ],
+            "currency": [
+                "Egyptian Pound"
+            ],
+            "language": [
+                "Arabic"
+            ],
+            "animal": [
+                "Camel",
+                "Scorpion",
+                "Crocodile",
+                "Cobra",
+                "Fennec Fox",
+                "Ibis",
+                "Jackal"
+            ],
+            "festival": [
+                "Ramadan",
+                "Eid al-Fitr",
+                "Sham en-Nessim",
+                "Eid al-Adha",
+                "Mawlid"
+            ],
+            "dance": [
+                "Belly Dance",
+                "Tanoura",
+                "Raqs Sharqi",
+                "Tahtib"
+            ],
+            "history": [
+                "Pharaohs",
+                "Mummies",
+                "Hieroglyphs",
+                "Cleopatra",
+                "Tutankhamun",
+                "Ancient Egypt"
+            ],
+            "geography": [
+                "Sahara Desert",
+                "Nile Delta",
+                "Sinai Peninsula",
+                "Mediterranean Coast"
+            ],
+            "art": [
+                "Papyrus Art",
+                "Statues",
+                "Wall Carvings"
+            ],
+            "climate": [
+                "Desert",
+                "Hot",
+                "Mediterranean (coast)"
+            ],
+            "living_style": [
+                "Late-night socializing",
+                "Cafe culture",
+                "Extended family"
+            ],
+            "home_feature": [
+                "Balcony",
+                "Flat roof",
+                "Inner courtyard"
+            ],
+            "outdoor_activity": [
+                "Soccer",
+                "Backgammon at cafes",
+                "Nile cruising"
+            ]
+        }
+    },
+    {
+        "id": "CAN",
+        "label": "Canada",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Poutine",
+                "Maple Syrup",
+                "Nanaimo Bar",
+                "Butter Tart",
+                "Tourtiere",
+                "Bannock",
+                "Beavertails",
+                "Montreal Bagel",
+                "Peameal Bacon",
+                "Ketchup Chips",
+                "Caesar Cocktail",
+                "Saskatoon Berry Pie",
+                "Donair",
+                "Split Pea Soup",
+                "Kraft Dinner",
+                "Coffee Crisp",
+                "Smarties",
+                "Ice Wine"
+            ],
+            "sport": [
+                "Ice Hockey",
+                "Lacrosse",
+                "Curling",
+                "Basketball",
+                "Soccer",
+                "Canadian Football",
+                "Skiing",
+                "Snowboarding",
+                "Figure Skating"
+            ],
+            "clothing": [
+                "Toque",
+                "Flannel Shirt",
+                "Parka",
+                "Mukluks",
+                "Mittens",
+                "Long Johns",
+                "Sorel Boots"
+            ],
+            "architecture": [
+                "Chateau Style",
+                "Igloo",
+                "CN Tower",
+                "Victorian",
+                "Modernist"
+            ],
+            "landmark": [
+                "Niagara Falls",
+                "CN Tower",
+                "Banff National Park",
+                "Parliament Hill",
+                "Jasper National Park",
+                "Lake Louise",
+                "Hopewell Rocks",
+                "Old Quebec",
+                "Whistler",
+                "Peggy's Cove"
+            ],
+            "currency": [
+                "Canadian Dollar"
+            ],
+            "language": [
+                "English",
+                "French"
+            ],
+            "animal": [
+                "Beaver",
+                "Moose",
+                "Polar Bear",
+                "Loon",
+                "Grizzly Bear",
+                "Black Bear",
+                "Wolf",
+                "Caribou",
+                "Orca",
+                "Canada Goose",
+                "Puffin"
+            ],
+            "festival": [
+                "Canada Day",
+                "Calgary Stampede",
+                "Winterlude",
+                "Toronto Film Festival",
+                "Montreal Jazz Festival",
+                "Quebec Winter Carnival"
+            ],
+            "dance": [
+                "Square Dance",
+                "Powwow",
+                "Jigging"
+            ],
+            "geography": [
+                "Rocky Mountains",
+                "Prairies",
+                "Canadian Shield",
+                "Arctic Tundra",
+                "Great Lakes"
+            ],
+            "history": [
+                "Fur Trade",
+                "Confederation",
+                "First Nations",
+                "Klondike Gold Rush"
+            ],
+            "climate": [
+                "Continental",
+                "Subarctic",
+                "Arctic"
+            ],
+            "living_style": [
+                "Outdoor appreciation",
+                "Cottage culture",
+                "Winter resilience"
+            ],
+            "home_feature": [
+                "Basement",
+                "Fireplace",
+                "Mudroom",
+                "Deck"
+            ],
+            "outdoor_activity": [
+                "Hockey",
+                "Skiing",
+                "Camping",
+                "Canoeing"
+            ]
+        }
+    },
+    {
+        "id": "RUS",
+        "label": "Russia",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Borscht",
+                "Pelmeni",
+                "Blini",
+                "Beef Stroganoff",
+                "Pirozhki",
+                "Shashlik",
+                "Olivier Salad",
+                "Caviar",
+                "Syrniki",
+                "Kvass",
+                "Okroshka",
+                "Solfanka",
+                "Kholodets",
+                "Vareniki",
+                "Medovik",
+                "Vodka",
+                "Tea with Jam"
+            ],
+            "sport": [
+                "Ice Hockey",
+                "Soccer",
+                "Figure Skating",
+                "Chess",
+                "Biathlon",
+                "Gymnastics",
+                "Volleyball",
+                "Basketball",
+                "Sambo"
+            ],
+            "clothing": [
+                "Ushanka",
+                "Sarafan",
+                "Kosovorotka",
+                "Valenki",
+                "Fur Coat",
+                "Kokoshnik"
+            ],
+            "architecture": [
+                "Onion Dome",
+                "Kremlin",
+                "Stalinist Architecture",
+                "Constructivism",
+                "Orthodox Church",
+                "Wooden Churches"
+            ],
+            "landmark": [
+                "Red Square",
+                "Saint Basil's Cathedral",
+                "Hermitage Museum",
+                "Lake Baikal",
+                "Kremlin",
+                "Peterhof",
+                "Trans-Siberian Railway",
+                "Bolshoi Theatre",
+                "Mount Elbrus",
+                "Kamchatka"
+            ],
+            "currency": [
+                "Russian Ruble"
+            ],
+            "language": [
+                "Russian"
+            ],
+            "animal": [
+                "Brown Bear",
+                "Siberian Tiger",
+                "Wolf",
+                "Lynx",
+                "Snow Leopard",
+                "Baikal Seal"
+            ],
+            "festival": [
+                "Maslenitsa",
+                "Victory Day",
+                "New Year",
+                "Orthodox Christmas",
+                "White Nights Festival"
+            ],
+            "dance": [
+                "Ballet",
+                "Folk Dance",
+                "Kalinka",
+                "Barynya",
+                "Trepak"
+            ],
+            "literature": [
+                "Tolstoy",
+                "Dostoevsky",
+                "Pushkin",
+                "Chekhov",
+                "Gogol"
+            ],
+            "history": [
+                "Tsars",
+                "Soviet Union",
+                "Romanovs",
+                "Revolution"
+            ],
+            "geography": [
+                "Steppe",
+                "Taiga",
+                "Tundra",
+                "Ural Mountains",
+                "Volga River"
+            ],
+            "music": [
+                "Tchaikovsky",
+                "Rachmaninoff",
+                "Stravinsky",
+                "Folk Music"
+            ],
+            "climate": [
+                "Humid continental",
+                "Subarctic",
+                "Tundra"
+            ],
+            "living_style": [
+                "Dacha culture",
+                "Tea drinking",
+                "Hospitality"
+            ],
+            "home_feature": [
+                "Dacha (Country house)",
+                "Rug on wall",
+                "Samovar"
+            ],
+            "outdoor_activity": [
+                "Mushroom picking",
+                "Ice skating",
+                "Skiing",
+                "Banya (Sauna)"
+            ]
+        }
+    },
+    {
+        "id": "ZAF",
+        "label": "South Africa",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Biltong",
+                "Boerewors",
+                "Bobotie",
+                "Bunny Chow",
+                "Malva Pudding",
+                "Chakalaka",
+                "Koeksister",
+                "Vetkoek",
+                "Potjiekos",
+                "Melktert",
+                "Amarula",
+                "Rooibos Tea",
+                "Pap",
+                "Samosa",
+                "Gatsby",
+                "Braai"
+            ],
+            "sport": [
+                "Rugby",
+                "Cricket",
+                "Soccer",
+                "Golf",
+                "Surfing",
+                "Athletics",
+                "Swimming"
+            ],
+            "clothing": [
+                "Madiba Shirt",
+                "Shweshwe",
+                "Veldskoen",
+                "Traditional Beadwork",
+                "Animal Skins (Traditional)"
+            ],
+            "architecture": [
+                "Cape Dutch",
+                "Rondavel",
+                "Ndebele Art Houses",
+                "Modernist"
+            ],
+            "landmark": [
+                "Table Mountain",
+                "Kruger National Park",
+                "Robben Island",
+                "Cape of Good Hope",
+                "Drakensberg",
+                "Blyde River Canyon",
+                "Cradle of Humankind",
+                "Garden Route",
+                "Victoria & Alfred Waterfront"
+            ],
+            "currency": [
+                "South African Rand"
+            ],
+            "language": [
+                "Zulu",
+                "Xhosa",
+                "Afrikaans",
+                "English",
+                "Sotho",
+                "Tswana"
+            ],
+            "animal": [
+                "Lion",
+                "Elephant",
+                "Leopard",
+                "Rhino",
+                "Buffalo",
+                "Cheetah",
+                "Giraffe",
+                "Zebra",
+                "Hippo",
+                "Penguin",
+                "Springbok"
+            ],
+            "festival": [
+                "Freedom Day",
+                "Heritage Day",
+                "Cape Town Jazz Festival",
+                "National Arts Festival"
+            ],
+            "dance": [
+                "Gumboot Dance",
+                "Pantsula",
+                "Zulu War Dance",
+                "Toyi-toyi",
+                "Indlamu"
+            ],
+            "history": [
+                "Apartheid",
+                "Mandela",
+                "Boer Wars",
+                "Zulu Kingdom"
+            ],
+            "geography": [
+                "Veld",
+                "Karoo",
+                "Kalahari Desert",
+                "Indian Ocean",
+                "Atlantic Ocean"
+            ],
+            "music": [
+                "Kwaito",
+                "Jazz",
+                "Mbaqanga",
+                "Afropop"
+            ],
+            "climate": [
+                "Temperate",
+                "Subtropical",
+                "Semiarid"
+            ],
+            "living_style": [
+                "Braai culture",
+                "Outdoor living",
+                "relaxed"
+            ],
+            "home_feature": [
+                "Braai area",
+                "Pool",
+                "Lapa"
+            ],
+            "outdoor_activity": [
+                "Rugby",
+                "Cricket",
+                "Safari",
+                "Surfing"
+            ]
+        }
+    },
+    {
+        "id": "MEX",
+        "label": "Mexico",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Tacos",
+                "Enchiladas",
+                "Guacamole",
+                "Tamales",
+                "Chiles en Nogada",
+                "Mole",
+                "Quesadilla",
+                "Pozole",
+                "Burrito",
+                "Churros",
+                "Salsa",
+                "Nachos",
+                "Fajitas",
+                "Tostadas",
+                "Elote",
+                "Menudo",
+                "Tequila",
+                "Mezcal",
+                "Horchata"
+            ],
+            "sport": [
+                "Soccer",
+                "Boxing",
+                "Lucha Libre",
+                "Baseball",
+                "Bullfighting",
+                "Charreada"
+            ],
+            "clothing": [
+                "Sombrero",
+                "Poncho",
+                "Huipil",
+                "Guayabera",
+                "Rebozo",
+                "Charro Suit",
+                "China Poblana"
+            ],
+            "architecture": [
+                "Aztec Pyramid",
+                "Colonial Cathedral",
+                "Hacienda",
+                "Mayan Ruins",
+                "Baroque"
+            ],
+            "landmark": [
+                "Chichen Itza",
+                "Teotihuacan",
+                "Zocalo",
+                "Cancun Beaches",
+                "Tulum",
+                "Palenque",
+                "Frida Kahlo Museum",
+                "Chapultepec",
+                "Cabo San Lucas",
+                "Copper Canyon"
+            ],
+            "currency": [
+                "Mexican Peso"
+            ],
+            "language": [
+                "Spanish"
+            ],
+            "animal": [
+                "Golden Eagle",
+                "Jaguar",
+                "Axolotl",
+                "Chihuahua",
+                "Monarch Butterfly",
+                "Xoloitzcuintli",
+                "Coati",
+                "Ocelot"
+            ],
+            "festival": [
+                "Day of the Dead",
+                "Cinco de Mayo",
+                "Independence Day",
+                "Las Posadas",
+                "Guelaguetza"
+            ],
+            "dance": [
+                "Jarabe Tapatio",
+                "Mariachi",
+                "Folklorico",
+                "Danza de los Voladores"
+            ],
+            "art": [
+                "Muralism",
+                "Frida Kahlo",
+                "Diego Rivera",
+                "Maya Art",
+                "Aztec Art"
+            ],
+            "history": [
+                "Aztecs",
+                "Mayans",
+                "Spanish Conquest",
+                "Mexican Revolution"
+            ],
+            "geography": [
+                "Sierra Madre",
+                "Yucatan Peninsula",
+                "Baja California",
+                "Gulf of Mexico"
+            ],
+            "climate": [
+                "Tropical",
+                "Arid",
+                "Temperate highlands"
+            ],
+            "living_style": [
+                "Fiesta culture",
+                "Family gatherings",
+                "Street life"
+            ],
+            "home_feature": [
+                "Patio",
+                "Hammock",
+                "Bright colors",
+                "Courtyard"
+            ],
+            "outdoor_activity": [
+                "Soccer",
+                "Lucha Libre",
+                "Plaza socializing"
+            ]
+        }
+    },
+    {
+        "id": "ARG",
+        "label": "Argentina",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Asado",
+                "Empanadas",
+                "Dulce de Leche",
+                "Chimichurri",
+                "Milanesa",
+                "Alfajor",
+                "Choripan",
+                "Locro",
+                "Matambre",
+                "Yerba Mate",
+                "Provoleta",
+                "Faina",
+                "Medialunas",
+                "Malbec Wine",
+                "Carbonada",
+                "Humita"
+            ],
+            "sport": [
+                "Soccer",
+                "Polo",
+                "Rugby",
+                "Basketball",
+                "Tennis",
+                "Field Hockey",
+                "Auto Racing"
+            ],
+            "clothing": [
+                "Gaucho Pants",
+                "Poncho",
+                "Beret",
+                "Espadrilles",
+                "Faja"
+            ],
+            "architecture": [
+                "Beaux-Arts",
+                "Colonial",
+                "Modern",
+                "Neoclassical",
+                "Art Nouveau"
+            ],
+            "landmark": [
+                "Iguazu Falls",
+                "Perito Moreno Glacier",
+                "Obelisco",
+                "La Boca",
+                "Casa Rosada",
+                "Teatro Colon",
+                "Bariloche",
+                "Mount Aconcagua",
+                "Valdes Peninsula",
+                "Tierra del Fuego"
+            ],
+            "currency": [
+                "Argentine Peso"
+            ],
+            "language": [
+                "Spanish"
+            ],
+            "animal": [
+                "Hornero",
+                "Jaguar",
+                "Guanaco",
+                "Puma",
+                "Condor",
+                "Mara",
+                "Capybara",
+                "Southern Right Whale",
+                "Penguin"
+            ],
+            "festival": [
+                "Carnival",
+                "Tango Festival",
+                "Cosquin Folk Festival",
+                "Vendimia Festival"
+            ],
+            "dance": [
+                "Tango",
+                "Milonga",
+                "Chacarera",
+                "Zamba",
+                "Malambo"
+            ],
+            "history": [
+                "Peronism",
+                "Falklands War",
+                "Independence",
+                "Immigration"
+            ],
+            "geography": [
+                "Pampas",
+                "Patagonia",
+                "Andes",
+                "Atlantic Coast"
+            ],
+            "music": [
+                "Tango",
+                "Folclore",
+                "Rock Nacional",
+                "Cumbia"
+            ],
+            "climate": [
+                "Subtropical",
+                "Temperate",
+                "Arid"
+            ],
+            "living_style": [
+                "Late dinners",
+                "Asado gatherings",
+                "Mate culture"
+            ],
+            "home_feature": [
+                "Parriilla (Grill)",
+                "Balcony",
+                "Terrace"
+            ],
+            "outdoor_activity": [
+                "Soccer",
+                "Tango",
+                "Polo"
+            ]
+        }
+    },
+    {
+        "id": "ESP",
+        "label": "Spain",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Paella",
+                "Tapas",
+                "Gazpacho",
+                "Jam\u00f3n Ib\u00e9rico",
+                "Tortilla Espa\u00f1ola",
+                "Churros",
+                "Patatas Bravas",
+                "Sangria",
+                "Fabada",
+                "Turron",
+                "Pisto",
+                "Gambas al Ajillo",
+                "Pulpo a la Gallega",
+                "Croquetas",
+                "Manchego Cheese",
+                "Cava",
+                "Horchata"
+            ],
+            "sport": [
+                "Soccer",
+                "Tennis",
+                "Basketball",
+                "Formula 1",
+                "Cycling",
+                "Handball",
+                "Bullfighting",
+                "Padel"
+            ],
+            "clothing": [
+                "Flamenco Dress",
+                "Mantilla",
+                "Espadrilles",
+                "Peineta",
+                "Gilet"
+            ],
+            "architecture": [
+                "Sagrada Familia",
+                "Alhambra",
+                "Moorish",
+                "Gothic",
+                "Renaissance",
+                "Modernisme",
+                "Mudejar"
+            ],
+            "landmark": [
+                "Sagrada Familia",
+                "Park Guell",
+                "Alhambra",
+                "Prado Museum",
+                "Royal Palace of Madrid",
+                "Mezquita of Cordoba",
+                "Guggenheim Bilbao",
+                "Casa Batllo",
+                "Ibiza",
+                "Camino de Santiago"
+            ],
+            "currency": [
+                "Euro"
+            ],
+            "language": [
+                "Spanish",
+                "Catalan",
+                "Basque",
+                "Galician"
+            ],
+            "animal": [
+                "Bull",
+                "Iberian Lynx",
+                "Wolf",
+                "Eagle",
+                "Bear",
+                "Gecko"
+            ],
+            "festival": [
+                "La Tomatina",
+                "Running of the Bulls",
+                "Semana Santa",
+                "Feria de Abril",
+                "Las Fallas"
+            ],
+            "dance": [
+                "Flamenco",
+                "Sardana",
+                "Jota",
+                "Fandango",
+                "Paso Doble"
+            ],
+            "art": [
+                "Picasso",
+                "Dali",
+                "Goya",
+                "Velazquez",
+                "Miro"
+            ],
+            "history": [
+                "Spanish Empire",
+                "Civil War",
+                "Reconquista",
+                "Moors"
+            ],
+            "geography": [
+                "Pyrenees",
+                "Mediterranean Coast",
+                "Meseta Central",
+                "Canary Islands",
+                "Balearic Islands"
+            ],
+            "climate": [
+                "Mediterranean",
+                "Oceanic",
+                "Semiarid"
+            ],
+            "living_style": [
+                "Siesta",
+                "Late hours",
+                "Tapas hopping"
+            ],
+            "home_feature": [
+                "Patio",
+                "Balcony",
+                "Tiles (Azulejos)",
+                "Shutters"
+            ],
+            "outdoor_activity": [
+                "Soccer",
+                "Flamenco",
+                "Beach"
+            ]
+        }
+    },
+    {
+        "id": "TUR",
+        "label": "Turkey",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Kebab",
+                "Baklava",
+                "Turkish Delight",
+                "Meze",
+                "Dolma",
+                "Simit",
+                "Lahmacun",
+                "Pide",
+                "Manti",
+                "Turkish Coffee",
+                "Tea",
+                "Borek",
+                "Kunefe",
+                "Iskender Kebab",
+                "Ayran",
+                "Raki",
+                "Lokum",
+                "Menemen"
+            ],
+            "sport": [
+                "Soccer",
+                "Basketball",
+                "Wrestling",
+                "Volleyball",
+                "Weightlifting",
+                "Archery"
+            ],
+            "clothing": [
+                "Fez",
+                "Kaftan",
+                "Shalwar",
+                "Yelek",
+                "Bindalli"
+            ],
+            "architecture": [
+                "Mosque",
+                "Ottoman Palace",
+                "Bazaar",
+                "Byzantine",
+                "Seljuk"
+            ],
+            "landmark": [
+                "Hagia Sophia",
+                "Blue Mosque",
+                "Cappadocia",
+                "Grand Bazaar",
+                "Topkapi Palace",
+                "Pamukkale",
+                "Ephesus",
+                "Galata Tower",
+                "Mount Ararat",
+                "Bosphorus"
+            ],
+            "currency": [
+                "Turkish Lira"
+            ],
+            "language": [
+                "Turkish"
+            ],
+            "animal": [
+                "Angora Cat",
+                "Kanggal Dog",
+                "Gray Wolf",
+                "Van Cat",
+                "Sea Turtle"
+            ],
+            "festival": [
+                "Ramadan",
+                "Republic Day",
+                "Children's Day",
+                "Victory Day",
+                "Tulip Festival",
+                "Camel Wrestling Festival"
+            ],
+            "dance": [
+                "Whirling Dervishes",
+                "Halay",
+                "Belly Dance",
+                "Horon",
+                "Zeybek"
+            ],
+            "history": [
+                "Ottoman Empire",
+                "Byzantine Empire",
+                "Ataturk",
+                "Silk Road",
+                "Troy"
+            ],
+            "geography": [
+                "Anatolia",
+                "Black Sea",
+                "Mediterranean",
+                "Aegean",
+                "Thrace"
+            ],
+            "art": [
+                "Carpet Weaving",
+                "Ceramics",
+                "Calligraphy",
+                "Ebruz",
+                "Miniature Painting"
+            ],
+            "climate": [
+                "Mediterranean",
+                "Temperate",
+                "Continental"
+            ],
+            "living_style": [
+                "Tea culture",
+                "Hospitality",
+                "Bazaar shopping"
+            ],
+            "home_feature": [
+                "Balcony",
+                "Salon (Guest room)",
+                "Rugs"
+            ],
+            "outdoor_activity": [
+                "Backgammon",
+                "Soccer",
+                "Fishing"
+            ]
+        }
+    },
+    {
+        "id": "THA",
+        "label": "Thailand",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Pad Thai",
+                "Tom Yum Goong",
+                "Green Curry",
+                "Som Tum",
+                "Mango Sticky Rice",
+                "Massaman Curry",
+                "Spring Rolls",
+                "Satay",
+                "Fried Rice",
+                "Thai Iced Tea",
+                "Panang Curry",
+                "Khao Soi",
+                "Tom Kha Gai",
+                "Larb",
+                "Sticky Rice",
+                "Coconut Milk"
+            ],
+            "sport": [
+                "Muay Thai",
+                "Soccer",
+                "Sepak Takraw",
+                "Badminton",
+                "Volleyball",
+                "Boxing"
+            ],
+            "clothing": [
+                "Chut Thai",
+                "Sabai",
+                "Pha Nung",
+                "Sinh",
+                "Raj Pattern"
+            ],
+            "architecture": [
+                "Wat (Temple)",
+                "Stilt House",
+                "Royal Palace",
+                "Pagoda",
+                "Sala Thai"
+            ],
+            "landmark": [
+                "Grand Palace",
+                "Wat Arun",
+                "Phuket Beaches",
+                "Ayutthaya",
+                "Wat Phra Kaew",
+                "Phi Phi Islands",
+                "Floating Market",
+                "Khao Yai National Park",
+                "Railay Beach",
+                "Sukhothai"
+            ],
+            "currency": [
+                "Thai Baht"
+            ],
+            "language": [
+                "Thai"
+            ],
+            "animal": [
+                "Elephant",
+                "Tiger",
+                "Siamese Cat",
+                "Water Buffalo",
+                "Gibbon",
+                "Cobra",
+                "Monitor Lizard"
+            ],
+            "festival": [
+                "Songkran",
+                "Loy Krathong",
+                "Yi Peng",
+                "Vegetarian Festival",
+                "Ghost Festival",
+                "Monkey Buffet Festival"
+            ],
+            "dance": [
+                "Khon",
+                "Fawn Thai",
+                "Ram Thai",
+                "Lakhon"
+            ],
+            "history": [
+                "Siam",
+                "Ayutthaya Kingdom",
+                "Sukhothai Kingdom",
+                "Monarchy"
+            ],
+            "geography": [
+                "Mekong River",
+                "Andaman Sea",
+                "Gulf of Thailand",
+                "Tropical Rainforest",
+                "Isan"
+            ],
+            "religion": [
+                "Buddhism"
+            ],
+            "climate": [
+                "Tropical",
+                "Monsoon"
+            ],
+            "living_style": [
+                "Street food culture",
+                "Sanuk (Fun)",
+                "Respect for elders"
+            ],
+            "home_feature": [
+                "Spirit house",
+                "Open-air kitchen",
+                "Raised floors"
+            ],
+            "outdoor_activity": [
+                "Muay Thai",
+                "Markets",
+                "Festivals"
+            ]
+        }
+    },
+    {
+        "id": "KOR",
+        "label": "South Korea",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Kimchi",
+                "Bibimbap",
+                "Bulgogi",
+                "Tteokbokki",
+                "Japchae",
+                "Samgyeopsal",
+                "Gimbap",
+                "Ramyeon",
+                "Haemul Pajeon",
+                "Soju",
+                "Galbi",
+                "Sundubu Jjigae",
+                "Mandu",
+                "Fried Chicken",
+                "Bingsu",
+                "Hotteok",
+                "Makgeolli",
+                "Banchan"
+            ],
+            "sport": [
+                "Taekwondo",
+                "Soccer",
+                "Baseball",
+                "Archery",
+                "Golf",
+                "E-sports",
+                "Skating",
+                "Volleyball"
+            ],
+            "clothing": [
+                "Hanbok",
+                "Gat",
+                "Jeogori",
+                "Chima"
+            ],
+            "architecture": [
+                "Hanok",
+                "Palace",
+                "Buddhist Temple",
+                "Pagoda",
+                "Pavilion",
+                "Modernist"
+            ],
+            "landmark": [
+                "Gyeongbokgung Palace",
+                "N Seoul Tower",
+                "Bukchon Hanok Village",
+                "Jeju Island",
+                "Changdeokgung",
+                "DMZ",
+                "Namdaemun Market",
+                "Busan Haeundae Beach",
+                "Seoraksan National Park",
+                "Lotte World Tower"
+            ],
+            "currency": [
+                "South Korean Won"
+            ],
+            "language": [
+                "Korean"
+            ],
+            "animal": [
+                "Siberian Tiger",
+                "Magpie",
+                "Jindo Dog",
+                "Black Bear",
+                "Crane"
+            ],
+            "festival": [
+                "Seollal",
+                "Chuseok",
+                "Lantern Festival",
+                "Boryeong Mud Festival",
+                "Cherry Blossom Festival"
+            ],
+            "dance": [
+                "K-Pop",
+                "Fan Dance",
+                "Mask Dance",
+                "Salpuri",
+                "Ganggangsullae"
+            ],
+            "history": [
+                "Joseon Dynasty",
+                "Korean War",
+                "Three Kingdoms",
+                "Hangul Invention"
+            ],
+            "geography": [
+                "Peninsula",
+                "Mountains",
+                "Yellow Sea",
+                "Sea of Japan"
+            ],
+            "technology": [
+                "Samsung",
+                "Hyundai",
+                "Electronics",
+                "Robotics",
+                "Internet"
+            ],
+            "climate": [
+                "Humid continental",
+                "Humid subtropical"
+            ],
+            "living_style": [
+                "High-tech",
+                "Cafes",
+                "Pali-pali (Hurry-hurry)"
+            ],
+            "home_feature": [
+                "Ondol (Heated floors)",
+                "Smart home tech",
+                "Apartment living"
+            ],
+            "outdoor_activity": [
+                "Hiking",
+                "Baseball",
+                "Karaoke (Noraebang)"
+            ]
+        }
+    },
+    {
+        "id": "GRC",
+        "label": "Greece",
+        "type": "COUNTRY",
+        "attributes": {
+            "food": [
+                "Moussaka",
+                "Souvlaki",
+                "Gyro",
+                "Tzatziki",
+                "Feta Cheese",
+                "Greek Salad",
+                "Spanakopita",
+                "Dolmades",
+                "Baklava",
+                "Loukoumades",
+                "Pastitsio",
+                "Kalamata Olives",
+                "Yogurt",
+                "Honey",
+                "Ouzo",
+                "Retsina",
+                "Frappe"
+            ],
+            "sport": [
+                "Soccer",
+                "Basketball",
+                "Marathon",
+                "Water Polo",
+                "Weightlifting",
+                "Athletics"
+            ],
+            "clothing": [
+                "Chiton",
+                "Toga",
+                "Fustanella",
+                "Peplos",
+                "Himation"
+            ],
+            "architecture": [
+                "Parthenon",
+                "Acropolis",
+                "Cycladic House",
+                "Doric",
+                "Ionic",
+                "Corinthian",
+                "Whitewashed Houses",
+                "Byzantine Church"
+            ],
+            "landmark": [
+                "Acropolis",
+                "Parthenon",
+                "Santorini",
+                "Mykonos",
+                "Delphi",
+                "Meteora",
+                "Olympia",
+                "Knossos",
+                "Mount Olympus",
+                "Corinth Canal"
+            ],
+            "currency": [
+                "Euro"
+            ],
+            "language": [
+                "Greek"
+            ],
+            "animal": [
+                "Dolphin",
+                "Phoenix (Mythical)",
+                "Donkey",
+                "Goat",
+                "Sea Turtle",
+                "Monk Seal"
+            ],
+            "festival": [
+                "Easter",
+                "Apokries",
+                "Hellenic Festival",
+                "Ohi Day"
+            ],
+            "dance": [
+                "Sirtaki",
+                "Kalamatianos",
+                "Hasapiko",
+                "Zeibekiko",
+                "Tsary"
+            ],
+            "history": [
+                "Ancient Olympics",
+                "Democracy",
+                "Philosophy",
+                "Alexander the Great",
+                "Sparta",
+                "Athens",
+                "Troy",
+                "Mycenaean"
+            ],
+            "geography": [
+                "Aegean Sea",
+                "Ionian Sea",
+                "Islands",
+                "Peloponnese",
+                "Pindus Mountains"
+            ],
+            "mythology": [
+                "Zeus",
+                "Athena",
+                "Poseidon",
+                "Hercules",
+                "Odyssey",
+                "Iliad"
+            ],
+            "climate": [
+                "Mediterranean"
+            ],
+            "living_style": [
+                "Island life",
+                "Coffee culture",
+                "Outdoor dining"
+            ],
+            "home_feature": [
+                "Whitewashed walls",
+                "Terrace",
+                "Olive trees"
+            ],
+            "outdoor_activity": [
+                "Island hopping",
+                "Swimming",
+                "Tavli (Backgammon)"
+            ]
+        }
+    }
+]

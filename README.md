@@ -46,7 +46,7 @@ pip install -e .
 python -m perception path/to/image.jpg
 ```
 
-**📖 Full guide:** [QUICKSTART.md](QUICKSTART.md)
+**Full guide:** [QUICKSTART.md](QUICKSTART.md)
 
 ---
 
@@ -67,12 +67,12 @@ graph LR
 | Stage | Purpose | Status |
 |-------|---------|--------|
 | **1. Context Extraction** | Extract structured visual information | Implemented |
-| **2. Cultural Reasoning** | Decide what to change using cultural KB | In Progress |
-| **3. Edit-Plan Generation** | Create auditable edit instructions | Planned |
-| **4. Visual Realization** | Execute edits with layout preservation | Planned |
+| **2. Cultural Reasoning** | Decide what to change using cultural KB | Implemented |
+| **3. Edit-Plan Generation** | Create auditable edit instructions | Implemented |
+| **4. Visual Realization** | Execute edits with layout preservation | Implemented |
 | **5. Verification** | Validate outputs and gather feedback | Planned |
 
-**📚 Technical details:** [docs/AI.md](docs/AI.md)
+**Technical details:** [docs/AI.md](docs/AI.md)
 
 ---
 
@@ -90,8 +90,11 @@ image-transcreation-pipeline/
 │       ├── understanding/       # Captioning and attributes
 │       ├── ocr/                 # Text extraction
 │       └── builders/            # JSON output builders
+│   ├── reasoning/               # Stage 2: Cultural Reasoning
+│   └── realization/             # Stage 3: Visual Realization
 ├── data/
 │   ├── input/                   # Input images
+│   ├── knowledge_base/          # Cultural knowledge graph
 │   └── output/
 │       └── debug/               # Debug visualizations (bboxes)
 ├── models/                      # Model weights (auto-downloaded)
@@ -174,7 +177,7 @@ ocr = OCREngine(languages=['en'])
 text = ocr.extract_text("image.jpg")
 ```
 
-**📖 Full API reference:** [src/perception/README.md](src/perception/README.md)
+**Full API reference:** [src/perception/README.md](src/perception/README.md)
 
 ---
 
@@ -238,7 +241,7 @@ BATCH_SIZE=1
 OCR_GPU=false
 ```
 
-**📖 All options:** [src/perception/config/settings.py](src/perception/config/settings.py)
+**All options:** [src/perception/config/settings.py](src/perception/config/settings.py)
 
 ---
 
@@ -280,7 +283,7 @@ docker run -d --name transcreation \
 - **GCP**: Cloud Run deployment  
 - **Azure**: ACI deployment
 
-**📖 Full deployment guide:** [QUICKSTART.md#deployment](QUICKSTART.md)
+**Full deployment guide:** [QUICKSTART.md#deployment](QUICKSTART.md)
 
 ---
 
@@ -288,8 +291,9 @@ docker run -d --name transcreation \
 
 ### Q1 2026
 - [COMPLETE] Stage 1: Perception Pipeline
-- [IN PROGRESS] Stage 2: Cultural Reasoning Module
-- [PLANNED] Knowledge Base v1.0 (10 cultures)
+- [COMPLETE] Stage 2: Cultural Reasoning Module
+- [COMPLETE] Stage 3: Visual Realization Module
+- [IN PROGRESS] Knowledge Base v1.0 (10 cultures)
 
 ### Q2-Q4 2026
 - [PLANNED] Stages 3-5 implementation
@@ -297,26 +301,21 @@ docker run -d --name transcreation \
 - [PLANNED] Knowledge Base v2.0 (50+ cultures)
 - [PLANNED] Web UI and Mobile SDK
 
-**📖 Detailed roadmap:** [docs/AI.md#future-directions](docs/AI.md#future-directions)
+**Detailed roadmap:** [docs/AI.md#future-directions](docs/AI.md#future-directions)
 
 ---
 
 ## Contributing
 
-We welcome contributions! Please:
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to set up your development environment, coding standards, and pull request process.
+
+### Quick Steps
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-### Guidelines
-
-- Follow PEP 8 style
-- Add tests for new features
-- Update documentation
-- Ensure all tests pass
 
 ---
 
@@ -339,7 +338,7 @@ We welcome contributions! Please:
 2. **Radford et al.** (2021). *CLIP: Learning Transferable Visual Models.* ICML
 3. **Li et al.** (2023). *BLIP-2: Bootstrapping Language-Image Pre-training.* NeurIPS
 
-**📖 Full references:** [docs/AI.md#references](docs/AI.md#references)
+**Full references:** [docs/AI.md#references](docs/AI.md#references)
 
 ---
 

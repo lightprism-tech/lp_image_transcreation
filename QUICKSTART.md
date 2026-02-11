@@ -74,6 +74,27 @@ python -m perception path/to/image.jpg
 python -m perception path/to/image.jpg --output custom_output.json
 ```
 
+### Step 4: Run Cultural Reasoning (Stage 2)
+
+```bash
+# Generate a transcreation plan
+python src/reasoning/main.py \
+  --input data/output/json/image_analysis.json \
+  --target "Japan" \
+  --kg data/knowledge_base/countries.json \
+  --output outputs/plan.json
+```
+
+### Step 5: Run Visual Realization (Stage 3)
+
+```bash
+# Execute the transcreation plan
+python -m src.realization.main \
+  --img path/to/image.jpg \
+  --plan outputs/plan.json \
+  --output outputs/final_result.png
+```
+
 ## First Run
 
 **NOTE: First run takes longer** (~2-5 minutes) due to model downloads:
@@ -328,4 +349,4 @@ az container create \
 
 ---
 
-**Ready to transcreate?** Start with the perception pipeline and stay tuned for cultural reasoning and visual realization stages!
+**Ready to transcreate?** Run the full pipeline from perception to realization!

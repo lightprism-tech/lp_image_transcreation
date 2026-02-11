@@ -1,0 +1,2839 @@
+{"id": "C_IND", "label": "India", "type": "COUNTRY"}
+{"id": "F_CHAPATI", "label": "Chapati", "type": "FOOD"}
+{"id": "F_BIRYANI", "label": "Biryani", "type": "FOOD"}
+{"id": "F_SAMOSA", "label": "Samosa", "type": "FOOD"}
+{"id": "F_DOSA", "label": "Dosa", "type": "FOOD"}
+{"id": "F_IDLI", "label": "Idli", "type": "FOOD"}
+{"id": "F_BUTTER_CHICKEN", "label": "Butter Chicken", "type": "FOOD"}
+{"id": "F_PANI_PURI", "label": "Pani Puri", "type": "FOOD"}
+{"id": "F_CHOLE_BHATURE", "label": "Chole Bhature", "type": "FOOD"}
+{"id": "F_VADA_PAV", "label": "Vada Pav", "type": "FOOD"}
+{"id": "F_ROGAL_JOSH", "label": "Rogal Josh", "type": "FOOD"}
+{"id": "F_PULAO", "label": "Pulao", "type": "FOOD"}
+{"id": "F_KHEER", "label": "Kheer", "type": "FOOD"}
+{"id": "F_GULAB_JAMUN", "label": "Gulab Jamun", "type": "FOOD"}
+{"id": "F_JALEBI", "label": "Jalebi", "type": "FOOD"}
+{"id": "F_RASAM", "label": "Rasam", "type": "FOOD"}
+{"id": "F_DAL_MAKHANI", "label": "Dal Makhani", "type": "FOOD"}
+{"id": "F_NAAN", "label": "Naan", "type": "FOOD"}
+{"id": "F_TANDOORI_CHICKEN", "label": "Tandoori Chicken", "type": "FOOD"}
+{"id": "F_FISH_CURRY", "label": "Fish Curry", "type": "FOOD"}
+{"id": "F_LASSI", "label": "Lassi", "type": "FOOD"}
+{"id": "S_CRICKET", "label": "Cricket", "type": "SPORT"}
+{"id": "S_HOCKEY", "label": "Hockey", "type": "SPORT"}
+{"id": "S_KABADDI", "label": "Kabaddi", "type": "SPORT"}
+{"id": "S_BADMINTON", "label": "Badminton", "type": "SPORT"}
+{"id": "S_WRESTLING", "label": "Wrestling", "type": "SPORT"}
+{"id": "S_SHOOTING", "label": "Shooting", "type": "SPORT"}
+{"id": "S_ARCHERY", "label": "Archery", "type": "SPORT"}
+{"id": "S_FOOTBALL", "label": "Football", "type": "SPORT"}
+{"id": "C_SAREE", "label": "Saree", "type": "CLOTHING"}
+{"id": "C_KURTA", "label": "Kurta", "type": "CLOTHING"}
+{"id": "C_DHOTI", "label": "Dhoti", "type": "CLOTHING"}
+{"id": "C_SHERWANI", "label": "Sherwani", "type": "CLOTHING"}
+{"id": "C_LEHENGA", "label": "Lehenga", "type": "CLOTHING"}
+{"id": "C_SALWAR_KAMEEZ", "label": "Salwar Kameez", "type": "CLOTHING"}
+{"id": "C_TURBAN", "label": "Turban", "type": "CLOTHING"}
+{"id": "C_DUPATTA", "label": "Dupatta", "type": "CLOTHING"}
+{"id": "C_LUNGI", "label": "Lungi", "type": "CLOTHING"}
+{"id": "C_NEHRU_JACKET", "label": "Nehru Jacket", "type": "CLOTHING"}
+{"id": "A_TEMPLE", "label": "Temple", "type": "ARCHITECTURE"}
+{"id": "A_PALACE", "label": "Palace", "type": "ARCHITECTURE"}
+{"id": "A_FORT", "label": "Fort", "type": "ARCHITECTURE"}
+{"id": "A_STUPA", "label": "Stupa", "type": "ARCHITECTURE"}
+{"id": "A_HAVELI", "label": "Haveli", "type": "ARCHITECTURE"}
+{"id": "A_STEPWELL", "label": "Stepwell", "type": "ARCHITECTURE"}
+{"id": "A_GHAT", "label": "Ghat", "type": "ARCHITECTURE"}
+{"id": "A_DRAVIDIAN_STYLE", "label": "Dravidian Style", "type": "ARCHITECTURE"}
+{"id": "A_MUGHAL_ARCHITECTURE", "label": "Mughal Architecture", "type": "ARCHITECTURE"}
+{"id": "L_TAJ_MAHAL", "label": "Taj Mahal", "type": "LANDMARK"}
+{"id": "L_QUTUB_MINAR", "label": "Qutub Minar", "type": "LANDMARK"}
+{"id": "L_RED_FORT", "label": "Red Fort", "type": "LANDMARK"}
+{"id": "L_INDIA_GATE", "label": "India Gate", "type": "LANDMARK"}
+{"id": "L_HAWA_MAHAL", "label": "Hawa Mahal", "type": "LANDMARK"}
+{"id": "L_GOLDEN_TEMPLE", "label": "Golden Temple", "type": "LANDMARK"}
+{"id": "L_GATEWAY_OF_INDIA", "label": "Gateway of India", "type": "LANDMARK"}
+{"id": "L_AJANTA_CAVES", "label": "Ajanta Caves", "type": "LANDMARK"}
+{"id": "L_ELLORA_CAVES", "label": "Ellora Caves", "type": "LANDMARK"}
+{"id": "L_KONARK_SUN_TEMPLE", "label": "Konark Sun Temple", "type": "LANDMARK"}
+{"id": "Y_INDIAN_RUPEE", "label": "Indian Rupee", "type": "CURRENCY"}
+{"id": "G_HINDI", "label": "Hindi", "type": "LANGUAGE"}
+{"id": "G_ENGLISH", "label": "English", "type": "LANGUAGE"}
+{"id": "G_TAMIL", "label": "Tamil", "type": "LANGUAGE"}
+{"id": "G_BENGALI", "label": "Bengali", "type": "LANGUAGE"}
+{"id": "G_TELUGU", "label": "Telugu", "type": "LANGUAGE"}
+{"id": "G_MARATHI", "label": "Marathi", "type": "LANGUAGE"}
+{"id": "G_GUJARATI", "label": "Gujarati", "type": "LANGUAGE"}
+{"id": "G_KANNADA", "label": "Kannada", "type": "LANGUAGE"}
+{"id": "G_MALAYALAM", "label": "Malayalam", "type": "LANGUAGE"}
+{"id": "G_PUNJABI", "label": "Punjabi", "type": "LANGUAGE"}
+{"id": "N_TIGER", "label": "Tiger", "type": "ANIMAL"}
+{"id": "N_ELEPHANT", "label": "Elephant", "type": "ANIMAL"}
+{"id": "N_PEACOCK", "label": "Peacock", "type": "ANIMAL"}
+{"id": "N_COBRA", "label": "Cobra", "type": "ANIMAL"}
+{"id": "N_RHINO", "label": "Rhino", "type": "ANIMAL"}
+{"id": "N_LION", "label": "Lion", "type": "ANIMAL"}
+{"id": "N_LEOPARD", "label": "Leopard", "type": "ANIMAL"}
+{"id": "C_USA", "label": "United States", "type": "COUNTRY"}
+{"id": "F_HAMBURGER", "label": "Hamburger", "type": "FOOD"}
+{"id": "F_HOT_DOG", "label": "Hot Dog", "type": "FOOD"}
+{"id": "F_APPLE_PIE", "label": "Apple Pie", "type": "FOOD"}
+{"id": "F_BBQ_RIBS", "label": "BBQ Ribs", "type": "FOOD"}
+{"id": "F_MAC_AND_CHEESE", "label": "Mac and Cheese", "type": "FOOD"}
+{"id": "F_FRIED_CHICKEN", "label": "Fried Chicken", "type": "FOOD"}
+{"id": "F_PIZZA", "label": "Pizza", "type": "FOOD"}
+{"id": "F_BAGEL", "label": "Bagel", "type": "FOOD"}
+{"id": "F_DONUT", "label": "Donut", "type": "FOOD"}
+{"id": "F_PANCAKES", "label": "Pancakes", "type": "FOOD"}
+{"id": "F_CLAM_CHOWDER", "label": "Clam Chowder", "type": "FOOD"}
+{"id": "F_BUFFALO_WINGS", "label": "Buffalo Wings", "type": "FOOD"}
+{"id": "F_REUBEN_SANDWICH", "label": "Reuben Sandwich", "type": "FOOD"}
+{"id": "F_PHILLY_CHEESESTEAK", "label": "Philly Cheesesteak", "type": "FOOD"}
+{"id": "F_JAMBALAYA", "label": "Jambalaya", "type": "FOOD"}
+{"id": "F_GUMBO", "label": "Gumbo", "type": "FOOD"}
+{"id": "F_CORNBREAD", "label": "Cornbread", "type": "FOOD"}
+{"id": "F_BISCUITS_AND_GRAVY", "label": "Biscuits and Gravy", "type": "FOOD"}
+{"id": "F_SMORES", "label": "Smores", "type": "FOOD"}
+{"id": "F_BROWNIES", "label": "Brownies", "type": "FOOD"}
+{"id": "S_AMERICAN_FOOTBALL", "label": "American Football", "type": "SPORT"}
+{"id": "S_BASKETBALL", "label": "Basketball", "type": "SPORT"}
+{"id": "S_BASEBALL", "label": "Baseball", "type": "SPORT"}
+{"id": "S_ICE_HOCKEY", "label": "Ice Hockey", "type": "SPORT"}
+{"id": "S_SOCCER", "label": "Soccer", "type": "SPORT"}
+{"id": "S_GOLF", "label": "Golf", "type": "SPORT"}
+{"id": "S_TENNIS", "label": "Tennis", "type": "SPORT"}
+{"id": "S_NASCAR", "label": "NASCAR", "type": "SPORT"}
+{"id": "S_BOXING", "label": "Boxing", "type": "SPORT"}
+{"id": "S_VOLLEYBALL", "label": "Volleyball", "type": "SPORT"}
+{"id": "C_JEANS", "label": "Jeans", "type": "CLOTHING"}
+{"id": "C_TSHIRT", "label": "T-shirt", "type": "CLOTHING"}
+{"id": "C_COWBOY_HAT", "label": "Cowboy Hat", "type": "CLOTHING"}
+{"id": "C_SNEAKERS", "label": "Sneakers", "type": "CLOTHING"}
+{"id": "C_BASEBALL_CAP", "label": "Baseball Cap", "type": "CLOTHING"}
+{"id": "C_HOODIE", "label": "Hoodie", "type": "CLOTHING"}
+{"id": "C_FLANNEL_SHIRT", "label": "Flannel Shirt", "type": "CLOTHING"}
+{"id": "C_LEATHER_JACKET", "label": "Leather Jacket", "type": "CLOTHING"}
+{"id": "C_SUIT", "label": "Suit", "type": "CLOTHING"}
+{"id": "C_BOOTS", "label": "Boots", "type": "CLOTHING"}
+{"id": "A_SKYSCRAPER", "label": "Skyscraper", "type": "ARCHITECTURE"}
+{"id": "A_COLONIAL_HOUSE", "label": "Colonial House", "type": "ARCHITECTURE"}
+{"id": "A_RANCH_STYLE", "label": "Ranch Style", "type": "ARCHITECTURE"}
+{"id": "A_SUBURBAN_HOME", "label": "Suburban Home", "type": "ARCHITECTURE"}
+{"id": "A_VICTORIAN_HOUSE", "label": "Victorian House", "type": "ARCHITECTURE"}
+{"id": "A_ART_DECO", "label": "Art Deco", "type": "ARCHITECTURE"}
+{"id": "A_PRAIRIE_STYLE", "label": "Prairie Style", "type": "ARCHITECTURE"}
+{"id": "A_LOG_CABIN", "label": "Log Cabin", "type": "ARCHITECTURE"}
+{"id": "L_STATUE_OF_LIBERTY", "label": "Statue of Liberty", "type": "LANDMARK"}
+{"id": "L_GRAND_CANYON", "label": "Grand Canyon", "type": "LANDMARK"}
+{"id": "L_WHITE_HOUSE", "label": "White House", "type": "LANDMARK"}
+{"id": "L_GOLDEN_GATE_BRIDGE", "label": "Golden Gate Bridge", "type": "LANDMARK"}
+{"id": "L_MOUNT_RUSHMORE", "label": "Mount Rushmore", "type": "LANDMARK"}
+{"id": "L_EMPIRE_STATE_BUILDING", "label": "Empire State Building", "type": "LANDMARK"}
+{"id": "L_YELLOWSTONE", "label": "Yellowstone", "type": "LANDMARK"}
+{"id": "L_YOSEMITE", "label": "Yosemite", "type": "LANDMARK"}
+{"id": "L_HOLLYWOOD_SIGN", "label": "Hollywood Sign", "type": "LANDMARK"}
+{"id": "L_TIMES_SQUARE", "label": "Times Square", "type": "LANDMARK"}
+{"id": "Y_US_DOLLAR", "label": "US Dollar", "type": "CURRENCY"}
+{"id": "G_SPANISH", "label": "Spanish", "type": "LANGUAGE"}
+{"id": "N_BALD_EAGLE", "label": "Bald Eagle", "type": "ANIMAL"}
+{"id": "N_BISON", "label": "Bison", "type": "ANIMAL"}
+{"id": "N_GRIZZLY_BEAR", "label": "Grizzly Bear", "type": "ANIMAL"}
+{"id": "N_MUSTANG", "label": "Mustang", "type": "ANIMAL"}
+{"id": "N_ALLIGATOR", "label": "Alligator", "type": "ANIMAL"}
+{"id": "N_MOOSE", "label": "Moose", "type": "ANIMAL"}
+{"id": "N_MOUNTAIN_LION", "label": "Mountain Lion", "type": "ANIMAL"}
+{"id": "N_RACCOON", "label": "Raccoon", "type": "ANIMAL"}
+{"id": "E_THANKSGIVING", "label": "Thanksgiving", "type": "FESTIVAL"}
+{"id": "E_INDEPENDENCE_DAY", "label": "Independence Day", "type": "FESTIVAL"}
+{"id": "E_HALLOWEEN", "label": "Halloween", "type": "FESTIVAL"}
+{"id": "E_CHRISTMAS", "label": "Christmas", "type": "FESTIVAL"}
+{"id": "E_SUPER_BOWL_SUNDAY", "label": "Super Bowl Sunday", "type": "FESTIVAL"}
+{"id": "E_MEMORIAL_DAY", "label": "Memorial Day", "type": "FESTIVAL"}
+{"id": "C_JPN", "label": "Japan", "type": "COUNTRY"}
+{"id": "F_SUSHI", "label": "Sushi", "type": "FOOD"}
+{"id": "F_RAMEN", "label": "Ramen", "type": "FOOD"}
+{"id": "F_TEMPURA", "label": "Tempura", "type": "FOOD"}
+{"id": "F_UDON", "label": "Udon", "type": "FOOD"}
+{"id": "F_SASHIMI", "label": "Sashimi", "type": "FOOD"}
+{"id": "F_MISO_SOUP", "label": "Miso Soup", "type": "FOOD"}
+{"id": "F_ONIGIRI", "label": "Onigiri", "type": "FOOD"}
+{"id": "F_TAKOYAKI", "label": "Takoyaki", "type": "FOOD"}
+{"id": "F_YAKITORI", "label": "Yakitori", "type": "FOOD"}
+{"id": "F_MATCHA", "label": "Matcha", "type": "FOOD"}
+{"id": "F_SOBA", "label": "Soba", "type": "FOOD"}
+{"id": "F_DONBURI", "label": "Donburi", "type": "FOOD"}
+{"id": "F_OKONOMIYAKI", "label": "Okonomiyaki", "type": "FOOD"}
+{"id": "F_GYOZA", "label": "Gyoza", "type": "FOOD"}
+{"id": "F_MOCHI", "label": "Mochi", "type": "FOOD"}
+{"id": "F_WAGYU_BEEF", "label": "Wagyu Beef", "type": "FOOD"}
+{"id": "F_FUGU", "label": "Fugu", "type": "FOOD"}
+{"id": "F_NATTO", "label": "Natto", "type": "FOOD"}
+{"id": "F_ODEN", "label": "Oden", "type": "FOOD"}
+{"id": "F_KATSU_CURRY", "label": "Katsu Curry", "type": "FOOD"}
+{"id": "S_SUMO", "label": "Sumo", "type": "SPORT"}
+{"id": "S_JUDO", "label": "Judo", "type": "SPORT"}
+{"id": "S_KARATE", "label": "Karate", "type": "SPORT"}
+{"id": "S_KENDO", "label": "Kendo", "type": "SPORT"}
+{"id": "S_AIKIDO", "label": "Aikido", "type": "SPORT"}
+{"id": "S_TABLE_TENNIS", "label": "Table Tennis", "type": "SPORT"}
+{"id": "C_KIMONO", "label": "Kimono", "type": "CLOTHING"}
+{"id": "C_YUKATA", "label": "Yukata", "type": "CLOTHING"}
+{"id": "C_HAKAMA", "label": "Hakama", "type": "CLOTHING"}
+{"id": "C_TABI", "label": "Tabi", "type": "CLOTHING"}
+{"id": "C_GETA", "label": "Geta", "type": "CLOTHING"}
+{"id": "C_ZORI", "label": "Zori", "type": "CLOTHING"}
+{"id": "C_HAORI", "label": "Haori", "type": "CLOTHING"}
+{"id": "C_OBI", "label": "Obi", "type": "CLOTHING"}
+{"id": "C_HAPPI", "label": "Happi", "type": "CLOTHING"}
+{"id": "C_SCHOOL_UNIFORM", "label": "School Uniform", "type": "CLOTHING"}
+{"id": "A_PAGODA", "label": "Pagoda", "type": "ARCHITECTURE"}
+{"id": "A_SHRINE", "label": "Shrine", "type": "ARCHITECTURE"}
+{"id": "A_TORII_GATE", "label": "Torii Gate", "type": "ARCHITECTURE"}
+{"id": "A_TEA_HOUSE", "label": "Tea House", "type": "ARCHITECTURE"}
+{"id": "A_CASTLE", "label": "Castle", "type": "ARCHITECTURE"}
+{"id": "A_MACHIYA", "label": "Machiya", "type": "ARCHITECTURE"}
+{"id": "A_MINKA", "label": "Minka", "type": "ARCHITECTURE"}
+{"id": "A_MODERNIST", "label": "Modernist", "type": "ARCHITECTURE"}
+{"id": "L_MOUNT_FUJI", "label": "Mount Fuji", "type": "LANDMARK"}
+{"id": "L_TOKYO_TOWER", "label": "Tokyo Tower", "type": "LANDMARK"}
+{"id": "L_KINKAKUJI", "label": "Kinkaku-ji", "type": "LANDMARK"}
+{"id": "L_HIMEJI_CASTLE", "label": "Himeji Castle", "type": "LANDMARK"}
+{"id": "L_FUSHIMI_INARI_NATASHA", "label": "Fushimi Inari Natasha", "type": "LANDMARK"}
+{"id": "L_SHIBUYA_CROSSING", "label": "Shibuya Crossing", "type": "LANDMARK"}
+{"id": "L_HIROSHIMA_PEACE_MEMORIAL", "label": "Hiroshima Peace Memorial", "type": "LANDMARK"}
+{"id": "L_TODAIJI", "label": "Todai-ji", "type": "LANDMARK"}
+{"id": "L_ITSUKUSHIMA_SHRINE", "label": "Itsukushima Shrine", "type": "LANDMARK"}
+{"id": "L_ARASHIYAMA_BAMBOO_GROVE", "label": "Arashiyama Bamboo Grove", "type": "LANDMARK"}
+{"id": "Y_YEN", "label": "Yen", "type": "CURRENCY"}
+{"id": "G_JAPANESE", "label": "Japanese", "type": "LANGUAGE"}
+{"id": "N_KOI_FISH", "label": "Koi Fish", "type": "ANIMAL"}
+{"id": "N_CRANE", "label": "Crane", "type": "ANIMAL"}
+{"id": "N_MACAQUE", "label": "Macaque", "type": "ANIMAL"}
+{"id": "N_TANUKI", "label": "Tanuki", "type": "ANIMAL"}
+{"id": "N_SHIBA_INU", "label": "Shiba Inu", "type": "ANIMAL"}
+{"id": "N_AKITA_INU", "label": "Akita Inu", "type": "ANIMAL"}
+{"id": "N_DEER_NARA", "label": "Deer (Nara)", "type": "ANIMAL"}
+{"id": "N_GIANT_SALAMANDER", "label": "Giant Salamander", "type": "ANIMAL"}
+{"id": "E_CHERRY_BLOSSOM_FESTIVAL", "label": "Cherry Blossom Festival", "type": "FESTIVAL"}
+{"id": "E_GION_MATSURI", "label": "Gion Matsuri", "type": "FESTIVAL"}
+{"id": "E_OBON", "label": "Obon", "type": "FESTIVAL"}
+{"id": "E_TANABATA", "label": "Tanabata", "type": "FESTIVAL"}
+{"id": "E_NEW_YEAR", "label": "New Year", "type": "FESTIVAL"}
+{"id": "E_SETSUBUN", "label": "Setsubun", "type": "FESTIVAL"}
+{"id": "E_HINA_MATSURI", "label": "Hina Matsuri", "type": "FESTIVAL"}
+{"id": "E_CHILDRENS_DAY", "label": "Children's Day", "type": "FESTIVAL"}
+{"id": "E_SAPPORO_SNOW_FESTIVAL", "label": "Sapporo Snow Festival", "type": "FESTIVAL"}
+{"id": "C_FRA", "label": "France", "type": "COUNTRY"}
+{"id": "F_BAGUETTE", "label": "Baguette", "type": "FOOD"}
+{"id": "F_CROISSANT", "label": "Croissant", "type": "FOOD"}
+{"id": "F_CHEESE", "label": "Cheese", "type": "FOOD"}
+{"id": "F_WINE", "label": "Wine", "type": "FOOD"}
+{"id": "F_ESCARGOT", "label": "Escargot", "type": "FOOD"}
+{"id": "F_RATATOUILLE", "label": "Ratatouille", "type": "FOOD"}
+{"id": "F_CREPE", "label": "Crepe", "type": "FOOD"}
+{"id": "F_MACARON", "label": "Macaron", "type": "FOOD"}
+{"id": "F_FOIE_GRAS", "label": "Foie Gras", "type": "FOOD"}
+{"id": "F_QUICHE", "label": "Quiche", "type": "FOOD"}
+{"id": "F_COQ_AU_VIN", "label": "Coq au Vin", "type": "FOOD"}
+{"id": "F_BOUILLABAISSE", "label": "Bouillabaisse", "type": "FOOD"}
+{"id": "F_BEEF_BOURGUIGNON", "label": "Beef Bourguignon", "type": "FOOD"}
+{"id": "F_CASSOULET", "label": "Cassoulet", "type": "FOOD"}
+{"id": "F_SOUFFLE", "label": "Souffle", "type": "FOOD"}
+{"id": "F_PROFITEROLE", "label": "Profiterole", "type": "FOOD"}
+{"id": "F_ECLAIR", "label": "Eclair", "type": "FOOD"}
+{"id": "F_MADELEINE", "label": "Madeleine", "type": "FOOD"}
+{"id": "F_BRIOCHE", "label": "Brioche", "type": "FOOD"}
+{"id": "F_TARTE_TATIN", "label": "Tarte Tatin", "type": "FOOD"}
+{"id": "S_RUGBY", "label": "Rugby", "type": "SPORT"}
+{"id": "S_CYCLING", "label": "Cycling", "type": "SPORT"}
+{"id": "S_HANDBALL", "label": "Handball", "type": "SPORT"}
+{"id": "S_FENCING", "label": "Fencing", "type": "SPORT"}
+{"id": "C_BERET", "label": "Beret", "type": "CLOTHING"}
+{"id": "C_SCARF", "label": "Scarf", "type": "CLOTHING"}
+{"id": "C_HAUTE_COUTURE", "label": "Haute Couture", "type": "CLOTHING"}
+{"id": "C_STRIPED_SHIRT", "label": "Striped Shirt", "type": "CLOTHING"}
+{"id": "C_TRENCH_COAT", "label": "Trench Coat", "type": "CLOTHING"}
+{"id": "C_LITTLE_BLACK_DRESS", "label": "Little Black Dress", "type": "CLOTHING"}
+{"id": "C_SILK_SCARF", "label": "Silk Scarf", "type": "CLOTHING"}
+{"id": "C_ESPADRILLES", "label": "Espadrilles", "type": "CLOTHING"}
+{"id": "A_GOTHIC_CATHEDRAL", "label": "Gothic Cathedral", "type": "ARCHITECTURE"}
+{"id": "A_CHATEAU", "label": "Chateau", "type": "ARCHITECTURE"}
+{"id": "A_HAUSSMANN_BUILDING", "label": "Haussmann Building", "type": "ARCHITECTURE"}
+{"id": "A_ROMANESQUE", "label": "Romanesque", "type": "ARCHITECTURE"}
+{"id": "A_BAROQUE", "label": "Baroque", "type": "ARCHITECTURE"}
+{"id": "A_ART_NOUVEAU", "label": "Art Nouveau", "type": "ARCHITECTURE"}
+{"id": "L_EIFFEL_TOWER", "label": "Eiffel Tower", "type": "LANDMARK"}
+{"id": "L_LOUVRE_MUSEUM", "label": "Louvre Museum", "type": "LANDMARK"}
+{"id": "L_NOTRE_DAME", "label": "Notre Dame", "type": "LANDMARK"}
+{"id": "L_ARC_DE_TRIOMPHE", "label": "Arc de Triomphe", "type": "LANDMARK"}
+{"id": "L_VERSAILLES_PALACE", "label": "Versailles Palace", "type": "LANDMARK"}
+{"id": "L_MONT_SAINTMICHEL", "label": "Mont Saint-Michel", "type": "LANDMARK"}
+{"id": "L_SACRECOEUR", "label": "Sacre-Coeur", "type": "LANDMARK"}
+{"id": "L_CHAMPSELYSEES", "label": "Champs-Elysees", "type": "LANDMARK"}
+{"id": "L_RIVIERA", "label": "Riviera", "type": "LANDMARK"}
+{"id": "L_PROVENCE", "label": "Provence", "type": "LANDMARK"}
+{"id": "Y_EURO", "label": "Euro", "type": "CURRENCY"}
+{"id": "G_FRENCH", "label": "French", "type": "LANGUAGE"}
+{"id": "N_ROOSTER", "label": "Rooster", "type": "ANIMAL"}
+{"id": "N_ALPINE_IBEX", "label": "Alpine Ibex", "type": "ANIMAL"}
+{"id": "N_MARMOT", "label": "Marmot", "type": "ANIMAL"}
+{"id": "N_CHAMOIS", "label": "Chamois", "type": "ANIMAL"}
+{"id": "E_BASTILLE_DAY", "label": "Bastille Day", "type": "FESTIVAL"}
+{"id": "E_CANNES_FILM_FESTIVAL", "label": "Cannes Film Festival", "type": "FESTIVAL"}
+{"id": "E_NICE_CARNIVAL", "label": "Nice Carnival", "type": "FESTIVAL"}
+{"id": "E_FETE_DE_LA_MUSIQUE", "label": "Fete de la Musique", "type": "FESTIVAL"}
+{"id": "E_TOUR_DE_FRANCE", "label": "Tour de France", "type": "FESTIVAL"}
+{"id": "D_BALLET", "label": "Ballet", "type": "DANCE"}
+{"id": "D_CANCAN", "label": "Cancan", "type": "DANCE"}
+{"id": "D_MINUET", "label": "Minuet", "type": "DANCE"}
+{"id": "D_GAVOTTE", "label": "Gavotte", "type": "DANCE"}
+{"id": "T_IMPRESSIONISM", "label": "Impressionism", "type": "ART"}
+{"id": "T_ROMANTICISM", "label": "Romanticism", "type": "ART"}
+{"id": "T_CUBISM", "label": "Cubism", "type": "ART"}
+{"id": "T_SURREALISM", "label": "Surrealism", "type": "ART"}
+{"id": "T_ART_DECO", "label": "Art Deco", "type": "ART"}
+{"id": "H_FRENCH_REVOLUTION", "label": "French Revolution", "type": "HISTORY"}
+{"id": "H_NAPOLEON", "label": "Napoleon", "type": "HISTORY"}
+{"id": "H_WORLD_WARS", "label": "World Wars", "type": "HISTORY"}
+{"id": "C_ITA", "label": "Italy", "type": "COUNTRY"}
+{"id": "F_PASTA", "label": "Pasta", "type": "FOOD"}
+{"id": "F_GELATO", "label": "Gelato", "type": "FOOD"}
+{"id": "F_RISOTTO", "label": "Risotto", "type": "FOOD"}
+{"id": "F_LASAGNA", "label": "Lasagna", "type": "FOOD"}
+{"id": "F_TIRAMISU", "label": "Tiramisu", "type": "FOOD"}
+{"id": "F_ESPRESSO", "label": "Espresso", "type": "FOOD"}
+{"id": "F_CANNOLI", "label": "Cannoli", "type": "FOOD"}
+{"id": "F_FOCACCIA", "label": "Focaccia", "type": "FOOD"}
+{"id": "F_PESTO", "label": "Pesto", "type": "FOOD"}
+{"id": "F_CARBONARA", "label": "Carbonara", "type": "FOOD"}
+{"id": "F_RAVIOLI", "label": "Ravioli", "type": "FOOD"}
+{"id": "F_GNOCCHI", "label": "Gnocchi", "type": "FOOD"}
+{"id": "F_BRUSCHETTA", "label": "Bruschetta", "type": "FOOD"}
+{"id": "F_CAPRESE_SALAD", "label": "Caprese Salad", "type": "FOOD"}
+{"id": "F_PROSCIUTTO", "label": "Prosciutto", "type": "FOOD"}
+{"id": "F_PARMESAN", "label": "Parmesan", "type": "FOOD"}
+{"id": "F_MOZZARELLA", "label": "Mozzarella", "type": "FOOD"}
+{"id": "F_BISCOTTI", "label": "Biscotti", "type": "FOOD"}
+{"id": "F_PANETTONE", "label": "Panettone", "type": "FOOD"}
+{"id": "S_FORMULA_1", "label": "Formula 1", "type": "SPORT"}
+{"id": "S_SKIING", "label": "Skiing", "type": "SPORT"}
+{"id": "C_DESIGNER_SUIT", "label": "Designer Suit", "type": "CLOTHING"}
+{"id": "C_SUNGLASSES", "label": "Sunglasses", "type": "CLOTHING"}
+{"id": "C_LOAFERS", "label": "Loafers", "type": "CLOTHING"}
+{"id": "C_FEDORA", "label": "Fedora", "type": "CLOTHING"}
+{"id": "C_SILK_TIE", "label": "Silk Tie", "type": "CLOTHING"}
+{"id": "C_STILETTOS", "label": "Stilettos", "type": "CLOTHING"}
+{"id": "A_ROMAN_FORUM", "label": "Roman Forum", "type": "ARCHITECTURE"}
+{"id": "A_RENAISSANCE_PALACE", "label": "Renaissance Palace", "type": "ARCHITECTURE"}
+{"id": "A_VILLA", "label": "Villa", "type": "ARCHITECTURE"}
+{"id": "A_CHURCH", "label": "Church", "type": "ARCHITECTURE"}
+{"id": "A_AQUEDUCT", "label": "Aqueduct", "type": "ARCHITECTURE"}
+{"id": "A_COLOSSEUM", "label": "Colosseum", "type": "ARCHITECTURE"}
+{"id": "A_DUOMO", "label": "Duomo", "type": "ARCHITECTURE"}
+{"id": "L_COLOSSEUM", "label": "Colosseum", "type": "LANDMARK"}
+{"id": "L_LEANING_TOWER_OF_PISA", "label": "Leaning Tower of Pisa", "type": "LANDMARK"}
+{"id": "L_VENICE_CANALS", "label": "Venice Canals", "type": "LANDMARK"}
+{"id": "L_VATICAN_CITY", "label": "Vatican City", "type": "LANDMARK"}
+{"id": "L_POMPEII", "label": "Pompeii", "type": "LANDMARK"}
+{"id": "L_PANTHEON", "label": "Pantheon", "type": "LANDMARK"}
+{"id": "L_TREVI_FOUNTAIN", "label": "Trevi Fountain", "type": "LANDMARK"}
+{"id": "L_FLORENCE_CATHEDRAL", "label": "Florence Cathedral", "type": "LANDMARK"}
+{"id": "L_AMALFI_COAST", "label": "Amalfi Coast", "type": "LANDMARK"}
+{"id": "L_CINQUE_TERRE", "label": "Cinque Terre", "type": "LANDMARK"}
+{"id": "G_ITALIAN", "label": "Italian", "type": "LANGUAGE"}
+{"id": "N_WOLF", "label": "Wolf", "type": "ANIMAL"}
+{"id": "N_BEAR", "label": "Bear", "type": "ANIMAL"}
+{"id": "N_GOLDEN_EAGLE", "label": "Golden Eagle", "type": "ANIMAL"}
+{"id": "E_VENICE_CARNIVAL", "label": "Venice Carnival", "type": "FESTIVAL"}
+{"id": "E_FERRAGOSTO", "label": "Ferragosto", "type": "FESTIVAL"}
+{"id": "E_SIENA_PALIO", "label": "Siena Palio", "type": "FESTIVAL"}
+{"id": "E_SANREMO_MUSIC_FESTIVAL", "label": "Sanremo Music Festival", "type": "FESTIVAL"}
+{"id": "D_TARANTELLA", "label": "Tarantella", "type": "DANCE"}
+{"id": "D_PIZZICA", "label": "Pizzica", "type": "DANCE"}
+{"id": "T_RENAISSANCE_ART", "label": "Renaissance Art", "type": "ART"}
+{"id": "T_BAROQUE_ART", "label": "Baroque Art", "type": "ART"}
+{"id": "T_ROMAN_ART", "label": "Roman Art", "type": "ART"}
+{"id": "T_FUTURISM", "label": "Futurism", "type": "ART"}
+{"id": "H_ROMAN_EMPIRE", "label": "Roman Empire", "type": "HISTORY"}
+{"id": "H_RENAISSANCE", "label": "Renaissance", "type": "HISTORY"}
+{"id": "H_RISORGIMENTO", "label": "Risorgimento", "type": "HISTORY"}
+{"id": "H_VATICAN", "label": "Vatican", "type": "HISTORY"}
+{"id": "R_ALPS", "label": "Alps", "type": "GEOGRAPHY"}
+{"id": "R_APPENNINES", "label": "Appennines", "type": "GEOGRAPHY"}
+{"id": "R_MEDITERRANEAN_SEA", "label": "Mediterranean Sea", "type": "GEOGRAPHY"}
+{"id": "C_BRA", "label": "Brazil", "type": "COUNTRY"}
+{"id": "F_FEIJOADA", "label": "Feijoada", "type": "FOOD"}
+{"id": "F_PAO_DE_QUEIJO", "label": "Pao de Queijo", "type": "FOOD"}
+{"id": "F_BRIGADEIRO", "label": "Brigadeiro", "type": "FOOD"}
+{"id": "F_ACAI", "label": "Acai", "type": "FOOD"}
+{"id": "F_COXINHA", "label": "Coxinha", "type": "FOOD"}
+{"id": "F_PASTEL", "label": "Pastel", "type": "FOOD"}
+{"id": "F_CHURRASCO", "label": "Churrasco", "type": "FOOD"}
+{"id": "F_MOQUECA", "label": "Moqueca", "type": "FOOD"}
+{"id": "F_FAROFA", "label": "Farofa", "type": "FOOD"}
+{"id": "F_GUARANA", "label": "Guarana", "type": "FOOD"}
+{"id": "F_VATAPA", "label": "Vatapa", "type": "FOOD"}
+{"id": "F_QUINDIM", "label": "Quindim", "type": "FOOD"}
+{"id": "F_TAPIOCA", "label": "Tapioca", "type": "FOOD"}
+{"id": "F_ACARAJE", "label": "Acaraje", "type": "FOOD"}
+{"id": "F_CACHACA", "label": "Cachaca", "type": "FOOD"}
+{"id": "F_CAIPIRINHA", "label": "Caipirinha", "type": "FOOD"}
+{"id": "S_MMA", "label": "MMA", "type": "SPORT"}
+{"id": "S_CAPOEIRA", "label": "Capoeira", "type": "SPORT"}
+{"id": "S_FUTSAL", "label": "Futsal", "type": "SPORT"}
+{"id": "S_SURFING", "label": "Surfing", "type": "SPORT"}
+{"id": "S_JIUJITSU", "label": "Jiu-Jitsu", "type": "SPORT"}
+{"id": "C_BIKINI", "label": "Bikini", "type": "CLOTHING"}
+{"id": "C_HAVAIANAS", "label": "Havaianas", "type": "CLOTHING"}
+{"id": "C_CANGA", "label": "Canga", "type": "CLOTHING"}
+{"id": "C_CARNIVAL_COSTUME", "label": "Carnival Costume", "type": "CLOTHING"}
+{"id": "C_BAIANA_DRESS", "label": "Baiana Dress", "type": "CLOTHING"}
+{"id": "C_SUNGAS", "label": "Sungas", "type": "CLOTHING"}
+{"id": "A_COLONIAL", "label": "Colonial", "type": "ARCHITECTURE"}
+{"id": "A_FAVELA", "label": "Favela", "type": "ARCHITECTURE"}
+{"id": "L_CHRIST_THE_REDEEMER", "label": "Christ the Redeemer", "type": "LANDMARK"}
+{"id": "L_SUGARLOAF_MOUNTAIN", "label": "Sugarloaf Mountain", "type": "LANDMARK"}
+{"id": "L_AMAZON_RAINFOREST", "label": "Amazon Rainforest", "type": "LANDMARK"}
+{"id": "L_IGUAZU_FALLS", "label": "Iguazu Falls", "type": "LANDMARK"}
+{"id": "L_COPACABANA_BEACH", "label": "Copacabana Beach", "type": "LANDMARK"}
+{"id": "L_PANTANAL", "label": "Pantanal", "type": "LANDMARK"}
+{"id": "L_FERNANDO_DE_NORONHA", "label": "Fernando de Noronha", "type": "LANDMARK"}
+{"id": "L_LENCOIS_MARANHENSES", "label": "Lencois Maranhenses", "type": "LANDMARK"}
+{"id": "L_PELOURINHO", "label": "Pelourinho", "type": "LANDMARK"}
+{"id": "L_BRASILIA_CATHEDRAL", "label": "Brasilia Cathedral", "type": "LANDMARK"}
+{"id": "Y_BRAZILIAN_REAL", "label": "Brazilian Real", "type": "CURRENCY"}
+{"id": "G_PORTUGUESE", "label": "Portuguese", "type": "LANGUAGE"}
+{"id": "N_JAGUAR", "label": "Jaguar", "type": "ANIMAL"}
+{"id": "N_TOUCAN", "label": "Toucan", "type": "ANIMAL"}
+{"id": "N_MACAW", "label": "Macaw", "type": "ANIMAL"}
+{"id": "N_CAPYBARA", "label": "Capybara", "type": "ANIMAL"}
+{"id": "N_SLOTH", "label": "Sloth", "type": "ANIMAL"}
+{"id": "N_ARMADILLO", "label": "Armadillo", "type": "ANIMAL"}
+{"id": "N_ANTEATER", "label": "Anteater", "type": "ANIMAL"}
+{"id": "N_PIRANHA", "label": "Piranha", "type": "ANIMAL"}
+{"id": "N_ANACONDA", "label": "Anaconda", "type": "ANIMAL"}
+{"id": "N_GOLDEN_LION_TAMARIN", "label": "Golden Lion Tamarin", "type": "ANIMAL"}
+{"id": "E_CARNIVAL", "label": "Carnival", "type": "FESTIVAL"}
+{"id": "E_REVEILLON", "label": "Reveillon", "type": "FESTIVAL"}
+{"id": "E_FESTA_JUNINA", "label": "Festa Junina", "type": "FESTIVAL"}
+{"id": "E_PARINTINS_FOLKLORE_FESTIVAL", "label": "Parintins Folklore Festival", "type": "FESTIVAL"}
+{"id": "D_SAMBA", "label": "Samba", "type": "DANCE"}
+{"id": "D_BOSSA_NOVA", "label": "Bossa Nova", "type": "DANCE"}
+{"id": "D_FORRO", "label": "Forro", "type": "DANCE"}
+{"id": "D_FREVO", "label": "Frevo", "type": "DANCE"}
+{"id": "D_AXE", "label": "Axe", "type": "DANCE"}
+{"id": "D_LAMBADA", "label": "Lambada", "type": "DANCE"}
+{"id": "M_SAMBA", "label": "Samba", "type": "MUSIC"}
+{"id": "M_BOSSA_NOVA", "label": "Bossa Nova", "type": "MUSIC"}
+{"id": "M_MPB", "label": "MPB", "type": "MUSIC"}
+{"id": "M_TROPICALIA", "label": "Tropicalia", "type": "MUSIC"}
+{"id": "M_FUNK_CARIOCA", "label": "Funk Carioca", "type": "MUSIC"}
+{"id": "R_AMAZON_RIVER", "label": "Amazon River", "type": "GEOGRAPHY"}
+{"id": "R_ATLANTIC_FOREST", "label": "Atlantic Forest", "type": "GEOGRAPHY"}
+{"id": "R_CERRADO", "label": "Cerrado", "type": "GEOGRAPHY"}
+{"id": "R_CAATINGA", "label": "Caatinga", "type": "GEOGRAPHY"}
+{"id": "C_CHN", "label": "China", "type": "COUNTRY"}
+{"id": "F_DUMPLINGS", "label": "Dumplings", "type": "FOOD"}
+{"id": "F_PEKING_DUCK", "label": "Peking Duck", "type": "FOOD"}
+{"id": "F_SPRING_ROLLS", "label": "Spring Rolls", "type": "FOOD"}
+{"id": "F_FRIED_RICE", "label": "Fried Rice", "type": "FOOD"}
+{"id": "F_CHOW_MEIN", "label": "Chow Mein", "type": "FOOD"}
+{"id": "F_HOT_POT", "label": "Hot Pot", "type": "FOOD"}
+{"id": "F_DIM_SUM", "label": "Dim Sum", "type": "FOOD"}
+{"id": "F_BAOZI", "label": "Baozi", "type": "FOOD"}
+{"id": "F_TOFU", "label": "Tofu", "type": "FOOD"}
+{"id": "F_TEA", "label": "Tea", "type": "FOOD"}
+{"id": "F_KUNG_PAO_CHICKEN", "label": "Kung Pao Chicken", "type": "FOOD"}
+{"id": "F_MAPO_TOFU", "label": "Mapo Tofu", "type": "FOOD"}
+{"id": "F_WONTON", "label": "Wonton", "type": "FOOD"}
+{"id": "F_MOONCAKE", "label": "Mooncake", "type": "FOOD"}
+{"id": "F_ZONGZI", "label": "Zongzi", "type": "FOOD"}
+{"id": "F_CONGEE", "label": "Congee", "type": "FOOD"}
+{"id": "F_CHAR_SIU", "label": "Char Siu", "type": "FOOD"}
+{"id": "F_BUBBLE_TEA", "label": "Bubble Tea", "type": "FOOD"}
+{"id": "F_SICHUAN_PEPPER", "label": "Sichuan Pepper", "type": "FOOD"}
+{"id": "S_MARTIAL_ARTS", "label": "Martial Arts", "type": "SPORT"}
+{"id": "S_DIVING", "label": "Diving", "type": "SPORT"}
+{"id": "S_GYMNASTICS", "label": "Gymnastics", "type": "SPORT"}
+{"id": "C_CHEONGSAM", "label": "Cheongsam", "type": "CLOTHING"}
+{"id": "C_HANFU", "label": "Hanfu", "type": "CLOTHING"}
+{"id": "C_TANG_SUIT", "label": "Tang Suit", "type": "CLOTHING"}
+{"id": "C_MAO_SUIT", "label": "Mao Suit", "type": "CLOTHING"}
+{"id": "C_QIPAO", "label": "Qipao", "type": "CLOTHING"}
+{"id": "C_SILK_ROBE", "label": "Silk Robe", "type": "CLOTHING"}
+{"id": "A_GREAT_WALL", "label": "Great Wall", "type": "ARCHITECTURE"}
+{"id": "A_COURTYARD_HOUSE", "label": "Courtyard House", "type": "ARCHITECTURE"}
+{"id": "A_TULOU", "label": "Tulou", "type": "ARCHITECTURE"}
+{"id": "A_FORBIDDEN_CITY_STYLE", "label": "Forbidden City Style", "type": "ARCHITECTURE"}
+{"id": "A_GARDEN_ARCHITECTURE", "label": "Garden Architecture", "type": "ARCHITECTURE"}
+{"id": "L_GREAT_WALL", "label": "Great Wall", "type": "LANDMARK"}
+{"id": "L_FORBIDDEN_CITY", "label": "Forbidden City", "type": "LANDMARK"}
+{"id": "L_TERRACOTTA_WARRIORS", "label": "Terracotta Warriors", "type": "LANDMARK"}
+{"id": "L_THE_BUND", "label": "The Bund", "type": "LANDMARK"}
+{"id": "L_POTALA_PALACE", "label": "Potala Palace", "type": "LANDMARK"}
+{"id": "L_WEST_LAKE", "label": "West Lake", "type": "LANDMARK"}
+{"id": "L_YELLOW_MOUNTAIN", "label": "Yellow Mountain", "type": "LANDMARK"}
+{"id": "L_LI_RIVER", "label": "Li River", "type": "LANDMARK"}
+{"id": "L_VICTORIA_HARBOUR", "label": "Victoria Harbour", "type": "LANDMARK"}
+{"id": "L_SUMMER_PALACE", "label": "Summer Palace", "type": "LANDMARK"}
+{"id": "Y_RENMINBI", "label": "Renminbi", "type": "CURRENCY"}
+{"id": "G_MANDARIN", "label": "Mandarin", "type": "LANGUAGE"}
+{"id": "G_CANTONESE", "label": "Cantonese", "type": "LANGUAGE"}
+{"id": "N_PANDA", "label": "Panda", "type": "ANIMAL"}
+{"id": "N_DRAGON_MYTHICAL", "label": "Dragon (Mythical)", "type": "ANIMAL"}
+{"id": "N_PHOENIX_MYTHICAL", "label": "Phoenix (Mythical)", "type": "ANIMAL"}
+{"id": "N_MONKEY", "label": "Monkey", "type": "ANIMAL"}
+{"id": "N_YAK", "label": "Yak", "type": "ANIMAL"}
+{"id": "N_SNOW_LEOPARD", "label": "Snow Leopard", "type": "ANIMAL"}
+{"id": "E_CHINESE_NEW_YEAR", "label": "Chinese New Year", "type": "FESTIVAL"}
+{"id": "E_MIDAUTUMN_FESTIVAL", "label": "Mid-Autumn Festival", "type": "FESTIVAL"}
+{"id": "E_DRAGON_BOAT_FESTIVAL", "label": "Dragon Boat Festival", "type": "FESTIVAL"}
+{"id": "E_LANTERN_FESTIVAL", "label": "Lantern Festival", "type": "FESTIVAL"}
+{"id": "E_QINGMING_FESTIVAL", "label": "Qingming Festival", "type": "FESTIVAL"}
+{"id": "E_DOUBLE_NINTH_FESTIVAL", "label": "Double Ninth Festival", "type": "FESTIVAL"}
+{"id": "D_DRAGON_DANCE", "label": "Dragon Dance", "type": "DANCE"}
+{"id": "D_LION_DANCE", "label": "Lion Dance", "type": "DANCE"}
+{"id": "D_FAN_DANCE", "label": "Fan Dance", "type": "DANCE"}
+{"id": "D_RIBBON_DANCE", "label": "Ribbon Dance", "type": "DANCE"}
+{"id": "H_DYNASTIES", "label": "Dynasties", "type": "HISTORY"}
+{"id": "H_SILK_ROAD", "label": "Silk Road", "type": "HISTORY"}
+{"id": "H_THREE_KINGDOMS", "label": "Three Kingdoms", "type": "HISTORY"}
+{"id": "H_CULTURAL_REVOLUTION", "label": "Cultural Revolution", "type": "HISTORY"}
+{"id": "C_DEU", "label": "Germany", "type": "COUNTRY"}
+{"id": "F_BRATWURST", "label": "Bratwurst", "type": "FOOD"}
+{"id": "F_SAUERKRAUT", "label": "Sauerkraut", "type": "FOOD"}
+{"id": "F_PRETZEL", "label": "Pretzel", "type": "FOOD"}
+{"id": "F_SCHNITZEL", "label": "Schnitzel", "type": "FOOD"}
+{"id": "F_BEER", "label": "Beer", "type": "FOOD"}
+{"id": "F_POTATO_SALAD", "label": "Potato Salad", "type": "FOOD"}
+{"id": "F_CURRYWURST", "label": "Currywurst", "type": "FOOD"}
+{"id": "F_BLACK_FOREST_CAKE", "label": "Black Forest Cake", "type": "FOOD"}
+{"id": "F_SAUERBRATEN", "label": "Sauerbraten", "type": "FOOD"}
+{"id": "F_LEBKUCHEN", "label": "Lebkuchen", "type": "FOOD"}
+{"id": "F_SPIAETZLE", "label": "Spiaetzle", "type": "FOOD"}
+{"id": "F_ROULADEN", "label": "Rouladen", "type": "FOOD"}
+{"id": "F_KARTOFFELPUFFER", "label": "Kartoffelpuffer", "type": "FOOD"}
+{"id": "F_WEISSWURST", "label": "Weisswurst", "type": "FOOD"}
+{"id": "F_STOLLEN", "label": "Stollen", "type": "FOOD"}
+{"id": "F_GLUHWEIN", "label": "Gluhwein", "type": "FOOD"}
+{"id": "F_RIESLING", "label": "Riesling", "type": "FOOD"}
+{"id": "F_MARZIPAN", "label": "Marzipan", "type": "FOOD"}
+{"id": "C_LEDERHOSEN", "label": "Lederhosen", "type": "CLOTHING"}
+{"id": "C_DIRNDL", "label": "Dirndl", "type": "CLOTHING"}
+{"id": "C_TRACHT", "label": "Tracht", "type": "CLOTHING"}
+{"id": "C_BIRKENSTOCK", "label": "Birkenstock", "type": "CLOTHING"}
+{"id": "A_TIMBERFRAMED_HOUSE", "label": "Timber-framed House", "type": "ARCHITECTURE"}
+{"id": "A_BAUHAUS", "label": "Bauhaus", "type": "ARCHITECTURE"}
+{"id": "A_CASTLES", "label": "Castles", "type": "ARCHITECTURE"}
+{"id": "L_BRANDENBURG_GATE", "label": "Brandenburg Gate", "type": "LANDMARK"}
+{"id": "L_NEUSCHWANSTEIN_CASTLE", "label": "Neuschwanstein Castle", "type": "LANDMARK"}
+{"id": "L_COLOGNE_CATHEDRAL", "label": "Cologne Cathedral", "type": "LANDMARK"}
+{"id": "L_BERLIN_WALL", "label": "Berlin Wall", "type": "LANDMARK"}
+{"id": "L_REICHSTAG", "label": "Reichstag", "type": "LANDMARK"}
+{"id": "L_BLACK_FOREST", "label": "Black Forest", "type": "LANDMARK"}
+{"id": "L_RHINE_VALLEY", "label": "Rhine Valley", "type": "LANDMARK"}
+{"id": "L_OKTOBERFEST_GROUNDS", "label": "Oktoberfest Grounds", "type": "LANDMARK"}
+{"id": "L_ZUGSPITZE", "label": "Zugspitze", "type": "LANDMARK"}
+{"id": "G_GERMAN", "label": "German", "type": "LANGUAGE"}
+{"id": "N_EAGLE", "label": "Eagle", "type": "ANIMAL"}
+{"id": "N_BOAR", "label": "Boar", "type": "ANIMAL"}
+{"id": "N_DEER", "label": "Deer", "type": "ANIMAL"}
+{"id": "E_OKTOBERFEST", "label": "Oktoberfest", "type": "FESTIVAL"}
+{"id": "E_CHRISTMAS_MARKETS", "label": "Christmas Markets", "type": "FESTIVAL"}
+{"id": "E_CARNIVAL_FASCHING", "label": "Carnival (Fasching)", "type": "FESTIVAL"}
+{"id": "E_BERLIN_FILM_FESTIVAL", "label": "Berlin Film Festival", "type": "FESTIVAL"}
+{"id": "D_SCHUHPLATTLER", "label": "Schuhplattler", "type": "DANCE"}
+{"id": "D_WALTZ", "label": "Waltz", "type": "DANCE"}
+{"id": "D_POLKA", "label": "Polka", "type": "DANCE"}
+{"id": "M_CLASSICAL", "label": "Classical", "type": "MUSIC"}
+{"id": "M_TECHNO", "label": "Techno", "type": "MUSIC"}
+{"id": "M_BEETHOVEN", "label": "Beethoven", "type": "MUSIC"}
+{"id": "M_BACH", "label": "Bach", "type": "MUSIC"}
+{"id": "M_WAGNER", "label": "Wagner", "type": "MUSIC"}
+{"id": "M_ELECTRONIC", "label": "Electronic", "type": "MUSIC"}
+{"id": "H_HOLY_ROMAN_EMPIRE", "label": "Holy Roman Empire", "type": "HISTORY"}
+{"id": "H_PRUSSIA", "label": "Prussia", "type": "HISTORY"}
+{"id": "H_REUNIFICATION", "label": "Reunification", "type": "HISTORY"}
+{"id": "R_RHINE_RIVER", "label": "Rhine River", "type": "GEOGRAPHY"}
+{"id": "R_DANUBE_RIVER", "label": "Danube River", "type": "GEOGRAPHY"}
+{"id": "R_NORTH_SEA", "label": "North Sea", "type": "GEOGRAPHY"}
+{"id": "R_BALTIC_SEA", "label": "Baltic Sea", "type": "GEOGRAPHY"}
+{"id": "P_KANT", "label": "Kant", "type": "PHILOSOPHY"}
+{"id": "P_NIETZSCHE", "label": "Nietzsche", "type": "PHILOSOPHY"}
+{"id": "P_HEGEL", "label": "Hegel", "type": "PHILOSOPHY"}
+{"id": "C_AUS", "label": "Australia", "type": "COUNTRY"}
+{"id": "F_VEGEMITE", "label": "Vegemite", "type": "FOOD"}
+{"id": "F_MEAT_PIE", "label": "Meat Pie", "type": "FOOD"}
+{"id": "F_LAMINGTON", "label": "Lamington", "type": "FOOD"}
+{"id": "F_PAVLOVA", "label": "Pavlova", "type": "FOOD"}
+{"id": "F_TIM_TAM", "label": "Tim Tam", "type": "FOOD"}
+{"id": "F_FISH_AND_CHIPS", "label": "Fish and Chips", "type": "FOOD"}
+{"id": "F_DAMPER", "label": "Damper", "type": "FOOD"}
+{"id": "F_ANZAC_BISCUIT", "label": "Anzac Biscuit", "type": "FOOD"}
+{"id": "F_BARRAMUNDI", "label": "Barramundi", "type": "FOOD"}
+{"id": "F_KANGAROO_MEAT", "label": "Kangaroo meat", "type": "FOOD"}
+{"id": "F_BEETROOT_ON_BURGER", "label": "Beetroot on Burger", "type": "FOOD"}
+{"id": "F_FLAT_WHITE", "label": "Flat White", "type": "FOOD"}
+{"id": "F_CHICKEN_PARMA", "label": "Chicken Parma", "type": "FOOD"}
+{"id": "F_SAUSAGE_SIZZLE", "label": "Sausage Sizzle", "type": "FOOD"}
+{"id": "F_FAIRY_BREAD", "label": "Fairy Bread", "type": "FOOD"}
+{"id": "F_WEETBIX", "label": "Weet-Bix", "type": "FOOD"}
+{"id": "F_WITCHETTY_GRUB", "label": "Witchetty Grub", "type": "FOOD"}
+{"id": "S_AFL", "label": "AFL", "type": "SPORT"}
+{"id": "S_SWIMMING", "label": "Swimming", "type": "SPORT"}
+{"id": "S_NETBALL", "label": "Netball", "type": "SPORT"}
+{"id": "S_HORSE_RACING", "label": "Horse Racing", "type": "SPORT"}
+{"id": "C_BOARDSHORTS", "label": "Boardshorts", "type": "CLOTHING"}
+{"id": "C_THONGS_FLIPFLOPS", "label": "Thongs (Flip-flops)", "type": "CLOTHING"}
+{"id": "C_AKUBRA_HAT", "label": "Akubra Hat", "type": "CLOTHING"}
+{"id": "C_DRIZABONE", "label": "Driza-Bone", "type": "CLOTHING"}
+{"id": "C_BATHERS", "label": "Bathers", "type": "CLOTHING"}
+{"id": "C_RASHIE", "label": "Rashie", "type": "CLOTHING"}
+{"id": "C_BLUNDSTONES", "label": "Blundstones", "type": "CLOTHING"}
+{"id": "A_QUEENSLANDER", "label": "Queenslander", "type": "ARCHITECTURE"}
+{"id": "A_SYDNEY_OPERA_HOUSE", "label": "Sydney Opera House", "type": "ARCHITECTURE"}
+{"id": "A_FEDERATION_STYLE", "label": "Federation Style", "type": "ARCHITECTURE"}
+{"id": "A_TERRACE_HOUSE", "label": "Terrace House", "type": "ARCHITECTURE"}
+{"id": "A_BEACH_HOUSE", "label": "Beach House", "type": "ARCHITECTURE"}
+{"id": "L_SYDNEY_OPERA_HOUSE", "label": "Sydney Opera House", "type": "LANDMARK"}
+{"id": "L_ULURU", "label": "Uluru", "type": "LANDMARK"}
+{"id": "L_GREAT_BARRIER_REEF", "label": "Great Barrier Reef", "type": "LANDMARK"}
+{"id": "L_SYDNEY_HARBOUR_BRIDGE", "label": "Sydney Harbour Bridge", "type": "LANDMARK"}
+{"id": "L_BONDI_BEACH", "label": "Bondi Beach", "type": "LANDMARK"}
+{"id": "L_TWELVE_APOSTLES", "label": "Twelve Apostles", "type": "LANDMARK"}
+{"id": "L_BLUE_MOUNTAINS", "label": "Blue Mountains", "type": "LANDMARK"}
+{"id": "L_KAKADU_NATIONAL_PARK", "label": "Kakadu National Park", "type": "LANDMARK"}
+{"id": "L_DAINTREE_RAINFOREST", "label": "Daintree Rainforest", "type": "LANDMARK"}
+{"id": "Y_AUSTRALIAN_DOLLAR", "label": "Australian Dollar", "type": "CURRENCY"}
+{"id": "N_KANGAROO", "label": "Kangaroo", "type": "ANIMAL"}
+{"id": "N_KOALA", "label": "Koala", "type": "ANIMAL"}
+{"id": "N_EMU", "label": "Emu", "type": "ANIMAL"}
+{"id": "N_WOMBAT", "label": "Wombat", "type": "ANIMAL"}
+{"id": "N_PLATYPUS", "label": "Platypus", "type": "ANIMAL"}
+{"id": "N_ECHIDNA", "label": "Echidna", "type": "ANIMAL"}
+{"id": "N_DINGO", "label": "Dingo", "type": "ANIMAL"}
+{"id": "N_TASMANIAN_DEVIL", "label": "Tasmanian Devil", "type": "ANIMAL"}
+{"id": "N_CROCODILE", "label": "Crocodile", "type": "ANIMAL"}
+{"id": "N_KOOKABURRA", "label": "Kookaburra", "type": "ANIMAL"}
+{"id": "N_WALLABY", "label": "Wallaby", "type": "ANIMAL"}
+{"id": "N_QUOKKA", "label": "Quokka", "type": "ANIMAL"}
+{"id": "E_AUSTRALIA_DAY", "label": "Australia Day", "type": "FESTIVAL"}
+{"id": "E_MARDI_GRAS", "label": "Mardi Gras", "type": "FESTIVAL"}
+{"id": "E_MELBOURNE_CUP", "label": "Melbourne Cup", "type": "FESTIVAL"}
+{"id": "E_ANZAC_DAY", "label": "Anzac Day", "type": "FESTIVAL"}
+{"id": "E_VIVID_SYDNEY", "label": "Vivid Sydney", "type": "FESTIVAL"}
+{"id": "D_BUSH_DANCE", "label": "Bush Dance", "type": "DANCE"}
+{"id": "D_INDIGENOUS_DANCE", "label": "Indigenous Dance", "type": "DANCE"}
+{"id": "D_CORROBOREE", "label": "Corroboree", "type": "DANCE"}
+{"id": "R_OUTBACK", "label": "Outback", "type": "GEOGRAPHY"}
+{"id": "R_GREAT_DIVIDING_RANGE", "label": "Great Dividing Range", "type": "GEOGRAPHY"}
+{"id": "R_SIMPSON_DESERT", "label": "Simpson Desert", "type": "GEOGRAPHY"}
+{"id": "R_GOLD_COAST", "label": "Gold Coast", "type": "GEOGRAPHY"}
+{"id": "H_ABORIGINAL_CULTURE", "label": "Aboriginal Culture", "type": "HISTORY"}
+{"id": "C_EGY", "label": "Egypt", "type": "COUNTRY"}
+{"id": "F_KOSHARY", "label": "Koshary", "type": "FOOD"}
+{"id": "F_FUL_MEDAMES", "label": "Ful Medames", "type": "FOOD"}
+{"id": "F_FALAFEL", "label": "Falafel", "type": "FOOD"}
+{"id": "F_SHAWARMA", "label": "Shawarma", "type": "FOOD"}
+{"id": "F_MAHSHI", "label": "Mahshi", "type": "FOOD"}
+{"id": "F_FATTAH", "label": "Fattah", "type": "FOOD"}
+{"id": "F_MULUKHIYAH", "label": "Mulukhiyah", "type": "FOOD"}
+{"id": "F_BAKLAVA", "label": "Baklava", "type": "FOOD"}
+{"id": "F_KUNAFA", "label": "Kunafa", "type": "FOOD"}
+{"id": "F_BASBOUSA", "label": "Basbousa", "type": "FOOD"}
+{"id": "F_HAWAWSHI", "label": "Hawawshi", "type": "FOOD"}
+{"id": "F_ROZ_BEL_LABAN", "label": "Roz Bel Laban", "type": "FOOD"}
+{"id": "F_UMM_ALI", "label": "Umm Ali", "type": "FOOD"}
+{"id": "F_FESEEKH", "label": "Feseekh", "type": "FOOD"}
+{"id": "F_HIBISCUS_TEA", "label": "Hibiscus Tea", "type": "FOOD"}
+{"id": "S_SQUASH", "label": "Squash", "type": "SPORT"}
+{"id": "C_GALABEYA", "label": "Galabeya", "type": "CLOTHING"}
+{"id": "C_HIJAB", "label": "Hijab", "type": "CLOTHING"}
+{"id": "C_KAFTAN", "label": "Kaftan", "type": "CLOTHING"}
+{"id": "C_ABAYA", "label": "Abaya", "type": "CLOTHING"}
+{"id": "C_TARBOUSH", "label": "Tarboush", "type": "CLOTHING"}
+{"id": "A_PYRAMID", "label": "Pyramid", "type": "ARCHITECTURE"}
+{"id": "A_MOSQUE", "label": "Mosque", "type": "ARCHITECTURE"}
+{"id": "A_MUD_BRICK_HOUSE", "label": "Mud Brick House", "type": "ARCHITECTURE"}
+{"id": "A_ISLAMIC_ARCHITECTURE", "label": "Islamic Architecture", "type": "ARCHITECTURE"}
+{"id": "A_COPTIC_ARCHITECTURE", "label": "Coptic Architecture", "type": "ARCHITECTURE"}
+{"id": "L_PYRAMIDS_OF_GIZA", "label": "Pyramids of Giza", "type": "LANDMARK"}
+{"id": "L_SPHINX", "label": "Sphinx", "type": "LANDMARK"}
+{"id": "L_NILE_RIVER", "label": "Nile River", "type": "LANDMARK"}
+{"id": "L_LUXOR_TEMPLE", "label": "Luxor Temple", "type": "LANDMARK"}
+{"id": "L_KARNAK_TEMPLE", "label": "Karnak Temple", "type": "LANDMARK"}
+{"id": "L_VALLEY_OF_THE_KINGS", "label": "Valley of the Kings", "type": "LANDMARK"}
+{"id": "L_ABU_SIMBEL", "label": "Abu Simbel", "type": "LANDMARK"}
+{"id": "L_CAIRO_CITADEL", "label": "Cairo Citadel", "type": "LANDMARK"}
+{"id": "L_EGYPTIAN_MUSEUM", "label": "Egyptian Museum", "type": "LANDMARK"}
+{"id": "L_RED_SEA", "label": "Red Sea", "type": "LANDMARK"}
+{"id": "L_SUEZ_CANAL", "label": "Suez Canal", "type": "LANDMARK"}
+{"id": "Y_EGYPTIAN_POUND", "label": "Egyptian Pound", "type": "CURRENCY"}
+{"id": "G_ARABIC", "label": "Arabic", "type": "LANGUAGE"}
+{"id": "N_CAMEL", "label": "Camel", "type": "ANIMAL"}
+{"id": "N_SCORPION", "label": "Scorpion", "type": "ANIMAL"}
+{"id": "N_FENNEC_FOX", "label": "Fennec Fox", "type": "ANIMAL"}
+{"id": "N_IBIS", "label": "Ibis", "type": "ANIMAL"}
+{"id": "N_JACKAL", "label": "Jackal", "type": "ANIMAL"}
+{"id": "E_RAMADAN", "label": "Ramadan", "type": "FESTIVAL"}
+{"id": "E_EID_ALFITR", "label": "Eid al-Fitr", "type": "FESTIVAL"}
+{"id": "E_SHAM_ENNESSIM", "label": "Sham en-Nessim", "type": "FESTIVAL"}
+{"id": "E_EID_ALADHA", "label": "Eid al-Adha", "type": "FESTIVAL"}
+{"id": "E_MAWLID", "label": "Mawlid", "type": "FESTIVAL"}
+{"id": "D_BELLY_DANCE", "label": "Belly Dance", "type": "DANCE"}
+{"id": "D_TANOURA", "label": "Tanoura", "type": "DANCE"}
+{"id": "D_RAQS_SHARQI", "label": "Raqs Sharqi", "type": "DANCE"}
+{"id": "D_TAHTIB", "label": "Tahtib", "type": "DANCE"}
+{"id": "H_PHARAOHS", "label": "Pharaohs", "type": "HISTORY"}
+{"id": "H_MUMMIES", "label": "Mummies", "type": "HISTORY"}
+{"id": "H_HIEROGLYPHS", "label": "Hieroglyphs", "type": "HISTORY"}
+{"id": "H_CLEOPATRA", "label": "Cleopatra", "type": "HISTORY"}
+{"id": "H_TUTANKHAMUN", "label": "Tutankhamun", "type": "HISTORY"}
+{"id": "H_ANCIENT_EGYPT", "label": "Ancient Egypt", "type": "HISTORY"}
+{"id": "R_SAHARA_DESERT", "label": "Sahara Desert", "type": "GEOGRAPHY"}
+{"id": "R_NILE_DELTA", "label": "Nile Delta", "type": "GEOGRAPHY"}
+{"id": "R_SINAI_PENINSULA", "label": "Sinai Peninsula", "type": "GEOGRAPHY"}
+{"id": "R_MEDITERRANEAN_COAST", "label": "Mediterranean Coast", "type": "GEOGRAPHY"}
+{"id": "T_PAPYRUS_ART", "label": "Papyrus Art", "type": "ART"}
+{"id": "T_STATUES", "label": "Statues", "type": "ART"}
+{"id": "T_WALL_CARVINGS", "label": "Wall Carvings", "type": "ART"}
+{"id": "K_DESERT", "label": "Desert", "type": "CLIMATE"}
+{"id": "C_CAN", "label": "Canada", "type": "COUNTRY"}
+{"id": "F_POUTINE", "label": "Poutine", "type": "FOOD"}
+{"id": "F_MAPLE_SYRUP", "label": "Maple Syrup", "type": "FOOD"}
+{"id": "F_NANAIMO_BAR", "label": "Nanaimo Bar", "type": "FOOD"}
+{"id": "F_BUTTER_TART", "label": "Butter Tart", "type": "FOOD"}
+{"id": "F_TOURTIERE", "label": "Tourtiere", "type": "FOOD"}
+{"id": "F_BANNOCK", "label": "Bannock", "type": "FOOD"}
+{"id": "F_BEAVERTAILS", "label": "Beavertails", "type": "FOOD"}
+{"id": "F_MONTREAL_BAGEL", "label": "Montreal Bagel", "type": "FOOD"}
+{"id": "F_PEAMEAL_BACON", "label": "Peameal Bacon", "type": "FOOD"}
+{"id": "F_KETCHUP_CHIPS", "label": "Ketchup Chips", "type": "FOOD"}
+{"id": "F_CAESAR_COCKTAIL", "label": "Caesar Cocktail", "type": "FOOD"}
+{"id": "F_SASKATOON_BERRY_PIE", "label": "Saskatoon Berry Pie", "type": "FOOD"}
+{"id": "F_DONAIR", "label": "Donair", "type": "FOOD"}
+{"id": "F_SPLIT_PEA_SOUP", "label": "Split Pea Soup", "type": "FOOD"}
+{"id": "F_KRAFT_DINNER", "label": "Kraft Dinner", "type": "FOOD"}
+{"id": "F_COFFEE_CRISP", "label": "Coffee Crisp", "type": "FOOD"}
+{"id": "F_SMARTIES", "label": "Smarties", "type": "FOOD"}
+{"id": "F_ICE_WINE", "label": "Ice Wine", "type": "FOOD"}
+{"id": "S_LACROSSE", "label": "Lacrosse", "type": "SPORT"}
+{"id": "S_CURLING", "label": "Curling", "type": "SPORT"}
+{"id": "S_CANADIAN_FOOTBALL", "label": "Canadian Football", "type": "SPORT"}
+{"id": "S_SNOWBOARDING", "label": "Snowboarding", "type": "SPORT"}
+{"id": "S_FIGURE_SKATING", "label": "Figure Skating", "type": "SPORT"}
+{"id": "C_TOQUE", "label": "Toque", "type": "CLOTHING"}
+{"id": "C_PARKA", "label": "Parka", "type": "CLOTHING"}
+{"id": "C_MUKLUKS", "label": "Mukluks", "type": "CLOTHING"}
+{"id": "C_MITTENS", "label": "Mittens", "type": "CLOTHING"}
+{"id": "C_LONG_JOHNS", "label": "Long Johns", "type": "CLOTHING"}
+{"id": "C_SOREL_BOOTS", "label": "Sorel Boots", "type": "CLOTHING"}
+{"id": "A_CHATEAU_STYLE", "label": "Chateau Style", "type": "ARCHITECTURE"}
+{"id": "A_IGLOO", "label": "Igloo", "type": "ARCHITECTURE"}
+{"id": "A_CN_TOWER", "label": "CN Tower", "type": "ARCHITECTURE"}
+{"id": "A_VICTORIAN", "label": "Victorian", "type": "ARCHITECTURE"}
+{"id": "L_NIAGARA_FALLS", "label": "Niagara Falls", "type": "LANDMARK"}
+{"id": "L_CN_TOWER", "label": "CN Tower", "type": "LANDMARK"}
+{"id": "L_BANFF_NATIONAL_PARK", "label": "Banff National Park", "type": "LANDMARK"}
+{"id": "L_PARLIAMENT_HILL", "label": "Parliament Hill", "type": "LANDMARK"}
+{"id": "L_JASPER_NATIONAL_PARK", "label": "Jasper National Park", "type": "LANDMARK"}
+{"id": "L_LAKE_LOUISE", "label": "Lake Louise", "type": "LANDMARK"}
+{"id": "L_HOPEWELL_ROCKS", "label": "Hopewell Rocks", "type": "LANDMARK"}
+{"id": "L_OLD_QUEBEC", "label": "Old Quebec", "type": "LANDMARK"}
+{"id": "L_WHISTLER", "label": "Whistler", "type": "LANDMARK"}
+{"id": "L_PEGGYS_COVE", "label": "Peggy's Cove", "type": "LANDMARK"}
+{"id": "Y_CANADIAN_DOLLAR", "label": "Canadian Dollar", "type": "CURRENCY"}
+{"id": "N_BEAVER", "label": "Beaver", "type": "ANIMAL"}
+{"id": "N_POLAR_BEAR", "label": "Polar Bear", "type": "ANIMAL"}
+{"id": "N_LOON", "label": "Loon", "type": "ANIMAL"}
+{"id": "N_BLACK_BEAR", "label": "Black Bear", "type": "ANIMAL"}
+{"id": "N_CARIBOU", "label": "Caribou", "type": "ANIMAL"}
+{"id": "N_ORCA", "label": "Orca", "type": "ANIMAL"}
+{"id": "N_CANADA_GOOSE", "label": "Canada Goose", "type": "ANIMAL"}
+{"id": "N_PUFFIN", "label": "Puffin", "type": "ANIMAL"}
+{"id": "E_CANADA_DAY", "label": "Canada Day", "type": "FESTIVAL"}
+{"id": "E_CALGARY_STAMPEDE", "label": "Calgary Stampede", "type": "FESTIVAL"}
+{"id": "E_WINTERLUDE", "label": "Winterlude", "type": "FESTIVAL"}
+{"id": "E_TORONTO_FILM_FESTIVAL", "label": "Toronto Film Festival", "type": "FESTIVAL"}
+{"id": "E_MONTREAL_JAZZ_FESTIVAL", "label": "Montreal Jazz Festival", "type": "FESTIVAL"}
+{"id": "E_QUEBEC_WINTER_CARNIVAL", "label": "Quebec Winter Carnival", "type": "FESTIVAL"}
+{"id": "D_SQUARE_DANCE", "label": "Square Dance", "type": "DANCE"}
+{"id": "D_POWWOW", "label": "Powwow", "type": "DANCE"}
+{"id": "D_JIGGING", "label": "Jigging", "type": "DANCE"}
+{"id": "R_ROCKY_MOUNTAINS", "label": "Rocky Mountains", "type": "GEOGRAPHY"}
+{"id": "R_PRAIRIES", "label": "Prairies", "type": "GEOGRAPHY"}
+{"id": "R_CANADIAN_SHIELD", "label": "Canadian Shield", "type": "GEOGRAPHY"}
+{"id": "C_RUS", "label": "Russia", "type": "COUNTRY"}
+{"id": "F_BORSCHT", "label": "Borscht", "type": "FOOD"}
+{"id": "F_PELMENI", "label": "Pelmeni", "type": "FOOD"}
+{"id": "F_BLINI", "label": "Blini", "type": "FOOD"}
+{"id": "F_BEEF_STROGANOFF", "label": "Beef Stroganoff", "type": "FOOD"}
+{"id": "F_PIROZHKI", "label": "Pirozhki", "type": "FOOD"}
+{"id": "F_SHASHLIK", "label": "Shashlik", "type": "FOOD"}
+{"id": "F_OLIVIER_SALAD", "label": "Olivier Salad", "type": "FOOD"}
+{"id": "F_CAVIAR", "label": "Caviar", "type": "FOOD"}
+{"id": "F_SYRNIKI", "label": "Syrniki", "type": "FOOD"}
+{"id": "F_KVASS", "label": "Kvass", "type": "FOOD"}
+{"id": "F_OKROSHKA", "label": "Okroshka", "type": "FOOD"}
+{"id": "F_SOLFANKA", "label": "Solfanka", "type": "FOOD"}
+{"id": "F_KHOLODETS", "label": "Kholodets", "type": "FOOD"}
+{"id": "F_VARENIKI", "label": "Vareniki", "type": "FOOD"}
+{"id": "F_MEDOVIK", "label": "Medovik", "type": "FOOD"}
+{"id": "F_VODKA", "label": "Vodka", "type": "FOOD"}
+{"id": "F_TEA_WITH_JAM", "label": "Tea with Jam", "type": "FOOD"}
+{"id": "S_CHESS", "label": "Chess", "type": "SPORT"}
+{"id": "S_BIATHLON", "label": "Biathlon", "type": "SPORT"}
+{"id": "S_SAMBO", "label": "Sambo", "type": "SPORT"}
+{"id": "C_USHANKA", "label": "Ushanka", "type": "CLOTHING"}
+{"id": "C_SARAFAN", "label": "Sarafan", "type": "CLOTHING"}
+{"id": "C_KOSOVOROTKA", "label": "Kosovorotka", "type": "CLOTHING"}
+{"id": "C_VALENKI", "label": "Valenki", "type": "CLOTHING"}
+{"id": "C_FUR_COAT", "label": "Fur Coat", "type": "CLOTHING"}
+{"id": "C_KOKOSHNIK", "label": "Kokoshnik", "type": "CLOTHING"}
+{"id": "A_ONION_DOME", "label": "Onion Dome", "type": "ARCHITECTURE"}
+{"id": "A_KREMLIN", "label": "Kremlin", "type": "ARCHITECTURE"}
+{"id": "A_STALINIST_ARCHITECTURE", "label": "Stalinist Architecture", "type": "ARCHITECTURE"}
+{"id": "A_CONSTRUCTIVISM", "label": "Constructivism", "type": "ARCHITECTURE"}
+{"id": "A_ORTHODOX_CHURCH", "label": "Orthodox Church", "type": "ARCHITECTURE"}
+{"id": "A_WOODEN_CHURCHES", "label": "Wooden Churches", "type": "ARCHITECTURE"}
+{"id": "L_RED_SQUARE", "label": "Red Square", "type": "LANDMARK"}
+{"id": "L_SAINT_BASILS_CATHEDRAL", "label": "Saint Basil's Cathedral", "type": "LANDMARK"}
+{"id": "L_HERMITAGE_MUSEUM", "label": "Hermitage Museum", "type": "LANDMARK"}
+{"id": "L_LAKE_BAIKAL", "label": "Lake Baikal", "type": "LANDMARK"}
+{"id": "L_KREMLIN", "label": "Kremlin", "type": "LANDMARK"}
+{"id": "L_PETERHOF", "label": "Peterhof", "type": "LANDMARK"}
+{"id": "L_TRANSSIBERIAN_RAILWAY", "label": "Trans-Siberian Railway", "type": "LANDMARK"}
+{"id": "L_BOLSHOI_THEATRE", "label": "Bolshoi Theatre", "type": "LANDMARK"}
+{"id": "L_MOUNT_ELBRUS", "label": "Mount Elbrus", "type": "LANDMARK"}
+{"id": "L_KAMCHATKA", "label": "Kamchatka", "type": "LANDMARK"}
+{"id": "Y_RUSSIAN_RUBLE", "label": "Russian Ruble", "type": "CURRENCY"}
+{"id": "G_RUSSIAN", "label": "Russian", "type": "LANGUAGE"}
+{"id": "N_BROWN_BEAR", "label": "Brown Bear", "type": "ANIMAL"}
+{"id": "N_SIBERIAN_TIGER", "label": "Siberian Tiger", "type": "ANIMAL"}
+{"id": "N_LYNX", "label": "Lynx", "type": "ANIMAL"}
+{"id": "N_BAIKAL_SEAL", "label": "Baikal Seal", "type": "ANIMAL"}
+{"id": "E_MASLENITSA", "label": "Maslenitsa", "type": "FESTIVAL"}
+{"id": "E_VICTORY_DAY", "label": "Victory Day", "type": "FESTIVAL"}
+{"id": "E_ORTHODOX_CHRISTMAS", "label": "Orthodox Christmas", "type": "FESTIVAL"}
+{"id": "E_WHITE_NIGHTS_FESTIVAL", "label": "White Nights Festival", "type": "FESTIVAL"}
+{"id": "D_FOLK_DANCE", "label": "Folk Dance", "type": "DANCE"}
+{"id": "D_KALINKA", "label": "Kalinka", "type": "DANCE"}
+{"id": "D_BARYNYA", "label": "Barynya", "type": "DANCE"}
+{"id": "D_TREPAK", "label": "Trepak", "type": "DANCE"}
+{"id": "W_TOLSTOY", "label": "Tolstoy", "type": "LITERATURE"}
+{"id": "W_DOSTOEVSKY", "label": "Dostoevsky", "type": "LITERATURE"}
+{"id": "W_PUSHKIN", "label": "Pushkin", "type": "LITERATURE"}
+{"id": "W_CHEKHOV", "label": "Chekhov", "type": "LITERATURE"}
+{"id": "W_GOGOL", "label": "Gogol", "type": "LITERATURE"}
+{"id": "H_TSARS", "label": "Tsars", "type": "HISTORY"}
+{"id": "H_SOVIET_UNION", "label": "Soviet Union", "type": "HISTORY"}
+{"id": "H_ROMANOVS", "label": "Romanovs", "type": "HISTORY"}
+{"id": "H_REVOLUTION", "label": "Revolution", "type": "HISTORY"}
+{"id": "C_ZAF", "label": "South Africa", "type": "COUNTRY"}
+{"id": "F_BILTONG", "label": "Biltong", "type": "FOOD"}
+{"id": "F_BOEREWORS", "label": "Boerewors", "type": "FOOD"}
+{"id": "F_BOBOTIE", "label": "Bobotie", "type": "FOOD"}
+{"id": "F_BUNNY_CHOW", "label": "Bunny Chow", "type": "FOOD"}
+{"id": "F_MALVA_PUDDING", "label": "Malva Pudding", "type": "FOOD"}
+{"id": "F_CHAKALAKA", "label": "Chakalaka", "type": "FOOD"}
+{"id": "F_KOEKSISTER", "label": "Koeksister", "type": "FOOD"}
+{"id": "F_VETKOEK", "label": "Vetkoek", "type": "FOOD"}
+{"id": "F_POTJIEKOS", "label": "Potjiekos", "type": "FOOD"}
+{"id": "F_MELKTERT", "label": "Melktert", "type": "FOOD"}
+{"id": "F_AMARULA", "label": "Amarula", "type": "FOOD"}
+{"id": "F_ROOIBOS_TEA", "label": "Rooibos Tea", "type": "FOOD"}
+{"id": "F_PAP", "label": "Pap", "type": "FOOD"}
+{"id": "F_GATSBY", "label": "Gatsby", "type": "FOOD"}
+{"id": "F_BRAAI", "label": "Braai", "type": "FOOD"}
+{"id": "S_ATHLETICS", "label": "Athletics", "type": "SPORT"}
+{"id": "C_MADIBA_SHIRT", "label": "Madiba Shirt", "type": "CLOTHING"}
+{"id": "C_SHWESHWE", "label": "Shweshwe", "type": "CLOTHING"}
+{"id": "C_VELDSKOEN", "label": "Veldskoen", "type": "CLOTHING"}
+{"id": "C_TRADITIONAL_BEADWORK", "label": "Traditional Beadwork", "type": "CLOTHING"}
+{"id": "C_ANIMAL_SKINS_TRADITIONAL", "label": "Animal Skins (Traditional)", "type": "CLOTHING"}
+{"id": "A_CAPE_DUTCH", "label": "Cape Dutch", "type": "ARCHITECTURE"}
+{"id": "A_RONDAVEL", "label": "Rondavel", "type": "ARCHITECTURE"}
+{"id": "A_NDEBELE_ART_HOUSES", "label": "Ndebele Art Houses", "type": "ARCHITECTURE"}
+{"id": "L_TABLE_MOUNTAIN", "label": "Table Mountain", "type": "LANDMARK"}
+{"id": "L_KRUGER_NATIONAL_PARK", "label": "Kruger National Park", "type": "LANDMARK"}
+{"id": "L_ROBBEN_ISLAND", "label": "Robben Island", "type": "LANDMARK"}
+{"id": "L_CAPE_OF_GOOD_HOPE", "label": "Cape of Good Hope", "type": "LANDMARK"}
+{"id": "L_DRAKENSBERG", "label": "Drakensberg", "type": "LANDMARK"}
+{"id": "L_BLYDE_RIVER_CANYON", "label": "Blyde River Canyon", "type": "LANDMARK"}
+{"id": "L_CRADLE_OF_HUMANKIND", "label": "Cradle of Humankind", "type": "LANDMARK"}
+{"id": "L_GARDEN_ROUTE", "label": "Garden Route", "type": "LANDMARK"}
+{"id": "L_VICTORIA__ALFRED_WATERFRONT", "label": "Victoria & Alfred Waterfront", "type": "LANDMARK"}
+{"id": "Y_SOUTH_AFRICAN_RAND", "label": "South African Rand", "type": "CURRENCY"}
+{"id": "G_ZULU", "label": "Zulu", "type": "LANGUAGE"}
+{"id": "G_XHOSA", "label": "Xhosa", "type": "LANGUAGE"}
+{"id": "G_AFRIKAANS", "label": "Afrikaans", "type": "LANGUAGE"}
+{"id": "G_SOTHO", "label": "Sotho", "type": "LANGUAGE"}
+{"id": "G_TSWANA", "label": "Tswana", "type": "LANGUAGE"}
+{"id": "N_BUFFALO", "label": "Buffalo", "type": "ANIMAL"}
+{"id": "N_CHEETAH", "label": "Cheetah", "type": "ANIMAL"}
+{"id": "N_GIRAFFE", "label": "Giraffe", "type": "ANIMAL"}
+{"id": "N_ZEBRA", "label": "Zebra", "type": "ANIMAL"}
+{"id": "N_HIPPO", "label": "Hippo", "type": "ANIMAL"}
+{"id": "N_PENGUIN", "label": "Penguin", "type": "ANIMAL"}
+{"id": "N_SPRINGBOK", "label": "Springbok", "type": "ANIMAL"}
+{"id": "E_FREEDOM_DAY", "label": "Freedom Day", "type": "FESTIVAL"}
+{"id": "E_HERITAGE_DAY", "label": "Heritage Day", "type": "FESTIVAL"}
+{"id": "E_CAPE_TOWN_JAZZ_FESTIVAL", "label": "Cape Town Jazz Festival", "type": "FESTIVAL"}
+{"id": "E_NATIONAL_ARTS_FESTIVAL", "label": "National Arts Festival", "type": "FESTIVAL"}
+{"id": "D_GUMBOOT_DANCE", "label": "Gumboot Dance", "type": "DANCE"}
+{"id": "D_PANTSULA", "label": "Pantsula", "type": "DANCE"}
+{"id": "D_ZULU_WAR_DANCE", "label": "Zulu War Dance", "type": "DANCE"}
+{"id": "D_TOYITOYI", "label": "Toyi-toyi", "type": "DANCE"}
+{"id": "D_INDLAMU", "label": "Indlamu", "type": "DANCE"}
+{"id": "H_APARTHEID", "label": "Apartheid", "type": "HISTORY"}
+{"id": "H_MANDELA", "label": "Mandela", "type": "HISTORY"}
+{"id": "H_BOER_WARS", "label": "Boer Wars", "type": "HISTORY"}
+{"id": "H_ZULU_KINGDOM", "label": "Zulu Kingdom", "type": "HISTORY"}
+{"id": "R_VELD", "label": "Veld", "type": "GEOGRAPHY"}
+{"id": "R_KAROO", "label": "Karoo", "type": "GEOGRAPHY"}
+{"id": "R_KALAHARI_DESERT", "label": "Kalahari Desert", "type": "GEOGRAPHY"}
+{"id": "C_MEX", "label": "Mexico", "type": "COUNTRY"}
+{"id": "F_TACOS", "label": "Tacos", "type": "FOOD"}
+{"id": "F_ENCHILADAS", "label": "Enchiladas", "type": "FOOD"}
+{"id": "F_GUACAMOLE", "label": "Guacamole", "type": "FOOD"}
+{"id": "F_TAMALES", "label": "Tamales", "type": "FOOD"}
+{"id": "F_CHILES_EN_NOGADA", "label": "Chiles en Nogada", "type": "FOOD"}
+{"id": "F_MOLE", "label": "Mole", "type": "FOOD"}
+{"id": "F_QUESADILLA", "label": "Quesadilla", "type": "FOOD"}
+{"id": "F_POZOLE", "label": "Pozole", "type": "FOOD"}
+{"id": "F_BURRITO", "label": "Burrito", "type": "FOOD"}
+{"id": "F_CHURROS", "label": "Churros", "type": "FOOD"}
+{"id": "F_SALSA", "label": "Salsa", "type": "FOOD"}
+{"id": "F_NACHOS", "label": "Nachos", "type": "FOOD"}
+{"id": "F_FAJITAS", "label": "Fajitas", "type": "FOOD"}
+{"id": "F_TOSTADAS", "label": "Tostadas", "type": "FOOD"}
+{"id": "F_ELOTE", "label": "Elote", "type": "FOOD"}
+{"id": "F_MENUDO", "label": "Menudo", "type": "FOOD"}
+{"id": "F_TEQUILA", "label": "Tequila", "type": "FOOD"}
+{"id": "F_MEZCAL", "label": "Mezcal", "type": "FOOD"}
+{"id": "F_HORCHATA", "label": "Horchata", "type": "FOOD"}
+{"id": "S_LUCHA_LIBRE", "label": "Lucha Libre", "type": "SPORT"}
+{"id": "S_BULLFIGHTING", "label": "Bullfighting", "type": "SPORT"}
+{"id": "S_CHARREADA", "label": "Charreada", "type": "SPORT"}
+{"id": "C_SOMBRERO", "label": "Sombrero", "type": "CLOTHING"}
+{"id": "C_PONCHO", "label": "Poncho", "type": "CLOTHING"}
+{"id": "C_HUIPIL", "label": "Huipil", "type": "CLOTHING"}
+{"id": "C_GUAYABERA", "label": "Guayabera", "type": "CLOTHING"}
+{"id": "C_REBOZO", "label": "Rebozo", "type": "CLOTHING"}
+{"id": "C_CHARRO_SUIT", "label": "Charro Suit", "type": "CLOTHING"}
+{"id": "C_CHINA_POBLANA", "label": "China Poblana", "type": "CLOTHING"}
+{"id": "A_AZTEC_PYRAMID", "label": "Aztec Pyramid", "type": "ARCHITECTURE"}
+{"id": "A_COLONIAL_CATHEDRAL", "label": "Colonial Cathedral", "type": "ARCHITECTURE"}
+{"id": "A_HACIENDA", "label": "Hacienda", "type": "ARCHITECTURE"}
+{"id": "A_MAYAN_RUINS", "label": "Mayan Ruins", "type": "ARCHITECTURE"}
+{"id": "L_CHICHEN_ITZA", "label": "Chichen Itza", "type": "LANDMARK"}
+{"id": "L_TEOTIHUACAN", "label": "Teotihuacan", "type": "LANDMARK"}
+{"id": "L_ZOCALO", "label": "Zocalo", "type": "LANDMARK"}
+{"id": "L_CANCUN_BEACHES", "label": "Cancun Beaches", "type": "LANDMARK"}
+{"id": "L_TULUM", "label": "Tulum", "type": "LANDMARK"}
+{"id": "L_PALENQUE", "label": "Palenque", "type": "LANDMARK"}
+{"id": "L_FRIDA_KAHLO_MUSEUM", "label": "Frida Kahlo Museum", "type": "LANDMARK"}
+{"id": "L_CHAPULTEPEC", "label": "Chapultepec", "type": "LANDMARK"}
+{"id": "L_CABO_SAN_LUCAS", "label": "Cabo San Lucas", "type": "LANDMARK"}
+{"id": "L_COPPER_CANYON", "label": "Copper Canyon", "type": "LANDMARK"}
+{"id": "Y_MEXICAN_PESO", "label": "Mexican Peso", "type": "CURRENCY"}
+{"id": "N_AXOLOTL", "label": "Axolotl", "type": "ANIMAL"}
+{"id": "N_CHIHUAHUA", "label": "Chihuahua", "type": "ANIMAL"}
+{"id": "N_MONARCH_BUTTERFLY", "label": "Monarch Butterfly", "type": "ANIMAL"}
+{"id": "N_XOLOITZCUINTLI", "label": "Xoloitzcuintli", "type": "ANIMAL"}
+{"id": "N_COATI", "label": "Coati", "type": "ANIMAL"}
+{"id": "N_OCELOT", "label": "Ocelot", "type": "ANIMAL"}
+{"id": "E_DAY_OF_THE_DEAD", "label": "Day of the Dead", "type": "FESTIVAL"}
+{"id": "E_CINCO_DE_MAYO", "label": "Cinco de Mayo", "type": "FESTIVAL"}
+{"id": "E_LAS_POSADAS", "label": "Las Posadas", "type": "FESTIVAL"}
+{"id": "E_GUELAGUETZA", "label": "Guelaguetza", "type": "FESTIVAL"}
+{"id": "D_JARABE_TAPATIO", "label": "Jarabe Tapatio", "type": "DANCE"}
+{"id": "D_MARIACHI", "label": "Mariachi", "type": "DANCE"}
+{"id": "D_FOLKLORICO", "label": "Folklorico", "type": "DANCE"}
+{"id": "D_DANZA_DE_LOS_VOLADORES", "label": "Danza de los Voladores", "type": "DANCE"}
+{"id": "T_MURALISM", "label": "Muralism", "type": "ART"}
+{"id": "T_FRIDA_KAHLO", "label": "Frida Kahlo", "type": "ART"}
+{"id": "T_DIEGO_RIVERA", "label": "Diego Rivera", "type": "ART"}
+{"id": "T_MAYA_ART", "label": "Maya Art", "type": "ART"}
+{"id": "T_AZTEC_ART", "label": "Aztec Art", "type": "ART"}
+{"id": "H_AZTECS", "label": "Aztecs", "type": "HISTORY"}
+{"id": "H_MAYANS", "label": "Mayans", "type": "HISTORY"}
+{"id": "H_SPANISH_CONQUEST", "label": "Spanish Conquest", "type": "HISTORY"}
+{"id": "H_MEXICAN_REVOLUTION", "label": "Mexican Revolution", "type": "HISTORY"}
+{"id": "C_ARG", "label": "Argentina", "type": "COUNTRY"}
+{"id": "F_ASADO", "label": "Asado", "type": "FOOD"}
+{"id": "F_EMPANADAS", "label": "Empanadas", "type": "FOOD"}
+{"id": "F_DULCE_DE_LECHE", "label": "Dulce de Leche", "type": "FOOD"}
+{"id": "F_CHIMICHURRI", "label": "Chimichurri", "type": "FOOD"}
+{"id": "F_MILANESA", "label": "Milanesa", "type": "FOOD"}
+{"id": "F_ALFAJOR", "label": "Alfajor", "type": "FOOD"}
+{"id": "F_CHORIPAN", "label": "Choripan", "type": "FOOD"}
+{"id": "F_LOCRO", "label": "Locro", "type": "FOOD"}
+{"id": "F_MATAMBRE", "label": "Matambre", "type": "FOOD"}
+{"id": "F_YERBA_MATE", "label": "Yerba Mate", "type": "FOOD"}
+{"id": "F_PROVOLETA", "label": "Provoleta", "type": "FOOD"}
+{"id": "F_FAINA", "label": "Faina", "type": "FOOD"}
+{"id": "F_MEDIALUNAS", "label": "Medialunas", "type": "FOOD"}
+{"id": "F_MALBEC_WINE", "label": "Malbec Wine", "type": "FOOD"}
+{"id": "F_CARBONADA", "label": "Carbonada", "type": "FOOD"}
+{"id": "F_HUMITA", "label": "Humita", "type": "FOOD"}
+{"id": "S_POLO", "label": "Polo", "type": "SPORT"}
+{"id": "S_FIELD_HOCKEY", "label": "Field Hockey", "type": "SPORT"}
+{"id": "S_AUTO_RACING", "label": "Auto Racing", "type": "SPORT"}
+{"id": "C_GAUCHO_PANTS", "label": "Gaucho Pants", "type": "CLOTHING"}
+{"id": "C_FAJA", "label": "Faja", "type": "CLOTHING"}
+{"id": "A_BEAUXARTS", "label": "Beaux-Arts", "type": "ARCHITECTURE"}
+{"id": "A_MODERN", "label": "Modern", "type": "ARCHITECTURE"}
+{"id": "A_NEOCLASSICAL", "label": "Neoclassical", "type": "ARCHITECTURE"}
+{"id": "L_PERITO_MORENO_GLACIER", "label": "Perito Moreno Glacier", "type": "LANDMARK"}
+{"id": "L_OBELISCO", "label": "Obelisco", "type": "LANDMARK"}
+{"id": "L_LA_BOCA", "label": "La Boca", "type": "LANDMARK"}
+{"id": "L_CASA_ROSADA", "label": "Casa Rosada", "type": "LANDMARK"}
+{"id": "L_TEATRO_COLON", "label": "Teatro Colon", "type": "LANDMARK"}
+{"id": "L_BARILOCHE", "label": "Bariloche", "type": "LANDMARK"}
+{"id": "L_MOUNT_ACONCAGUA", "label": "Mount Aconcagua", "type": "LANDMARK"}
+{"id": "L_VALDES_PENINSULA", "label": "Valdes Peninsula", "type": "LANDMARK"}
+{"id": "L_TIERRA_DEL_FUEGO", "label": "Tierra del Fuego", "type": "LANDMARK"}
+{"id": "Y_ARGENTINE_PESO", "label": "Argentine Peso", "type": "CURRENCY"}
+{"id": "N_HORNERO", "label": "Hornero", "type": "ANIMAL"}
+{"id": "N_GUANACO", "label": "Guanaco", "type": "ANIMAL"}
+{"id": "N_PUMA", "label": "Puma", "type": "ANIMAL"}
+{"id": "N_CONDOR", "label": "Condor", "type": "ANIMAL"}
+{"id": "N_MARA", "label": "Mara", "type": "ANIMAL"}
+{"id": "N_SOUTHERN_RIGHT_WHALE", "label": "Southern Right Whale", "type": "ANIMAL"}
+{"id": "E_TANGO_FESTIVAL", "label": "Tango Festival", "type": "FESTIVAL"}
+{"id": "E_COSQUIN_FOLK_FESTIVAL", "label": "Cosquin Folk Festival", "type": "FESTIVAL"}
+{"id": "E_VENDIMIA_FESTIVAL", "label": "Vendimia Festival", "type": "FESTIVAL"}
+{"id": "D_TANGO", "label": "Tango", "type": "DANCE"}
+{"id": "D_MILONGA", "label": "Milonga", "type": "DANCE"}
+{"id": "D_CHACARERA", "label": "Chacarera", "type": "DANCE"}
+{"id": "D_ZAMBA", "label": "Zamba", "type": "DANCE"}
+{"id": "D_MALAMBO", "label": "Malambo", "type": "DANCE"}
+{"id": "H_PERONISM", "label": "Peronism", "type": "HISTORY"}
+{"id": "H_FALKLANDS_WAR", "label": "Falklands War", "type": "HISTORY"}
+{"id": "H_INDEPENDENCE", "label": "Independence", "type": "HISTORY"}
+{"id": "H_IMMIGRATION", "label": "Immigration", "type": "HISTORY"}
+{"id": "R_PAMPAS", "label": "Pampas", "type": "GEOGRAPHY"}
+{"id": "R_PATAGONIA", "label": "Patagonia", "type": "GEOGRAPHY"}
+{"id": "R_ANDES", "label": "Andes", "type": "GEOGRAPHY"}
+{"id": "R_ATLANTIC_COAST", "label": "Atlantic Coast", "type": "GEOGRAPHY"}
+{"id": "M_TANGO", "label": "Tango", "type": "MUSIC"}
+{"id": "M_FOLCLORE", "label": "Folclore", "type": "MUSIC"}
+{"id": "M_ROCK_NACIONAL", "label": "Rock Nacional", "type": "MUSIC"}
+{"id": "M_CUMBIA", "label": "Cumbia", "type": "MUSIC"}
+{"id": "C_ESP", "label": "Spain", "type": "COUNTRY"}
+{"id": "F_PAELLA", "label": "Paella", "type": "FOOD"}
+{"id": "F_TAPAS", "label": "Tapas", "type": "FOOD"}
+{"id": "F_GAZPACHO", "label": "Gazpacho", "type": "FOOD"}
+{"id": "F_JAM\u00d3N_IB\u00c9RICO", "label": "Jam\u00f3n Ib\u00e9rico", "type": "FOOD"}
+{"id": "F_TORTILLA_ESPA\u00d1OLA", "label": "Tortilla Espa\u00f1ola", "type": "FOOD"}
+{"id": "F_PATATAS_BRAVAS", "label": "Patatas Bravas", "type": "FOOD"}
+{"id": "F_SANGRIA", "label": "Sangria", "type": "FOOD"}
+{"id": "F_FABADA", "label": "Fabada", "type": "FOOD"}
+{"id": "F_TURRON", "label": "Turron", "type": "FOOD"}
+{"id": "F_PISTO", "label": "Pisto", "type": "FOOD"}
+{"id": "F_GAMBAS_AL_AJILLO", "label": "Gambas al Ajillo", "type": "FOOD"}
+{"id": "F_PULPO_A_LA_GALLEGA", "label": "Pulpo a la Gallega", "type": "FOOD"}
+{"id": "F_CROQUETAS", "label": "Croquetas", "type": "FOOD"}
+{"id": "F_MANCHEGO_CHEESE", "label": "Manchego Cheese", "type": "FOOD"}
+{"id": "F_CAVA", "label": "Cava", "type": "FOOD"}
+{"id": "S_PADEL", "label": "Padel", "type": "SPORT"}
+{"id": "C_FLAMENCO_DRESS", "label": "Flamenco Dress", "type": "CLOTHING"}
+{"id": "C_MANTILLA", "label": "Mantilla", "type": "CLOTHING"}
+{"id": "C_PEINETA", "label": "Peineta", "type": "CLOTHING"}
+{"id": "C_GILET", "label": "Gilet", "type": "CLOTHING"}
+{"id": "A_SAGRADA_FAMILIA", "label": "Sagrada Familia", "type": "ARCHITECTURE"}
+{"id": "A_ALHAMBRA", "label": "Alhambra", "type": "ARCHITECTURE"}
+{"id": "A_MOORISH", "label": "Moorish", "type": "ARCHITECTURE"}
+{"id": "A_GOTHIC", "label": "Gothic", "type": "ARCHITECTURE"}
+{"id": "A_RENAISSANCE", "label": "Renaissance", "type": "ARCHITECTURE"}
+{"id": "A_MODERNISME", "label": "Modernisme", "type": "ARCHITECTURE"}
+{"id": "A_MUDEJAR", "label": "Mudejar", "type": "ARCHITECTURE"}
+{"id": "L_SAGRADA_FAMILIA", "label": "Sagrada Familia", "type": "LANDMARK"}
+{"id": "L_PARK_GUELL", "label": "Park Guell", "type": "LANDMARK"}
+{"id": "L_ALHAMBRA", "label": "Alhambra", "type": "LANDMARK"}
+{"id": "L_PRADO_MUSEUM", "label": "Prado Museum", "type": "LANDMARK"}
+{"id": "L_ROYAL_PALACE_OF_MADRID", "label": "Royal Palace of Madrid", "type": "LANDMARK"}
+{"id": "L_MEZQUITA_OF_CORDOBA", "label": "Mezquita of Cordoba", "type": "LANDMARK"}
+{"id": "L_GUGGENHEIM_BILBAO", "label": "Guggenheim Bilbao", "type": "LANDMARK"}
+{"id": "L_CASA_BATLLO", "label": "Casa Batllo", "type": "LANDMARK"}
+{"id": "L_IBIZA", "label": "Ibiza", "type": "LANDMARK"}
+{"id": "L_CAMINO_DE_SANTIAGO", "label": "Camino de Santiago", "type": "LANDMARK"}
+{"id": "G_CATALAN", "label": "Catalan", "type": "LANGUAGE"}
+{"id": "G_BASQUE", "label": "Basque", "type": "LANGUAGE"}
+{"id": "G_GALICIAN", "label": "Galician", "type": "LANGUAGE"}
+{"id": "N_BULL", "label": "Bull", "type": "ANIMAL"}
+{"id": "N_IBERIAN_LYNX", "label": "Iberian Lynx", "type": "ANIMAL"}
+{"id": "N_GECKO", "label": "Gecko", "type": "ANIMAL"}
+{"id": "E_LA_TOMATINA", "label": "La Tomatina", "type": "FESTIVAL"}
+{"id": "E_RUNNING_OF_THE_BULLS", "label": "Running of the Bulls", "type": "FESTIVAL"}
+{"id": "E_SEMANA_SANTA", "label": "Semana Santa", "type": "FESTIVAL"}
+{"id": "E_FERIA_DE_ABRIL", "label": "Feria de Abril", "type": "FESTIVAL"}
+{"id": "E_LAS_FALLAS", "label": "Las Fallas", "type": "FESTIVAL"}
+{"id": "D_FLAMENCO", "label": "Flamenco", "type": "DANCE"}
+{"id": "D_SARDANA", "label": "Sardana", "type": "DANCE"}
+{"id": "D_JOTA", "label": "Jota", "type": "DANCE"}
+{"id": "D_FANDANGO", "label": "Fandango", "type": "DANCE"}
+{"id": "D_PASO_DOBLE", "label": "Paso Doble", "type": "DANCE"}
+{"id": "T_PICASSO", "label": "Picasso", "type": "ART"}
+{"id": "T_DALI", "label": "Dali", "type": "ART"}
+{"id": "T_GOYA", "label": "Goya", "type": "ART"}
+{"id": "T_VELAZQUEZ", "label": "Velazquez", "type": "ART"}
+{"id": "T_MIRO", "label": "Miro", "type": "ART"}
+{"id": "H_SPANISH_EMPIRE", "label": "Spanish Empire", "type": "HISTORY"}
+{"id": "H_CIVIL_WAR", "label": "Civil War", "type": "HISTORY"}
+{"id": "C_TUR", "label": "Turkey", "type": "COUNTRY"}
+{"id": "F_KEBAB", "label": "Kebab", "type": "FOOD"}
+{"id": "F_TURKISH_DELIGHT", "label": "Turkish Delight", "type": "FOOD"}
+{"id": "F_MEZE", "label": "Meze", "type": "FOOD"}
+{"id": "F_DOLMA", "label": "Dolma", "type": "FOOD"}
+{"id": "F_SIMIT", "label": "Simit", "type": "FOOD"}
+{"id": "F_LAHMACUN", "label": "Lahmacun", "type": "FOOD"}
+{"id": "F_PIDE", "label": "Pide", "type": "FOOD"}
+{"id": "F_MANTI", "label": "Manti", "type": "FOOD"}
+{"id": "F_TURKISH_COFFEE", "label": "Turkish Coffee", "type": "FOOD"}
+{"id": "F_BOREK", "label": "Borek", "type": "FOOD"}
+{"id": "F_KUNEFE", "label": "Kunefe", "type": "FOOD"}
+{"id": "F_ISKENDER_KEBAB", "label": "Iskender Kebab", "type": "FOOD"}
+{"id": "F_AYRAN", "label": "Ayran", "type": "FOOD"}
+{"id": "F_RAKI", "label": "Raki", "type": "FOOD"}
+{"id": "F_LOKUM", "label": "Lokum", "type": "FOOD"}
+{"id": "F_MENEMEN", "label": "Menemen", "type": "FOOD"}
+{"id": "S_WEIGHTLIFTING", "label": "Weightlifting", "type": "SPORT"}
+{"id": "C_FEZ", "label": "Fez", "type": "CLOTHING"}
+{"id": "C_SHALWAR", "label": "Shalwar", "type": "CLOTHING"}
+{"id": "C_YELEK", "label": "Yelek", "type": "CLOTHING"}
+{"id": "C_BINDALLI", "label": "Bindalli", "type": "CLOTHING"}
+{"id": "A_OTTOMAN_PALACE", "label": "Ottoman Palace", "type": "ARCHITECTURE"}
+{"id": "A_BAZAAR", "label": "Bazaar", "type": "ARCHITECTURE"}
+{"id": "A_BYZANTINE", "label": "Byzantine", "type": "ARCHITECTURE"}
+{"id": "A_SELJUK", "label": "Seljuk", "type": "ARCHITECTURE"}
+{"id": "L_HAGIA_SOPHIA", "label": "Hagia Sophia", "type": "LANDMARK"}
+{"id": "L_BLUE_MOSQUE", "label": "Blue Mosque", "type": "LANDMARK"}
+{"id": "L_CAPPADOCIA", "label": "Cappadocia", "type": "LANDMARK"}
+{"id": "L_GRAND_BAZAAR", "label": "Grand Bazaar", "type": "LANDMARK"}
+{"id": "L_TOPKAPI_PALACE", "label": "Topkapi Palace", "type": "LANDMARK"}
+{"id": "L_PAMUKKALE", "label": "Pamukkale", "type": "LANDMARK"}
+{"id": "L_EPHESUS", "label": "Ephesus", "type": "LANDMARK"}
+{"id": "L_GALATA_TOWER", "label": "Galata Tower", "type": "LANDMARK"}
+{"id": "L_MOUNT_ARARAT", "label": "Mount Ararat", "type": "LANDMARK"}
+{"id": "L_BOSPHORUS", "label": "Bosphorus", "type": "LANDMARK"}
+{"id": "Y_TURKISH_LIRA", "label": "Turkish Lira", "type": "CURRENCY"}
+{"id": "G_TURKISH", "label": "Turkish", "type": "LANGUAGE"}
+{"id": "N_ANGORA_CAT", "label": "Angora Cat", "type": "ANIMAL"}
+{"id": "N_KANGGAL_DOG", "label": "Kanggal Dog", "type": "ANIMAL"}
+{"id": "N_GRAY_WOLF", "label": "Gray Wolf", "type": "ANIMAL"}
+{"id": "N_VAN_CAT", "label": "Van Cat", "type": "ANIMAL"}
+{"id": "N_SEA_TURTLE", "label": "Sea Turtle", "type": "ANIMAL"}
+{"id": "E_REPUBLIC_DAY", "label": "Republic Day", "type": "FESTIVAL"}
+{"id": "E_TULIP_FESTIVAL", "label": "Tulip Festival", "type": "FESTIVAL"}
+{"id": "E_CAMEL_WRESTLING_FESTIVAL", "label": "Camel Wrestling Festival", "type": "FESTIVAL"}
+{"id": "D_WHIRLING_DERVISHES", "label": "Whirling Dervishes", "type": "DANCE"}
+{"id": "D_HALAY", "label": "Halay", "type": "DANCE"}
+{"id": "D_HORON", "label": "Horon", "type": "DANCE"}
+{"id": "D_ZEYBEK", "label": "Zeybek", "type": "DANCE"}
+{"id": "H_OTTOMAN_EMPIRE", "label": "Ottoman Empire", "type": "HISTORY"}
+{"id": "H_BYZANTINE_EMPIRE", "label": "Byzantine Empire", "type": "HISTORY"}
+{"id": "H_ATATURK", "label": "Ataturk", "type": "HISTORY"}
+{"id": "H_TROY", "label": "Troy", "type": "HISTORY"}
+{"id": "R_ANATOLIA", "label": "Anatolia", "type": "GEOGRAPHY"}
+{"id": "R_BLACK_SEA", "label": "Black Sea", "type": "GEOGRAPHY"}
+{"id": "R_MEDITERRANEAN", "label": "Mediterranean", "type": "GEOGRAPHY"}
+{"id": "R_AEGEAN", "label": "Aegean", "type": "GEOGRAPHY"}
+{"id": "R_THRACE", "label": "Thrace", "type": "GEOGRAPHY"}
+{"id": "T_CARPET_WEAVING", "label": "Carpet Weaving", "type": "ART"}
+{"id": "T_CERAMICS", "label": "Ceramics", "type": "ART"}
+{"id": "T_CALLIGRAPHY", "label": "Calligraphy", "type": "ART"}
+{"id": "C_THA", "label": "Thailand", "type": "COUNTRY"}
+{"id": "F_PAD_THAI", "label": "Pad Thai", "type": "FOOD"}
+{"id": "F_TOM_YUM_GOONG", "label": "Tom Yum Goong", "type": "FOOD"}
+{"id": "F_GREEN_CURRY", "label": "Green Curry", "type": "FOOD"}
+{"id": "F_SOM_TUM", "label": "Som Tum", "type": "FOOD"}
+{"id": "F_MANGO_STICKY_RICE", "label": "Mango Sticky Rice", "type": "FOOD"}
+{"id": "F_MASSAMAN_CURRY", "label": "Massaman Curry", "type": "FOOD"}
+{"id": "F_SATAY", "label": "Satay", "type": "FOOD"}
+{"id": "F_THAI_ICED_TEA", "label": "Thai Iced Tea", "type": "FOOD"}
+{"id": "F_PANANG_CURRY", "label": "Panang Curry", "type": "FOOD"}
+{"id": "F_KHAO_SOI", "label": "Khao Soi", "type": "FOOD"}
+{"id": "F_TOM_KHA_GAI", "label": "Tom Kha Gai", "type": "FOOD"}
+{"id": "F_LARB", "label": "Larb", "type": "FOOD"}
+{"id": "F_STICKY_RICE", "label": "Sticky Rice", "type": "FOOD"}
+{"id": "F_COCONUT_MILK", "label": "Coconut Milk", "type": "FOOD"}
+{"id": "S_MUAY_THAI", "label": "Muay Thai", "type": "SPORT"}
+{"id": "S_SEPAK_TAKRAW", "label": "Sepak Takraw", "type": "SPORT"}
+{"id": "C_CHUT_THAI", "label": "Chut Thai", "type": "CLOTHING"}
+{"id": "C_SABAI", "label": "Sabai", "type": "CLOTHING"}
+{"id": "C_PHA_NUNG", "label": "Pha Nung", "type": "CLOTHING"}
+{"id": "C_SINH", "label": "Sinh", "type": "CLOTHING"}
+{"id": "C_RAJ_PATTERN", "label": "Raj Pattern", "type": "CLOTHING"}
+{"id": "A_WAT_TEMPLE", "label": "Wat (Temple)", "type": "ARCHITECTURE"}
+{"id": "A_STILT_HOUSE", "label": "Stilt House", "type": "ARCHITECTURE"}
+{"id": "A_ROYAL_PALACE", "label": "Royal Palace", "type": "ARCHITECTURE"}
+{"id": "A_SALA_THAI", "label": "Sala Thai", "type": "ARCHITECTURE"}
+{"id": "L_GRAND_PALACE", "label": "Grand Palace", "type": "LANDMARK"}
+{"id": "L_WAT_ARUN", "label": "Wat Arun", "type": "LANDMARK"}
+{"id": "L_PHUKET_BEACHES", "label": "Phuket Beaches", "type": "LANDMARK"}
+{"id": "L_AYUTTHAYA", "label": "Ayutthaya", "type": "LANDMARK"}
+{"id": "L_WAT_PHRA_KAEW", "label": "Wat Phra Kaew", "type": "LANDMARK"}
+{"id": "L_PHI_PHI_ISLANDS", "label": "Phi Phi Islands", "type": "LANDMARK"}
+{"id": "L_FLOATING_MARKET", "label": "Floating Market", "type": "LANDMARK"}
+{"id": "L_KHAO_YAI_NATIONAL_PARK", "label": "Khao Yai National Park", "type": "LANDMARK"}
+{"id": "L_RAILAY_BEACH", "label": "Railay Beach", "type": "LANDMARK"}
+{"id": "L_SUKHOTHAI", "label": "Sukhothai", "type": "LANDMARK"}
+{"id": "Y_THAI_BAHT", "label": "Thai Baht", "type": "CURRENCY"}
+{"id": "G_THAI", "label": "Thai", "type": "LANGUAGE"}
+{"id": "N_SIAMESE_CAT", "label": "Siamese Cat", "type": "ANIMAL"}
+{"id": "N_WATER_BUFFALO", "label": "Water Buffalo", "type": "ANIMAL"}
+{"id": "N_GIBBON", "label": "Gibbon", "type": "ANIMAL"}
+{"id": "N_MONITOR_LIZARD", "label": "Monitor Lizard", "type": "ANIMAL"}
+{"id": "E_SONGKRAN", "label": "Songkran", "type": "FESTIVAL"}
+{"id": "E_LOY_KRATHONG", "label": "Loy Krathong", "type": "FESTIVAL"}
+{"id": "E_YI_PENG", "label": "Yi Peng", "type": "FESTIVAL"}
+{"id": "E_VEGETARIAN_FESTIVAL", "label": "Vegetarian Festival", "type": "FESTIVAL"}
+{"id": "E_GHOST_FESTIVAL", "label": "Ghost Festival", "type": "FESTIVAL"}
+{"id": "E_MONKEY_BUFFET_FESTIVAL", "label": "Monkey Buffet Festival", "type": "FESTIVAL"}
+{"id": "D_KHON", "label": "Khon", "type": "DANCE"}
+{"id": "D_FAWN_THAI", "label": "Fawn Thai", "type": "DANCE"}
+{"id": "D_RAM_THAI", "label": "Ram Thai", "type": "DANCE"}
+{"id": "D_LAKHON", "label": "Lakhon", "type": "DANCE"}
+{"id": "H_SIAM", "label": "Siam", "type": "HISTORY"}
+{"id": "H_AYUTTHAYA_KINGDOM", "label": "Ayutthaya Kingdom", "type": "HISTORY"}
+{"id": "H_SUKHOTHAI_KINGDOM", "label": "Sukhothai Kingdom", "type": "HISTORY"}
+{"id": "H_MONARCHY", "label": "Monarchy", "type": "HISTORY"}
+{"id": "R_MEKONG_RIVER", "label": "Mekong River", "type": "GEOGRAPHY"}
+{"id": "R_ANDAMAN_SEA", "label": "Andaman Sea", "type": "GEOGRAPHY"}
+{"id": "R_GULF_OF_THAILAND", "label": "Gulf of Thailand", "type": "GEOGRAPHY"}
+{"id": "R_TROPICAL_RAINFOREST", "label": "Tropical Rainforest", "type": "GEOGRAPHY"}
+{"id": "R_ISAN", "label": "Isan", "type": "GEOGRAPHY"}
+{"id": "B_BUDDHISM", "label": "Buddhism", "type": "RELIGION"}
+{"id": "K_TROPICAL", "label": "Tropical", "type": "CLIMATE"}
+{"id": "K_MONSOON", "label": "Monsoon", "type": "CLIMATE"}
+{"id": "V_STREET_FOOD_CULTURE", "label": "Street food culture", "type": "LIVING_STYLE"}
+{"id": "V_SANUK_FUN", "label": "Sanuk (Fun)", "type": "LIVING_STYLE"}
+{"id": "C_KOR", "label": "South Korea", "type": "COUNTRY"}
+{"id": "F_KIMCHI", "label": "Kimchi", "type": "FOOD"}
+{"id": "F_BIBIMBAP", "label": "Bibimbap", "type": "FOOD"}
+{"id": "F_BULGOGI", "label": "Bulgogi", "type": "FOOD"}
+{"id": "F_TTEOKBOKKI", "label": "Tteokbokki", "type": "FOOD"}
+{"id": "F_JAPCHAE", "label": "Japchae", "type": "FOOD"}
+{"id": "F_SAMGYEOPSAL", "label": "Samgyeopsal", "type": "FOOD"}
+{"id": "F_GIMBAP", "label": "Gimbap", "type": "FOOD"}
+{"id": "F_RAMYEON", "label": "Ramyeon", "type": "FOOD"}
+{"id": "F_HAEMUL_PAJEON", "label": "Haemul Pajeon", "type": "FOOD"}
+{"id": "F_SOJU", "label": "Soju", "type": "FOOD"}
+{"id": "F_GALBI", "label": "Galbi", "type": "FOOD"}
+{"id": "F_SUNDUBU_JJIGAE", "label": "Sundubu Jjigae", "type": "FOOD"}
+{"id": "F_MANDU", "label": "Mandu", "type": "FOOD"}
+{"id": "F_BINGSU", "label": "Bingsu", "type": "FOOD"}
+{"id": "F_HOTTEOK", "label": "Hotteok", "type": "FOOD"}
+{"id": "F_MAKGEOLLI", "label": "Makgeolli", "type": "FOOD"}
+{"id": "F_BANCHAN", "label": "Banchan", "type": "FOOD"}
+{"id": "S_TAEKWONDO", "label": "Taekwondo", "type": "SPORT"}
+{"id": "S_ESPORTS", "label": "E-sports", "type": "SPORT"}
+{"id": "S_SKATING", "label": "Skating", "type": "SPORT"}
+{"id": "C_HANBOK", "label": "Hanbok", "type": "CLOTHING"}
+{"id": "C_GAT", "label": "Gat", "type": "CLOTHING"}
+{"id": "C_JEOGORI", "label": "Jeogori", "type": "CLOTHING"}
+{"id": "C_CHIMA", "label": "Chima", "type": "CLOTHING"}
+{"id": "A_HANOK", "label": "Hanok", "type": "ARCHITECTURE"}
+{"id": "A_BUDDHIST_TEMPLE", "label": "Buddhist Temple", "type": "ARCHITECTURE"}
+{"id": "A_PAVILION", "label": "Pavilion", "type": "ARCHITECTURE"}
+{"id": "L_GYEONGBOKGUNG_PALACE", "label": "Gyeongbokgung Palace", "type": "LANDMARK"}
+{"id": "L_N_SEOUL_TOWER", "label": "N Seoul Tower", "type": "LANDMARK"}
+{"id": "L_BUKCHON_HANOK_VILLAGE", "label": "Bukchon Hanok Village", "type": "LANDMARK"}
+{"id": "L_JEJU_ISLAND", "label": "Jeju Island", "type": "LANDMARK"}
+{"id": "L_CHANGDEOKGUNG", "label": "Changdeokgung", "type": "LANDMARK"}
+{"id": "L_DMZ", "label": "DMZ", "type": "LANDMARK"}
+{"id": "L_NAMDAEMUN_MARKET", "label": "Namdaemun Market", "type": "LANDMARK"}
+{"id": "L_BUSAN_HAEUNDAE_BEACH", "label": "Busan Haeundae Beach", "type": "LANDMARK"}
+{"id": "L_SEORAKSAN_NATIONAL_PARK", "label": "Seoraksan National Park", "type": "LANDMARK"}
+{"id": "L_LOTTE_WORLD_TOWER", "label": "Lotte World Tower", "type": "LANDMARK"}
+{"id": "Y_SOUTH_KOREAN_WON", "label": "South Korean Won", "type": "CURRENCY"}
+{"id": "G_KOREAN", "label": "Korean", "type": "LANGUAGE"}
+{"id": "N_MAGPIE", "label": "Magpie", "type": "ANIMAL"}
+{"id": "N_JINDO_DOG", "label": "Jindo Dog", "type": "ANIMAL"}
+{"id": "E_SEOLLAL", "label": "Seollal", "type": "FESTIVAL"}
+{"id": "E_CHUSEOK", "label": "Chuseok", "type": "FESTIVAL"}
+{"id": "E_BORYEONG_MUD_FESTIVAL", "label": "Boryeong Mud Festival", "type": "FESTIVAL"}
+{"id": "D_KPOP", "label": "K-Pop", "type": "DANCE"}
+{"id": "D_MASK_DANCE", "label": "Mask Dance", "type": "DANCE"}
+{"id": "D_SALPURI", "label": "Salpuri", "type": "DANCE"}
+{"id": "D_GANGGANGSULLAE", "label": "Ganggangsullae", "type": "DANCE"}
+{"id": "H_JOSEON_DYNASTY", "label": "Joseon Dynasty", "type": "HISTORY"}
+{"id": "H_KOREAN_WAR", "label": "Korean War", "type": "HISTORY"}
+{"id": "H_HANGUL_INVENTION", "label": "Hangul Invention", "type": "HISTORY"}
+{"id": "R_PENINSULA", "label": "Peninsula", "type": "GEOGRAPHY"}
+{"id": "R_MOUNTAINS", "label": "Mountains", "type": "GEOGRAPHY"}
+{"id": "R_YELLOW_SEA", "label": "Yellow Sea", "type": "GEOGRAPHY"}
+{"id": "R_SEA_OF_JAPAN", "label": "Sea of Japan", "type": "GEOGRAPHY"}
+{"id": "X_SAMSUNG", "label": "Samsung", "type": "TECHNOLOGY"}
+{"id": "X_HYUNDAI", "label": "Hyundai", "type": "TECHNOLOGY"}
+{"id": "X_ELECTRONICS", "label": "Electronics", "type": "TECHNOLOGY"}
+{"id": "X_ROBOTICS", "label": "Robotics", "type": "TECHNOLOGY"}
+{"id": "C_GRC", "label": "Greece", "type": "COUNTRY"}
+{"id": "F_MOUSSAKA", "label": "Moussaka", "type": "FOOD"}
+{"id": "F_SOUVLAKI", "label": "Souvlaki", "type": "FOOD"}
+{"id": "F_GYRO", "label": "Gyro", "type": "FOOD"}
+{"id": "F_TZATZIKI", "label": "Tzatziki", "type": "FOOD"}
+{"id": "F_FETA_CHEESE", "label": "Feta Cheese", "type": "FOOD"}
+{"id": "F_GREEK_SALAD", "label": "Greek Salad", "type": "FOOD"}
+{"id": "F_SPANAKOPITA", "label": "Spanakopita", "type": "FOOD"}
+{"id": "F_DOLMADES", "label": "Dolmades", "type": "FOOD"}
+{"id": "F_LOUKOUMADES", "label": "Loukoumades", "type": "FOOD"}
+{"id": "F_PASTITSIO", "label": "Pastitsio", "type": "FOOD"}
+{"id": "F_KALAMATA_OLIVES", "label": "Kalamata Olives", "type": "FOOD"}
+{"id": "F_YOGURT", "label": "Yogurt", "type": "FOOD"}
+{"id": "F_HONEY", "label": "Honey", "type": "FOOD"}
+{"id": "F_OUZO", "label": "Ouzo", "type": "FOOD"}
+{"id": "F_RETSINA", "label": "Retsina", "type": "FOOD"}
+{"id": "F_FRAPPE", "label": "Frappe", "type": "FOOD"}
+{"id": "S_MARATHON", "label": "Marathon", "type": "SPORT"}
+{"id": "S_WATER_POLO", "label": "Water Polo", "type": "SPORT"}
+{"id": "C_CHITON", "label": "Chiton", "type": "CLOTHING"}
+{"id": "C_TOGA", "label": "Toga", "type": "CLOTHING"}
+{"id": "C_FUSTANELLA", "label": "Fustanella", "type": "CLOTHING"}
+{"id": "C_PEPLOS", "label": "Peplos", "type": "CLOTHING"}
+{"id": "C_HIMATION", "label": "Himation", "type": "CLOTHING"}
+{"id": "A_PARTHENON", "label": "Parthenon", "type": "ARCHITECTURE"}
+{"id": "A_ACROPOLIS", "label": "Acropolis", "type": "ARCHITECTURE"}
+{"id": "A_CYCLADIC_HOUSE", "label": "Cycladic House", "type": "ARCHITECTURE"}
+{"id": "A_DORIC", "label": "Doric", "type": "ARCHITECTURE"}
+{"id": "A_IONIC", "label": "Ionic", "type": "ARCHITECTURE"}
+{"id": "A_CORINTHIAN", "label": "Corinthian", "type": "ARCHITECTURE"}
+{"id": "A_WHITEWASHED_HOUSES", "label": "Whitewashed Houses", "type": "ARCHITECTURE"}
+{"id": "A_BYZANTINE_CHURCH", "label": "Byzantine Church", "type": "ARCHITECTURE"}
+{"id": "L_ACROPOLIS", "label": "Acropolis", "type": "LANDMARK"}
+{"id": "L_PARTHENON", "label": "Parthenon", "type": "LANDMARK"}
+{"id": "L_SANTORINI", "label": "Santorini", "type": "LANDMARK"}
+{"id": "L_MYKONOS", "label": "Mykonos", "type": "LANDMARK"}
+{"id": "L_DELPHI", "label": "Delphi", "type": "LANDMARK"}
+{"id": "L_METEORA", "label": "Meteora", "type": "LANDMARK"}
+{"id": "L_OLYMPIA", "label": "Olympia", "type": "LANDMARK"}
+{"id": "L_KNOSSOS", "label": "Knossos", "type": "LANDMARK"}
+{"id": "L_MOUNT_OLYMPUS", "label": "Mount Olympus", "type": "LANDMARK"}
+{"id": "L_CORINTH_CANAL", "label": "Corinth Canal", "type": "LANDMARK"}
+{"id": "G_GREEK", "label": "Greek", "type": "LANGUAGE"}
+{"id": "N_DOLPHIN", "label": "Dolphin", "type": "ANIMAL"}
+{"id": "N_DONKEY", "label": "Donkey", "type": "ANIMAL"}
+{"id": "N_GOAT", "label": "Goat", "type": "ANIMAL"}
+{"id": "N_MONK_SEAL", "label": "Monk Seal", "type": "ANIMAL"}
+{"id": "E_EASTER", "label": "Easter", "type": "FESTIVAL"}
+{"id": "E_APOKRIES", "label": "Apokries", "type": "FESTIVAL"}
+{"id": "E_HELLENIC_FESTIVAL", "label": "Hellenic Festival", "type": "FESTIVAL"}
+{"id": "E_OHI_DAY", "label": "Ohi Day", "type": "FESTIVAL"}
+{"id": "D_SIRTAKI", "label": "Sirtaki", "type": "DANCE"}
+{"id": "D_KALAMATIANOS", "label": "Kalamatianos", "type": "DANCE"}
+{"id": "D_HASAPIKO", "label": "Hasapiko", "type": "DANCE"}
+{"id": "D_ZEIBEKIKO", "label": "Zeibekiko", "type": "DANCE"}
+{"id": "D_TSARY", "label": "Tsary", "type": "DANCE"}
+{"id": "H_ANCIENT_OLYMPICS", "label": "Ancient Olympics", "type": "HISTORY"}
+{"id": "H_DEMOCRACY", "label": "Democracy", "type": "HISTORY"}
+{"id": "H_PHILOSOPHY", "label": "Philosophy", "type": "HISTORY"}
+{"id": "H_ALEXANDER_THE_GREAT", "label": "Alexander the Great", "type": "HISTORY"}
+{"id": "H_SPARTA", "label": "Sparta", "type": "HISTORY"}
+{"id": "H_ATHENS", "label": "Athens", "type": "HISTORY"}
+{"id": "H_MYCENAEAN", "label": "Mycenaean", "type": "HISTORY"}
+{"id": "R_AEGEAN_SEA", "label": "Aegean Sea", "type": "GEOGRAPHY"}
+{"id": "R_IONIAN_SEA", "label": "Ionian Sea", "type": "GEOGRAPHY"}
+{"id": "R_ISLANDS", "label": "Islands", "type": "GEOGRAPHY"}
+{"id": "R_PELOPONNESE", "label": "Peloponnese", "type": "GEOGRAPHY"}
+{"source": "C_IND", "target": "F_CHAPATI", "relation": "food"}
+{"source": "C_IND", "target": "F_BIRYANI", "relation": "food"}
+{"source": "C_IND", "target": "F_SAMOSA", "relation": "food"}
+{"source": "C_IND", "target": "F_DOSA", "relation": "food"}
+{"source": "C_IND", "target": "F_IDLI", "relation": "food"}
+{"source": "C_IND", "target": "F_BUTTER_CHICKEN", "relation": "food"}
+{"source": "C_IND", "target": "F_PANI_PURI", "relation": "food"}
+{"source": "C_IND", "target": "F_CHOLE_BHATURE", "relation": "food"}
+{"source": "C_IND", "target": "F_VADA_PAV", "relation": "food"}
+{"source": "C_IND", "target": "F_ROGAL_JOSH", "relation": "food"}
+{"source": "C_IND", "target": "F_PULAO", "relation": "food"}
+{"source": "C_IND", "target": "F_KHEER", "relation": "food"}
+{"source": "C_IND", "target": "F_GULAB_JAMUN", "relation": "food"}
+{"source": "C_IND", "target": "F_JALEBI", "relation": "food"}
+{"source": "C_IND", "target": "F_RASAM", "relation": "food"}
+{"source": "C_IND", "target": "F_DAL_MAKHANI", "relation": "food"}
+{"source": "C_IND", "target": "F_NAAN", "relation": "food"}
+{"source": "C_IND", "target": "F_TANDOORI_CHICKEN", "relation": "food"}
+{"source": "C_IND", "target": "F_FISH_CURRY", "relation": "food"}
+{"source": "C_IND", "target": "F_LASSI", "relation": "food"}
+{"source": "C_IND", "target": "S_CRICKET", "relation": "sport"}
+{"source": "C_IND", "target": "S_HOCKEY", "relation": "sport"}
+{"source": "C_IND", "target": "S_KABADDI", "relation": "sport"}
+{"source": "C_IND", "target": "S_BADMINTON", "relation": "sport"}
+{"source": "C_IND", "target": "S_WRESTLING", "relation": "sport"}
+{"source": "C_IND", "target": "S_SHOOTING", "relation": "sport"}
+{"source": "C_IND", "target": "S_ARCHERY", "relation": "sport"}
+{"source": "C_IND", "target": "S_FOOTBALL", "relation": "sport"}
+{"source": "C_IND", "target": "C_SAREE", "relation": "clothing"}
+{"source": "C_IND", "target": "C_KURTA", "relation": "clothing"}
+{"source": "C_IND", "target": "C_DHOTI", "relation": "clothing"}
+{"source": "C_IND", "target": "C_SHERWANI", "relation": "clothing"}
+{"source": "C_IND", "target": "C_LEHENGA", "relation": "clothing"}
+{"source": "C_IND", "target": "C_SALWAR_KAMEEZ", "relation": "clothing"}
+{"source": "C_IND", "target": "C_TURBAN", "relation": "clothing"}
+{"source": "C_IND", "target": "C_DUPATTA", "relation": "clothing"}
+{"source": "C_IND", "target": "C_LUNGI", "relation": "clothing"}
+{"source": "C_IND", "target": "C_NEHRU_JACKET", "relation": "clothing"}
+{"source": "C_IND", "target": "A_TEMPLE", "relation": "architecture"}
+{"source": "C_IND", "target": "A_PALACE", "relation": "architecture"}
+{"source": "C_IND", "target": "A_FORT", "relation": "architecture"}
+{"source": "C_IND", "target": "A_STUPA", "relation": "architecture"}
+{"source": "C_IND", "target": "A_HAVELI", "relation": "architecture"}
+{"source": "C_IND", "target": "A_STEPWELL", "relation": "architecture"}
+{"source": "C_IND", "target": "A_GHAT", "relation": "architecture"}
+{"source": "C_IND", "target": "A_DRAVIDIAN_STYLE", "relation": "architecture"}
+{"source": "C_IND", "target": "A_MUGHAL_ARCHITECTURE", "relation": "architecture"}
+{"source": "C_IND", "target": "L_TAJ_MAHAL", "relation": "landmark"}
+{"source": "C_IND", "target": "L_QUTUB_MINAR", "relation": "landmark"}
+{"source": "C_IND", "target": "L_RED_FORT", "relation": "landmark"}
+{"source": "C_IND", "target": "L_INDIA_GATE", "relation": "landmark"}
+{"source": "C_IND", "target": "L_HAWA_MAHAL", "relation": "landmark"}
+{"source": "C_IND", "target": "L_GOLDEN_TEMPLE", "relation": "landmark"}
+{"source": "C_IND", "target": "L_GATEWAY_OF_INDIA", "relation": "landmark"}
+{"source": "C_IND", "target": "L_AJANTA_CAVES", "relation": "landmark"}
+{"source": "C_IND", "target": "L_ELLORA_CAVES", "relation": "landmark"}
+{"source": "C_IND", "target": "L_KONARK_SUN_TEMPLE", "relation": "landmark"}
+{"source": "C_IND", "target": "Y_INDIAN_RUPEE", "relation": "currency"}
+{"source": "C_IND", "target": "G_HINDI", "relation": "language"}
+{"source": "C_IND", "target": "G_ENGLISH", "relation": "language"}
+{"source": "C_IND", "target": "G_TAMIL", "relation": "language"}
+{"source": "C_IND", "target": "G_BENGALI", "relation": "language"}
+{"source": "C_IND", "target": "G_TELUGU", "relation": "language"}
+{"source": "C_IND", "target": "G_MARATHI", "relation": "language"}
+{"source": "C_IND", "target": "G_GUJARATI", "relation": "language"}
+{"source": "C_IND", "target": "G_KANNADA", "relation": "language"}
+{"source": "C_IND", "target": "G_MALAYALAM", "relation": "language"}
+{"source": "C_IND", "target": "G_PUNJABI", "relation": "language"}
+{"source": "C_IND", "target": "N_TIGER", "relation": "animal"}
+{"source": "C_IND", "target": "N_ELEPHANT", "relation": "animal"}
+{"source": "C_IND", "target": "N_PEACOCK", "relation": "animal"}
+{"source": "C_IND", "target": "N_COBRA", "relation": "animal"}
+{"source": "C_IND", "target": "N_RHINO", "relation": "animal"}
+{"source": "C_IND", "target": "N_LION", "relation": "animal"}
+{"source": "C_IND", "target": "N_LEOPARD", "relation": "animal"}
+{"source": "C_USA", "target": "F_HAMBURGER", "relation": "food"}
+{"source": "C_USA", "target": "F_HOT_DOG", "relation": "food"}
+{"source": "C_USA", "target": "F_APPLE_PIE", "relation": "food"}
+{"source": "C_USA", "target": "F_BBQ_RIBS", "relation": "food"}
+{"source": "C_USA", "target": "F_MAC_AND_CHEESE", "relation": "food"}
+{"source": "C_USA", "target": "F_FRIED_CHICKEN", "relation": "food"}
+{"source": "C_USA", "target": "F_PIZZA", "relation": "food"}
+{"source": "C_USA", "target": "F_BAGEL", "relation": "food"}
+{"source": "C_USA", "target": "F_DONUT", "relation": "food"}
+{"source": "C_USA", "target": "F_PANCAKES", "relation": "food"}
+{"source": "C_USA", "target": "F_CLAM_CHOWDER", "relation": "food"}
+{"source": "C_USA", "target": "F_BUFFALO_WINGS", "relation": "food"}
+{"source": "C_USA", "target": "F_REUBEN_SANDWICH", "relation": "food"}
+{"source": "C_USA", "target": "F_PHILLY_CHEESESTEAK", "relation": "food"}
+{"source": "C_USA", "target": "F_JAMBALAYA", "relation": "food"}
+{"source": "C_USA", "target": "F_GUMBO", "relation": "food"}
+{"source": "C_USA", "target": "F_CORNBREAD", "relation": "food"}
+{"source": "C_USA", "target": "F_BISCUITS_AND_GRAVY", "relation": "food"}
+{"source": "C_USA", "target": "F_SMORES", "relation": "food"}
+{"source": "C_USA", "target": "F_BROWNIES", "relation": "food"}
+{"source": "C_USA", "target": "S_AMERICAN_FOOTBALL", "relation": "sport"}
+{"source": "C_USA", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_USA", "target": "S_BASEBALL", "relation": "sport"}
+{"source": "C_USA", "target": "S_ICE_HOCKEY", "relation": "sport"}
+{"source": "C_USA", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_USA", "target": "S_GOLF", "relation": "sport"}
+{"source": "C_USA", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_USA", "target": "S_NASCAR", "relation": "sport"}
+{"source": "C_USA", "target": "S_BOXING", "relation": "sport"}
+{"source": "C_USA", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_USA", "target": "C_JEANS", "relation": "clothing"}
+{"source": "C_USA", "target": "C_TSHIRT", "relation": "clothing"}
+{"source": "C_USA", "target": "C_COWBOY_HAT", "relation": "clothing"}
+{"source": "C_USA", "target": "C_SNEAKERS", "relation": "clothing"}
+{"source": "C_USA", "target": "C_BASEBALL_CAP", "relation": "clothing"}
+{"source": "C_USA", "target": "C_HOODIE", "relation": "clothing"}
+{"source": "C_USA", "target": "C_FLANNEL_SHIRT", "relation": "clothing"}
+{"source": "C_USA", "target": "C_LEATHER_JACKET", "relation": "clothing"}
+{"source": "C_USA", "target": "C_SUIT", "relation": "clothing"}
+{"source": "C_USA", "target": "C_BOOTS", "relation": "clothing"}
+{"source": "C_USA", "target": "A_SKYSCRAPER", "relation": "architecture"}
+{"source": "C_USA", "target": "A_COLONIAL_HOUSE", "relation": "architecture"}
+{"source": "C_USA", "target": "A_RANCH_STYLE", "relation": "architecture"}
+{"source": "C_USA", "target": "A_SUBURBAN_HOME", "relation": "architecture"}
+{"source": "C_USA", "target": "A_VICTORIAN_HOUSE", "relation": "architecture"}
+{"source": "C_USA", "target": "A_ART_DECO", "relation": "architecture"}
+{"source": "C_USA", "target": "A_PRAIRIE_STYLE", "relation": "architecture"}
+{"source": "C_USA", "target": "A_LOG_CABIN", "relation": "architecture"}
+{"source": "C_USA", "target": "L_STATUE_OF_LIBERTY", "relation": "landmark"}
+{"source": "C_USA", "target": "L_GRAND_CANYON", "relation": "landmark"}
+{"source": "C_USA", "target": "L_WHITE_HOUSE", "relation": "landmark"}
+{"source": "C_USA", "target": "L_GOLDEN_GATE_BRIDGE", "relation": "landmark"}
+{"source": "C_USA", "target": "L_MOUNT_RUSHMORE", "relation": "landmark"}
+{"source": "C_USA", "target": "L_EMPIRE_STATE_BUILDING", "relation": "landmark"}
+{"source": "C_USA", "target": "L_YELLOWSTONE", "relation": "landmark"}
+{"source": "C_USA", "target": "L_YOSEMITE", "relation": "landmark"}
+{"source": "C_USA", "target": "L_HOLLYWOOD_SIGN", "relation": "landmark"}
+{"source": "C_USA", "target": "L_TIMES_SQUARE", "relation": "landmark"}
+{"source": "C_USA", "target": "Y_US_DOLLAR", "relation": "currency"}
+{"source": "C_USA", "target": "G_ENGLISH", "relation": "language"}
+{"source": "C_USA", "target": "G_SPANISH", "relation": "language"}
+{"source": "C_USA", "target": "N_BALD_EAGLE", "relation": "animal"}
+{"source": "C_USA", "target": "N_BISON", "relation": "animal"}
+{"source": "C_USA", "target": "N_GRIZZLY_BEAR", "relation": "animal"}
+{"source": "C_USA", "target": "N_MUSTANG", "relation": "animal"}
+{"source": "C_USA", "target": "N_ALLIGATOR", "relation": "animal"}
+{"source": "C_USA", "target": "N_MOOSE", "relation": "animal"}
+{"source": "C_USA", "target": "N_MOUNTAIN_LION", "relation": "animal"}
+{"source": "C_USA", "target": "N_RACCOON", "relation": "animal"}
+{"source": "C_USA", "target": "E_THANKSGIVING", "relation": "festival"}
+{"source": "C_USA", "target": "E_INDEPENDENCE_DAY", "relation": "festival"}
+{"source": "C_USA", "target": "E_HALLOWEEN", "relation": "festival"}
+{"source": "C_USA", "target": "E_CHRISTMAS", "relation": "festival"}
+{"source": "C_USA", "target": "E_SUPER_BOWL_SUNDAY", "relation": "festival"}
+{"source": "C_USA", "target": "E_MEMORIAL_DAY", "relation": "festival"}
+{"source": "C_JPN", "target": "F_SUSHI", "relation": "food"}
+{"source": "C_JPN", "target": "F_RAMEN", "relation": "food"}
+{"source": "C_JPN", "target": "F_TEMPURA", "relation": "food"}
+{"source": "C_JPN", "target": "F_UDON", "relation": "food"}
+{"source": "C_JPN", "target": "F_SASHIMI", "relation": "food"}
+{"source": "C_JPN", "target": "F_MISO_SOUP", "relation": "food"}
+{"source": "C_JPN", "target": "F_ONIGIRI", "relation": "food"}
+{"source": "C_JPN", "target": "F_TAKOYAKI", "relation": "food"}
+{"source": "C_JPN", "target": "F_YAKITORI", "relation": "food"}
+{"source": "C_JPN", "target": "F_MATCHA", "relation": "food"}
+{"source": "C_JPN", "target": "F_SOBA", "relation": "food"}
+{"source": "C_JPN", "target": "F_DONBURI", "relation": "food"}
+{"source": "C_JPN", "target": "F_OKONOMIYAKI", "relation": "food"}
+{"source": "C_JPN", "target": "F_GYOZA", "relation": "food"}
+{"source": "C_JPN", "target": "F_MOCHI", "relation": "food"}
+{"source": "C_JPN", "target": "F_WAGYU_BEEF", "relation": "food"}
+{"source": "C_JPN", "target": "F_FUGU", "relation": "food"}
+{"source": "C_JPN", "target": "F_NATTO", "relation": "food"}
+{"source": "C_JPN", "target": "F_ODEN", "relation": "food"}
+{"source": "C_JPN", "target": "F_KATSU_CURRY", "relation": "food"}
+{"source": "C_JPN", "target": "S_SUMO", "relation": "sport"}
+{"source": "C_JPN", "target": "S_JUDO", "relation": "sport"}
+{"source": "C_JPN", "target": "S_KARATE", "relation": "sport"}
+{"source": "C_JPN", "target": "S_BASEBALL", "relation": "sport"}
+{"source": "C_JPN", "target": "S_KENDO", "relation": "sport"}
+{"source": "C_JPN", "target": "S_AIKIDO", "relation": "sport"}
+{"source": "C_JPN", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_JPN", "target": "S_TABLE_TENNIS", "relation": "sport"}
+{"source": "C_JPN", "target": "C_KIMONO", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_YUKATA", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_HAKAMA", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_TABI", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_GETA", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_ZORI", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_HAORI", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_OBI", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_HAPPI", "relation": "clothing"}
+{"source": "C_JPN", "target": "C_SCHOOL_UNIFORM", "relation": "clothing"}
+{"source": "C_JPN", "target": "A_PAGODA", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_SHRINE", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_TORII_GATE", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_TEA_HOUSE", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_CASTLE", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_MACHIYA", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_MINKA", "relation": "architecture"}
+{"source": "C_JPN", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_JPN", "target": "L_MOUNT_FUJI", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_TOKYO_TOWER", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_KINKAKUJI", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_HIMEJI_CASTLE", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_FUSHIMI_INARI_NATASHA", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_SHIBUYA_CROSSING", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_HIROSHIMA_PEACE_MEMORIAL", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_TODAIJI", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_ITSUKUSHIMA_SHRINE", "relation": "landmark"}
+{"source": "C_JPN", "target": "L_ARASHIYAMA_BAMBOO_GROVE", "relation": "landmark"}
+{"source": "C_JPN", "target": "Y_YEN", "relation": "currency"}
+{"source": "C_JPN", "target": "G_JAPANESE", "relation": "language"}
+{"source": "C_JPN", "target": "N_KOI_FISH", "relation": "animal"}
+{"source": "C_JPN", "target": "N_CRANE", "relation": "animal"}
+{"source": "C_JPN", "target": "N_MACAQUE", "relation": "animal"}
+{"source": "C_JPN", "target": "N_TANUKI", "relation": "animal"}
+{"source": "C_JPN", "target": "N_SHIBA_INU", "relation": "animal"}
+{"source": "C_JPN", "target": "N_AKITA_INU", "relation": "animal"}
+{"source": "C_JPN", "target": "N_DEER_NARA", "relation": "animal"}
+{"source": "C_JPN", "target": "N_GIANT_SALAMANDER", "relation": "animal"}
+{"source": "C_JPN", "target": "E_CHERRY_BLOSSOM_FESTIVAL", "relation": "festival"}
+{"source": "C_JPN", "target": "E_GION_MATSURI", "relation": "festival"}
+{"source": "C_JPN", "target": "E_OBON", "relation": "festival"}
+{"source": "C_JPN", "target": "E_TANABATA", "relation": "festival"}
+{"source": "C_JPN", "target": "E_NEW_YEAR", "relation": "festival"}
+{"source": "C_JPN", "target": "E_SETSUBUN", "relation": "festival"}
+{"source": "C_JPN", "target": "E_HINA_MATSURI", "relation": "festival"}
+{"source": "C_JPN", "target": "E_CHILDRENS_DAY", "relation": "festival"}
+{"source": "C_JPN", "target": "E_SAPPORO_SNOW_FESTIVAL", "relation": "festival"}
+{"source": "C_FRA", "target": "F_BAGUETTE", "relation": "food"}
+{"source": "C_FRA", "target": "F_CROISSANT", "relation": "food"}
+{"source": "C_FRA", "target": "F_CHEESE", "relation": "food"}
+{"source": "C_FRA", "target": "F_WINE", "relation": "food"}
+{"source": "C_FRA", "target": "F_ESCARGOT", "relation": "food"}
+{"source": "C_FRA", "target": "F_RATATOUILLE", "relation": "food"}
+{"source": "C_FRA", "target": "F_CREPE", "relation": "food"}
+{"source": "C_FRA", "target": "F_MACARON", "relation": "food"}
+{"source": "C_FRA", "target": "F_FOIE_GRAS", "relation": "food"}
+{"source": "C_FRA", "target": "F_QUICHE", "relation": "food"}
+{"source": "C_FRA", "target": "F_COQ_AU_VIN", "relation": "food"}
+{"source": "C_FRA", "target": "F_BOUILLABAISSE", "relation": "food"}
+{"source": "C_FRA", "target": "F_BEEF_BOURGUIGNON", "relation": "food"}
+{"source": "C_FRA", "target": "F_CASSOULET", "relation": "food"}
+{"source": "C_FRA", "target": "F_SOUFFLE", "relation": "food"}
+{"source": "C_FRA", "target": "F_PROFITEROLE", "relation": "food"}
+{"source": "C_FRA", "target": "F_ECLAIR", "relation": "food"}
+{"source": "C_FRA", "target": "F_MADELEINE", "relation": "food"}
+{"source": "C_FRA", "target": "F_BRIOCHE", "relation": "food"}
+{"source": "C_FRA", "target": "F_TARTE_TATIN", "relation": "food"}
+{"source": "C_FRA", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_FRA", "target": "S_RUGBY", "relation": "sport"}
+{"source": "C_FRA", "target": "S_CYCLING", "relation": "sport"}
+{"source": "C_FRA", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_FRA", "target": "S_HANDBALL", "relation": "sport"}
+{"source": "C_FRA", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_FRA", "target": "S_JUDO", "relation": "sport"}
+{"source": "C_FRA", "target": "S_FENCING", "relation": "sport"}
+{"source": "C_FRA", "target": "C_BERET", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_SCARF", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_HAUTE_COUTURE", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_STRIPED_SHIRT", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_TRENCH_COAT", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_LITTLE_BLACK_DRESS", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_SILK_SCARF", "relation": "clothing"}
+{"source": "C_FRA", "target": "C_ESPADRILLES", "relation": "clothing"}
+{"source": "C_FRA", "target": "A_GOTHIC_CATHEDRAL", "relation": "architecture"}
+{"source": "C_FRA", "target": "A_CHATEAU", "relation": "architecture"}
+{"source": "C_FRA", "target": "A_HAUSSMANN_BUILDING", "relation": "architecture"}
+{"source": "C_FRA", "target": "A_ROMANESQUE", "relation": "architecture"}
+{"source": "C_FRA", "target": "A_BAROQUE", "relation": "architecture"}
+{"source": "C_FRA", "target": "A_ART_NOUVEAU", "relation": "architecture"}
+{"source": "C_FRA", "target": "L_EIFFEL_TOWER", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_LOUVRE_MUSEUM", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_NOTRE_DAME", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_ARC_DE_TRIOMPHE", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_VERSAILLES_PALACE", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_MONT_SAINTMICHEL", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_SACRECOEUR", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_CHAMPSELYSEES", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_RIVIERA", "relation": "landmark"}
+{"source": "C_FRA", "target": "L_PROVENCE", "relation": "landmark"}
+{"source": "C_FRA", "target": "Y_EURO", "relation": "currency"}
+{"source": "C_FRA", "target": "G_FRENCH", "relation": "language"}
+{"source": "C_FRA", "target": "N_ROOSTER", "relation": "animal"}
+{"source": "C_FRA", "target": "N_ALPINE_IBEX", "relation": "animal"}
+{"source": "C_FRA", "target": "N_MARMOT", "relation": "animal"}
+{"source": "C_FRA", "target": "N_CHAMOIS", "relation": "animal"}
+{"source": "C_FRA", "target": "E_BASTILLE_DAY", "relation": "festival"}
+{"source": "C_FRA", "target": "E_CANNES_FILM_FESTIVAL", "relation": "festival"}
+{"source": "C_FRA", "target": "E_NICE_CARNIVAL", "relation": "festival"}
+{"source": "C_FRA", "target": "E_FETE_DE_LA_MUSIQUE", "relation": "festival"}
+{"source": "C_FRA", "target": "E_TOUR_DE_FRANCE", "relation": "festival"}
+{"source": "C_FRA", "target": "D_BALLET", "relation": "dance"}
+{"source": "C_FRA", "target": "D_CANCAN", "relation": "dance"}
+{"source": "C_FRA", "target": "D_MINUET", "relation": "dance"}
+{"source": "C_FRA", "target": "D_GAVOTTE", "relation": "dance"}
+{"source": "C_FRA", "target": "T_IMPRESSIONISM", "relation": "art"}
+{"source": "C_FRA", "target": "T_ROMANTICISM", "relation": "art"}
+{"source": "C_FRA", "target": "T_CUBISM", "relation": "art"}
+{"source": "C_FRA", "target": "T_SURREALISM", "relation": "art"}
+{"source": "C_FRA", "target": "T_ART_DECO", "relation": "art"}
+{"source": "C_FRA", "target": "H_FRENCH_REVOLUTION", "relation": "history"}
+{"source": "C_FRA", "target": "H_NAPOLEON", "relation": "history"}
+{"source": "C_FRA", "target": "H_WORLD_WARS", "relation": "history"}
+{"source": "C_ITA", "target": "F_PIZZA", "relation": "food"}
+{"source": "C_ITA", "target": "F_PASTA", "relation": "food"}
+{"source": "C_ITA", "target": "F_GELATO", "relation": "food"}
+{"source": "C_ITA", "target": "F_RISOTTO", "relation": "food"}
+{"source": "C_ITA", "target": "F_LASAGNA", "relation": "food"}
+{"source": "C_ITA", "target": "F_TIRAMISU", "relation": "food"}
+{"source": "C_ITA", "target": "F_ESPRESSO", "relation": "food"}
+{"source": "C_ITA", "target": "F_CANNOLI", "relation": "food"}
+{"source": "C_ITA", "target": "F_FOCACCIA", "relation": "food"}
+{"source": "C_ITA", "target": "F_PESTO", "relation": "food"}
+{"source": "C_ITA", "target": "F_CARBONARA", "relation": "food"}
+{"source": "C_ITA", "target": "F_RAVIOLI", "relation": "food"}
+{"source": "C_ITA", "target": "F_GNOCCHI", "relation": "food"}
+{"source": "C_ITA", "target": "F_BRUSCHETTA", "relation": "food"}
+{"source": "C_ITA", "target": "F_CAPRESE_SALAD", "relation": "food"}
+{"source": "C_ITA", "target": "F_PROSCIUTTO", "relation": "food"}
+{"source": "C_ITA", "target": "F_PARMESAN", "relation": "food"}
+{"source": "C_ITA", "target": "F_MOZZARELLA", "relation": "food"}
+{"source": "C_ITA", "target": "F_BISCOTTI", "relation": "food"}
+{"source": "C_ITA", "target": "F_PANETTONE", "relation": "food"}
+{"source": "C_ITA", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_ITA", "target": "S_FORMULA_1", "relation": "sport"}
+{"source": "C_ITA", "target": "S_CYCLING", "relation": "sport"}
+{"source": "C_ITA", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_ITA", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_ITA", "target": "S_RUGBY", "relation": "sport"}
+{"source": "C_ITA", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_ITA", "target": "S_SKIING", "relation": "sport"}
+{"source": "C_ITA", "target": "C_DESIGNER_SUIT", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_LEATHER_JACKET", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_SUNGLASSES", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_LOAFERS", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_FEDORA", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_SILK_TIE", "relation": "clothing"}
+{"source": "C_ITA", "target": "C_STILETTOS", "relation": "clothing"}
+{"source": "C_ITA", "target": "A_ROMAN_FORUM", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_RENAISSANCE_PALACE", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_VILLA", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_CHURCH", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_AQUEDUCT", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_COLOSSEUM", "relation": "architecture"}
+{"source": "C_ITA", "target": "A_DUOMO", "relation": "architecture"}
+{"source": "C_ITA", "target": "L_COLOSSEUM", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_LEANING_TOWER_OF_PISA", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_VENICE_CANALS", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_VATICAN_CITY", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_POMPEII", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_PANTHEON", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_TREVI_FOUNTAIN", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_FLORENCE_CATHEDRAL", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_AMALFI_COAST", "relation": "landmark"}
+{"source": "C_ITA", "target": "L_CINQUE_TERRE", "relation": "landmark"}
+{"source": "C_ITA", "target": "Y_EURO", "relation": "currency"}
+{"source": "C_ITA", "target": "G_ITALIAN", "relation": "language"}
+{"source": "C_ITA", "target": "N_WOLF", "relation": "animal"}
+{"source": "C_ITA", "target": "N_BEAR", "relation": "animal"}
+{"source": "C_ITA", "target": "N_CHAMOIS", "relation": "animal"}
+{"source": "C_ITA", "target": "N_GOLDEN_EAGLE", "relation": "animal"}
+{"source": "C_ITA", "target": "E_VENICE_CARNIVAL", "relation": "festival"}
+{"source": "C_ITA", "target": "E_FERRAGOSTO", "relation": "festival"}
+{"source": "C_ITA", "target": "E_SIENA_PALIO", "relation": "festival"}
+{"source": "C_ITA", "target": "E_SANREMO_MUSIC_FESTIVAL", "relation": "festival"}
+{"source": "C_ITA", "target": "D_TARANTELLA", "relation": "dance"}
+{"source": "C_ITA", "target": "D_PIZZICA", "relation": "dance"}
+{"source": "C_ITA", "target": "T_RENAISSANCE_ART", "relation": "art"}
+{"source": "C_ITA", "target": "T_BAROQUE_ART", "relation": "art"}
+{"source": "C_ITA", "target": "T_ROMAN_ART", "relation": "art"}
+{"source": "C_ITA", "target": "T_FUTURISM", "relation": "art"}
+{"source": "C_ITA", "target": "H_ROMAN_EMPIRE", "relation": "history"}
+{"source": "C_ITA", "target": "H_RENAISSANCE", "relation": "history"}
+{"source": "C_ITA", "target": "H_RISORGIMENTO", "relation": "history"}
+{"source": "C_ITA", "target": "H_VATICAN", "relation": "history"}
+{"source": "C_ITA", "target": "R_ALPS", "relation": "geography"}
+{"source": "C_ITA", "target": "R_APPENNINES", "relation": "geography"}
+{"source": "C_ITA", "target": "R_MEDITERRANEAN_SEA", "relation": "geography"}
+{"source": "C_BRA", "target": "F_FEIJOADA", "relation": "food"}
+{"source": "C_BRA", "target": "F_PAO_DE_QUEIJO", "relation": "food"}
+{"source": "C_BRA", "target": "F_BRIGADEIRO", "relation": "food"}
+{"source": "C_BRA", "target": "F_ACAI", "relation": "food"}
+{"source": "C_BRA", "target": "F_COXINHA", "relation": "food"}
+{"source": "C_BRA", "target": "F_PASTEL", "relation": "food"}
+{"source": "C_BRA", "target": "F_CHURRASCO", "relation": "food"}
+{"source": "C_BRA", "target": "F_MOQUECA", "relation": "food"}
+{"source": "C_BRA", "target": "F_FAROFA", "relation": "food"}
+{"source": "C_BRA", "target": "F_GUARANA", "relation": "food"}
+{"source": "C_BRA", "target": "F_VATAPA", "relation": "food"}
+{"source": "C_BRA", "target": "F_QUINDIM", "relation": "food"}
+{"source": "C_BRA", "target": "F_TAPIOCA", "relation": "food"}
+{"source": "C_BRA", "target": "F_ACARAJE", "relation": "food"}
+{"source": "C_BRA", "target": "F_CACHACA", "relation": "food"}
+{"source": "C_BRA", "target": "F_CAIPIRINHA", "relation": "food"}
+{"source": "C_BRA", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_BRA", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_BRA", "target": "S_MMA", "relation": "sport"}
+{"source": "C_BRA", "target": "S_CAPOEIRA", "relation": "sport"}
+{"source": "C_BRA", "target": "S_FUTSAL", "relation": "sport"}
+{"source": "C_BRA", "target": "S_SURFING", "relation": "sport"}
+{"source": "C_BRA", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_BRA", "target": "S_JIUJITSU", "relation": "sport"}
+{"source": "C_BRA", "target": "C_BIKINI", "relation": "clothing"}
+{"source": "C_BRA", "target": "C_HAVAIANAS", "relation": "clothing"}
+{"source": "C_BRA", "target": "C_CANGA", "relation": "clothing"}
+{"source": "C_BRA", "target": "C_CARNIVAL_COSTUME", "relation": "clothing"}
+{"source": "C_BRA", "target": "C_BAIANA_DRESS", "relation": "clothing"}
+{"source": "C_BRA", "target": "C_SUNGAS", "relation": "clothing"}
+{"source": "C_BRA", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_BRA", "target": "A_COLONIAL", "relation": "architecture"}
+{"source": "C_BRA", "target": "A_FAVELA", "relation": "architecture"}
+{"source": "C_BRA", "target": "A_BAROQUE", "relation": "architecture"}
+{"source": "C_BRA", "target": "L_CHRIST_THE_REDEEMER", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_SUGARLOAF_MOUNTAIN", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_AMAZON_RAINFOREST", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_IGUAZU_FALLS", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_COPACABANA_BEACH", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_PANTANAL", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_FERNANDO_DE_NORONHA", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_LENCOIS_MARANHENSES", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_PELOURINHO", "relation": "landmark"}
+{"source": "C_BRA", "target": "L_BRASILIA_CATHEDRAL", "relation": "landmark"}
+{"source": "C_BRA", "target": "Y_BRAZILIAN_REAL", "relation": "currency"}
+{"source": "C_BRA", "target": "G_PORTUGUESE", "relation": "language"}
+{"source": "C_BRA", "target": "N_JAGUAR", "relation": "animal"}
+{"source": "C_BRA", "target": "N_TOUCAN", "relation": "animal"}
+{"source": "C_BRA", "target": "N_MACAW", "relation": "animal"}
+{"source": "C_BRA", "target": "N_CAPYBARA", "relation": "animal"}
+{"source": "C_BRA", "target": "N_SLOTH", "relation": "animal"}
+{"source": "C_BRA", "target": "N_ARMADILLO", "relation": "animal"}
+{"source": "C_BRA", "target": "N_ANTEATER", "relation": "animal"}
+{"source": "C_BRA", "target": "N_PIRANHA", "relation": "animal"}
+{"source": "C_BRA", "target": "N_ANACONDA", "relation": "animal"}
+{"source": "C_BRA", "target": "N_GOLDEN_LION_TAMARIN", "relation": "animal"}
+{"source": "C_BRA", "target": "E_CARNIVAL", "relation": "festival"}
+{"source": "C_BRA", "target": "E_REVEILLON", "relation": "festival"}
+{"source": "C_BRA", "target": "E_FESTA_JUNINA", "relation": "festival"}
+{"source": "C_BRA", "target": "E_PARINTINS_FOLKLORE_FESTIVAL", "relation": "festival"}
+{"source": "C_BRA", "target": "D_SAMBA", "relation": "dance"}
+{"source": "C_BRA", "target": "D_BOSSA_NOVA", "relation": "dance"}
+{"source": "C_BRA", "target": "D_FORRO", "relation": "dance"}
+{"source": "C_BRA", "target": "D_FREVO", "relation": "dance"}
+{"source": "C_BRA", "target": "D_AXE", "relation": "dance"}
+{"source": "C_BRA", "target": "D_LAMBADA", "relation": "dance"}
+{"source": "C_BRA", "target": "M_SAMBA", "relation": "music"}
+{"source": "C_BRA", "target": "M_BOSSA_NOVA", "relation": "music"}
+{"source": "C_BRA", "target": "M_MPB", "relation": "music"}
+{"source": "C_BRA", "target": "M_TROPICALIA", "relation": "music"}
+{"source": "C_BRA", "target": "M_FUNK_CARIOCA", "relation": "music"}
+{"source": "C_BRA", "target": "R_AMAZON_RIVER", "relation": "geography"}
+{"source": "C_BRA", "target": "R_ATLANTIC_FOREST", "relation": "geography"}
+{"source": "C_BRA", "target": "R_CERRADO", "relation": "geography"}
+{"source": "C_BRA", "target": "R_CAATINGA", "relation": "geography"}
+{"source": "C_CHN", "target": "F_DUMPLINGS", "relation": "food"}
+{"source": "C_CHN", "target": "F_PEKING_DUCK", "relation": "food"}
+{"source": "C_CHN", "target": "F_SPRING_ROLLS", "relation": "food"}
+{"source": "C_CHN", "target": "F_FRIED_RICE", "relation": "food"}
+{"source": "C_CHN", "target": "F_CHOW_MEIN", "relation": "food"}
+{"source": "C_CHN", "target": "F_HOT_POT", "relation": "food"}
+{"source": "C_CHN", "target": "F_DIM_SUM", "relation": "food"}
+{"source": "C_CHN", "target": "F_BAOZI", "relation": "food"}
+{"source": "C_CHN", "target": "F_TOFU", "relation": "food"}
+{"source": "C_CHN", "target": "F_TEA", "relation": "food"}
+{"source": "C_CHN", "target": "F_KUNG_PAO_CHICKEN", "relation": "food"}
+{"source": "C_CHN", "target": "F_MAPO_TOFU", "relation": "food"}
+{"source": "C_CHN", "target": "F_WONTON", "relation": "food"}
+{"source": "C_CHN", "target": "F_MOONCAKE", "relation": "food"}
+{"source": "C_CHN", "target": "F_ZONGZI", "relation": "food"}
+{"source": "C_CHN", "target": "F_CONGEE", "relation": "food"}
+{"source": "C_CHN", "target": "F_CHAR_SIU", "relation": "food"}
+{"source": "C_CHN", "target": "F_BUBBLE_TEA", "relation": "food"}
+{"source": "C_CHN", "target": "F_SICHUAN_PEPPER", "relation": "food"}
+{"source": "C_CHN", "target": "S_TABLE_TENNIS", "relation": "sport"}
+{"source": "C_CHN", "target": "S_BADMINTON", "relation": "sport"}
+{"source": "C_CHN", "target": "S_MARTIAL_ARTS", "relation": "sport"}
+{"source": "C_CHN", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_CHN", "target": "S_DIVING", "relation": "sport"}
+{"source": "C_CHN", "target": "S_GYMNASTICS", "relation": "sport"}
+{"source": "C_CHN", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_CHN", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_CHN", "target": "C_CHEONGSAM", "relation": "clothing"}
+{"source": "C_CHN", "target": "C_HANFU", "relation": "clothing"}
+{"source": "C_CHN", "target": "C_TANG_SUIT", "relation": "clothing"}
+{"source": "C_CHN", "target": "C_MAO_SUIT", "relation": "clothing"}
+{"source": "C_CHN", "target": "C_QIPAO", "relation": "clothing"}
+{"source": "C_CHN", "target": "C_SILK_ROBE", "relation": "clothing"}
+{"source": "C_CHN", "target": "A_GREAT_WALL", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_PAGODA", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_COURTYARD_HOUSE", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_TEMPLE", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_TULOU", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_FORBIDDEN_CITY_STYLE", "relation": "architecture"}
+{"source": "C_CHN", "target": "A_GARDEN_ARCHITECTURE", "relation": "architecture"}
+{"source": "C_CHN", "target": "L_GREAT_WALL", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_FORBIDDEN_CITY", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_TERRACOTTA_WARRIORS", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_THE_BUND", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_POTALA_PALACE", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_WEST_LAKE", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_YELLOW_MOUNTAIN", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_LI_RIVER", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_VICTORIA_HARBOUR", "relation": "landmark"}
+{"source": "C_CHN", "target": "L_SUMMER_PALACE", "relation": "landmark"}
+{"source": "C_CHN", "target": "Y_RENMINBI", "relation": "currency"}
+{"source": "C_CHN", "target": "G_MANDARIN", "relation": "language"}
+{"source": "C_CHN", "target": "G_CANTONESE", "relation": "language"}
+{"source": "C_CHN", "target": "N_PANDA", "relation": "animal"}
+{"source": "C_CHN", "target": "N_DRAGON_MYTHICAL", "relation": "animal"}
+{"source": "C_CHN", "target": "N_TIGER", "relation": "animal"}
+{"source": "C_CHN", "target": "N_CRANE", "relation": "animal"}
+{"source": "C_CHN", "target": "N_PHOENIX_MYTHICAL", "relation": "animal"}
+{"source": "C_CHN", "target": "N_MONKEY", "relation": "animal"}
+{"source": "C_CHN", "target": "N_YAK", "relation": "animal"}
+{"source": "C_CHN", "target": "N_SNOW_LEOPARD", "relation": "animal"}
+{"source": "C_CHN", "target": "E_CHINESE_NEW_YEAR", "relation": "festival"}
+{"source": "C_CHN", "target": "E_MIDAUTUMN_FESTIVAL", "relation": "festival"}
+{"source": "C_CHN", "target": "E_DRAGON_BOAT_FESTIVAL", "relation": "festival"}
+{"source": "C_CHN", "target": "E_LANTERN_FESTIVAL", "relation": "festival"}
+{"source": "C_CHN", "target": "E_QINGMING_FESTIVAL", "relation": "festival"}
+{"source": "C_CHN", "target": "E_DOUBLE_NINTH_FESTIVAL", "relation": "festival"}
+{"source": "C_CHN", "target": "D_DRAGON_DANCE", "relation": "dance"}
+{"source": "C_CHN", "target": "D_LION_DANCE", "relation": "dance"}
+{"source": "C_CHN", "target": "D_FAN_DANCE", "relation": "dance"}
+{"source": "C_CHN", "target": "D_RIBBON_DANCE", "relation": "dance"}
+{"source": "C_CHN", "target": "H_DYNASTIES", "relation": "history"}
+{"source": "C_CHN", "target": "H_SILK_ROAD", "relation": "history"}
+{"source": "C_CHN", "target": "H_THREE_KINGDOMS", "relation": "history"}
+{"source": "C_CHN", "target": "H_CULTURAL_REVOLUTION", "relation": "history"}
+{"source": "C_DEU", "target": "F_BRATWURST", "relation": "food"}
+{"source": "C_DEU", "target": "F_SAUERKRAUT", "relation": "food"}
+{"source": "C_DEU", "target": "F_PRETZEL", "relation": "food"}
+{"source": "C_DEU", "target": "F_SCHNITZEL", "relation": "food"}
+{"source": "C_DEU", "target": "F_BEER", "relation": "food"}
+{"source": "C_DEU", "target": "F_POTATO_SALAD", "relation": "food"}
+{"source": "C_DEU", "target": "F_CURRYWURST", "relation": "food"}
+{"source": "C_DEU", "target": "F_BLACK_FOREST_CAKE", "relation": "food"}
+{"source": "C_DEU", "target": "F_SAUERBRATEN", "relation": "food"}
+{"source": "C_DEU", "target": "F_LEBKUCHEN", "relation": "food"}
+{"source": "C_DEU", "target": "F_SPIAETZLE", "relation": "food"}
+{"source": "C_DEU", "target": "F_ROULADEN", "relation": "food"}
+{"source": "C_DEU", "target": "F_KARTOFFELPUFFER", "relation": "food"}
+{"source": "C_DEU", "target": "F_WEISSWURST", "relation": "food"}
+{"source": "C_DEU", "target": "F_STOLLEN", "relation": "food"}
+{"source": "C_DEU", "target": "F_GLUHWEIN", "relation": "food"}
+{"source": "C_DEU", "target": "F_RIESLING", "relation": "food"}
+{"source": "C_DEU", "target": "F_MARZIPAN", "relation": "food"}
+{"source": "C_DEU", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_DEU", "target": "S_HANDBALL", "relation": "sport"}
+{"source": "C_DEU", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_DEU", "target": "S_SKIING", "relation": "sport"}
+{"source": "C_DEU", "target": "S_FORMULA_1", "relation": "sport"}
+{"source": "C_DEU", "target": "S_ICE_HOCKEY", "relation": "sport"}
+{"source": "C_DEU", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_DEU", "target": "S_CYCLING", "relation": "sport"}
+{"source": "C_DEU", "target": "C_LEDERHOSEN", "relation": "clothing"}
+{"source": "C_DEU", "target": "C_DIRNDL", "relation": "clothing"}
+{"source": "C_DEU", "target": "C_TRACHT", "relation": "clothing"}
+{"source": "C_DEU", "target": "C_BIRKENSTOCK", "relation": "clothing"}
+{"source": "C_DEU", "target": "A_TIMBERFRAMED_HOUSE", "relation": "architecture"}
+{"source": "C_DEU", "target": "A_GOTHIC_CATHEDRAL", "relation": "architecture"}
+{"source": "C_DEU", "target": "A_BAUHAUS", "relation": "architecture"}
+{"source": "C_DEU", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_DEU", "target": "A_CASTLES", "relation": "architecture"}
+{"source": "C_DEU", "target": "L_BRANDENBURG_GATE", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_NEUSCHWANSTEIN_CASTLE", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_COLOGNE_CATHEDRAL", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_BERLIN_WALL", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_REICHSTAG", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_BLACK_FOREST", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_RHINE_VALLEY", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_OKTOBERFEST_GROUNDS", "relation": "landmark"}
+{"source": "C_DEU", "target": "L_ZUGSPITZE", "relation": "landmark"}
+{"source": "C_DEU", "target": "Y_EURO", "relation": "currency"}
+{"source": "C_DEU", "target": "G_GERMAN", "relation": "language"}
+{"source": "C_DEU", "target": "N_EAGLE", "relation": "animal"}
+{"source": "C_DEU", "target": "N_BEAR", "relation": "animal"}
+{"source": "C_DEU", "target": "N_BOAR", "relation": "animal"}
+{"source": "C_DEU", "target": "N_DEER", "relation": "animal"}
+{"source": "C_DEU", "target": "E_OKTOBERFEST", "relation": "festival"}
+{"source": "C_DEU", "target": "E_CHRISTMAS_MARKETS", "relation": "festival"}
+{"source": "C_DEU", "target": "E_CARNIVAL_FASCHING", "relation": "festival"}
+{"source": "C_DEU", "target": "E_BERLIN_FILM_FESTIVAL", "relation": "festival"}
+{"source": "C_DEU", "target": "D_SCHUHPLATTLER", "relation": "dance"}
+{"source": "C_DEU", "target": "D_WALTZ", "relation": "dance"}
+{"source": "C_DEU", "target": "D_POLKA", "relation": "dance"}
+{"source": "C_DEU", "target": "M_CLASSICAL", "relation": "music"}
+{"source": "C_DEU", "target": "M_TECHNO", "relation": "music"}
+{"source": "C_DEU", "target": "M_BEETHOVEN", "relation": "music"}
+{"source": "C_DEU", "target": "M_BACH", "relation": "music"}
+{"source": "C_DEU", "target": "M_WAGNER", "relation": "music"}
+{"source": "C_DEU", "target": "M_ELECTRONIC", "relation": "music"}
+{"source": "C_DEU", "target": "H_HOLY_ROMAN_EMPIRE", "relation": "history"}
+{"source": "C_DEU", "target": "H_PRUSSIA", "relation": "history"}
+{"source": "C_DEU", "target": "H_REUNIFICATION", "relation": "history"}
+{"source": "C_DEU", "target": "H_WORLD_WARS", "relation": "history"}
+{"source": "C_DEU", "target": "R_ALPS", "relation": "geography"}
+{"source": "C_DEU", "target": "R_RHINE_RIVER", "relation": "geography"}
+{"source": "C_DEU", "target": "R_DANUBE_RIVER", "relation": "geography"}
+{"source": "C_DEU", "target": "R_NORTH_SEA", "relation": "geography"}
+{"source": "C_DEU", "target": "R_BALTIC_SEA", "relation": "geography"}
+{"source": "C_DEU", "target": "P_KANT", "relation": "philosophy"}
+{"source": "C_DEU", "target": "P_NIETZSCHE", "relation": "philosophy"}
+{"source": "C_DEU", "target": "P_HEGEL", "relation": "philosophy"}
+{"source": "C_AUS", "target": "F_VEGEMITE", "relation": "food"}
+{"source": "C_AUS", "target": "F_MEAT_PIE", "relation": "food"}
+{"source": "C_AUS", "target": "F_LAMINGTON", "relation": "food"}
+{"source": "C_AUS", "target": "F_PAVLOVA", "relation": "food"}
+{"source": "C_AUS", "target": "F_TIM_TAM", "relation": "food"}
+{"source": "C_AUS", "target": "F_FISH_AND_CHIPS", "relation": "food"}
+{"source": "C_AUS", "target": "F_DAMPER", "relation": "food"}
+{"source": "C_AUS", "target": "F_ANZAC_BISCUIT", "relation": "food"}
+{"source": "C_AUS", "target": "F_BARRAMUNDI", "relation": "food"}
+{"source": "C_AUS", "target": "F_KANGAROO_MEAT", "relation": "food"}
+{"source": "C_AUS", "target": "F_BEETROOT_ON_BURGER", "relation": "food"}
+{"source": "C_AUS", "target": "F_FLAT_WHITE", "relation": "food"}
+{"source": "C_AUS", "target": "F_CHICKEN_PARMA", "relation": "food"}
+{"source": "C_AUS", "target": "F_SAUSAGE_SIZZLE", "relation": "food"}
+{"source": "C_AUS", "target": "F_FAIRY_BREAD", "relation": "food"}
+{"source": "C_AUS", "target": "F_WEETBIX", "relation": "food"}
+{"source": "C_AUS", "target": "F_WITCHETTY_GRUB", "relation": "food"}
+{"source": "C_AUS", "target": "S_CRICKET", "relation": "sport"}
+{"source": "C_AUS", "target": "S_RUGBY", "relation": "sport"}
+{"source": "C_AUS", "target": "S_AFL", "relation": "sport"}
+{"source": "C_AUS", "target": "S_SURFING", "relation": "sport"}
+{"source": "C_AUS", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_AUS", "target": "S_SWIMMING", "relation": "sport"}
+{"source": "C_AUS", "target": "S_NETBALL", "relation": "sport"}
+{"source": "C_AUS", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_AUS", "target": "S_GOLF", "relation": "sport"}
+{"source": "C_AUS", "target": "S_HORSE_RACING", "relation": "sport"}
+{"source": "C_AUS", "target": "C_BOARDSHORTS", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_THONGS_FLIPFLOPS", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_AKUBRA_HAT", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_DRIZABONE", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_BATHERS", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_RASHIE", "relation": "clothing"}
+{"source": "C_AUS", "target": "C_BLUNDSTONES", "relation": "clothing"}
+{"source": "C_AUS", "target": "A_QUEENSLANDER", "relation": "architecture"}
+{"source": "C_AUS", "target": "A_SYDNEY_OPERA_HOUSE", "relation": "architecture"}
+{"source": "C_AUS", "target": "A_FEDERATION_STYLE", "relation": "architecture"}
+{"source": "C_AUS", "target": "A_TERRACE_HOUSE", "relation": "architecture"}
+{"source": "C_AUS", "target": "A_BEACH_HOUSE", "relation": "architecture"}
+{"source": "C_AUS", "target": "L_SYDNEY_OPERA_HOUSE", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_ULURU", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_GREAT_BARRIER_REEF", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_SYDNEY_HARBOUR_BRIDGE", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_BONDI_BEACH", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_TWELVE_APOSTLES", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_BLUE_MOUNTAINS", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_KAKADU_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_AUS", "target": "L_DAINTREE_RAINFOREST", "relation": "landmark"}
+{"source": "C_AUS", "target": "Y_AUSTRALIAN_DOLLAR", "relation": "currency"}
+{"source": "C_AUS", "target": "G_ENGLISH", "relation": "language"}
+{"source": "C_AUS", "target": "N_KANGAROO", "relation": "animal"}
+{"source": "C_AUS", "target": "N_KOALA", "relation": "animal"}
+{"source": "C_AUS", "target": "N_EMU", "relation": "animal"}
+{"source": "C_AUS", "target": "N_WOMBAT", "relation": "animal"}
+{"source": "C_AUS", "target": "N_PLATYPUS", "relation": "animal"}
+{"source": "C_AUS", "target": "N_ECHIDNA", "relation": "animal"}
+{"source": "C_AUS", "target": "N_DINGO", "relation": "animal"}
+{"source": "C_AUS", "target": "N_TASMANIAN_DEVIL", "relation": "animal"}
+{"source": "C_AUS", "target": "N_CROCODILE", "relation": "animal"}
+{"source": "C_AUS", "target": "N_KOOKABURRA", "relation": "animal"}
+{"source": "C_AUS", "target": "N_WALLABY", "relation": "animal"}
+{"source": "C_AUS", "target": "N_QUOKKA", "relation": "animal"}
+{"source": "C_AUS", "target": "E_AUSTRALIA_DAY", "relation": "festival"}
+{"source": "C_AUS", "target": "E_MARDI_GRAS", "relation": "festival"}
+{"source": "C_AUS", "target": "E_MELBOURNE_CUP", "relation": "festival"}
+{"source": "C_AUS", "target": "E_ANZAC_DAY", "relation": "festival"}
+{"source": "C_AUS", "target": "E_VIVID_SYDNEY", "relation": "festival"}
+{"source": "C_AUS", "target": "D_BUSH_DANCE", "relation": "dance"}
+{"source": "C_AUS", "target": "D_INDIGENOUS_DANCE", "relation": "dance"}
+{"source": "C_AUS", "target": "D_CORROBOREE", "relation": "dance"}
+{"source": "C_AUS", "target": "R_OUTBACK", "relation": "geography"}
+{"source": "C_AUS", "target": "R_GREAT_DIVIDING_RANGE", "relation": "geography"}
+{"source": "C_AUS", "target": "R_SIMPSON_DESERT", "relation": "geography"}
+{"source": "C_AUS", "target": "R_GOLD_COAST", "relation": "geography"}
+{"source": "C_AUS", "target": "H_ABORIGINAL_CULTURE", "relation": "history"}
+{"source": "C_EGY", "target": "F_KOSHARY", "relation": "food"}
+{"source": "C_EGY", "target": "F_FUL_MEDAMES", "relation": "food"}
+{"source": "C_EGY", "target": "F_FALAFEL", "relation": "food"}
+{"source": "C_EGY", "target": "F_SHAWARMA", "relation": "food"}
+{"source": "C_EGY", "target": "F_MAHSHI", "relation": "food"}
+{"source": "C_EGY", "target": "F_FATTAH", "relation": "food"}
+{"source": "C_EGY", "target": "F_MULUKHIYAH", "relation": "food"}
+{"source": "C_EGY", "target": "F_BAKLAVA", "relation": "food"}
+{"source": "C_EGY", "target": "F_KUNAFA", "relation": "food"}
+{"source": "C_EGY", "target": "F_BASBOUSA", "relation": "food"}
+{"source": "C_EGY", "target": "F_HAWAWSHI", "relation": "food"}
+{"source": "C_EGY", "target": "F_ROZ_BEL_LABAN", "relation": "food"}
+{"source": "C_EGY", "target": "F_UMM_ALI", "relation": "food"}
+{"source": "C_EGY", "target": "F_FESEEKH", "relation": "food"}
+{"source": "C_EGY", "target": "F_TEA", "relation": "food"}
+{"source": "C_EGY", "target": "F_HIBISCUS_TEA", "relation": "food"}
+{"source": "C_EGY", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_EGY", "target": "S_SQUASH", "relation": "sport"}
+{"source": "C_EGY", "target": "S_HANDBALL", "relation": "sport"}
+{"source": "C_EGY", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_EGY", "target": "S_SWIMMING", "relation": "sport"}
+{"source": "C_EGY", "target": "C_GALABEYA", "relation": "clothing"}
+{"source": "C_EGY", "target": "C_HIJAB", "relation": "clothing"}
+{"source": "C_EGY", "target": "C_KAFTAN", "relation": "clothing"}
+{"source": "C_EGY", "target": "C_ABAYA", "relation": "clothing"}
+{"source": "C_EGY", "target": "C_TARBOUSH", "relation": "clothing"}
+{"source": "C_EGY", "target": "A_PYRAMID", "relation": "architecture"}
+{"source": "C_EGY", "target": "A_TEMPLE", "relation": "architecture"}
+{"source": "C_EGY", "target": "A_MOSQUE", "relation": "architecture"}
+{"source": "C_EGY", "target": "A_MUD_BRICK_HOUSE", "relation": "architecture"}
+{"source": "C_EGY", "target": "A_ISLAMIC_ARCHITECTURE", "relation": "architecture"}
+{"source": "C_EGY", "target": "A_COPTIC_ARCHITECTURE", "relation": "architecture"}
+{"source": "C_EGY", "target": "L_PYRAMIDS_OF_GIZA", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_SPHINX", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_NILE_RIVER", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_LUXOR_TEMPLE", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_KARNAK_TEMPLE", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_VALLEY_OF_THE_KINGS", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_ABU_SIMBEL", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_CAIRO_CITADEL", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_EGYPTIAN_MUSEUM", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_RED_SEA", "relation": "landmark"}
+{"source": "C_EGY", "target": "L_SUEZ_CANAL", "relation": "landmark"}
+{"source": "C_EGY", "target": "Y_EGYPTIAN_POUND", "relation": "currency"}
+{"source": "C_EGY", "target": "G_ARABIC", "relation": "language"}
+{"source": "C_EGY", "target": "N_CAMEL", "relation": "animal"}
+{"source": "C_EGY", "target": "N_SCORPION", "relation": "animal"}
+{"source": "C_EGY", "target": "N_CROCODILE", "relation": "animal"}
+{"source": "C_EGY", "target": "N_COBRA", "relation": "animal"}
+{"source": "C_EGY", "target": "N_FENNEC_FOX", "relation": "animal"}
+{"source": "C_EGY", "target": "N_IBIS", "relation": "animal"}
+{"source": "C_EGY", "target": "N_JACKAL", "relation": "animal"}
+{"source": "C_EGY", "target": "E_RAMADAN", "relation": "festival"}
+{"source": "C_EGY", "target": "E_EID_ALFITR", "relation": "festival"}
+{"source": "C_EGY", "target": "E_SHAM_ENNESSIM", "relation": "festival"}
+{"source": "C_EGY", "target": "E_EID_ALADHA", "relation": "festival"}
+{"source": "C_EGY", "target": "E_MAWLID", "relation": "festival"}
+{"source": "C_EGY", "target": "D_BELLY_DANCE", "relation": "dance"}
+{"source": "C_EGY", "target": "D_TANOURA", "relation": "dance"}
+{"source": "C_EGY", "target": "D_RAQS_SHARQI", "relation": "dance"}
+{"source": "C_EGY", "target": "D_TAHTIB", "relation": "dance"}
+{"source": "C_EGY", "target": "H_PHARAOHS", "relation": "history"}
+{"source": "C_EGY", "target": "H_MUMMIES", "relation": "history"}
+{"source": "C_EGY", "target": "H_HIEROGLYPHS", "relation": "history"}
+{"source": "C_EGY", "target": "H_CLEOPATRA", "relation": "history"}
+{"source": "C_EGY", "target": "H_TUTANKHAMUN", "relation": "history"}
+{"source": "C_EGY", "target": "H_ANCIENT_EGYPT", "relation": "history"}
+{"source": "C_EGY", "target": "R_SAHARA_DESERT", "relation": "geography"}
+{"source": "C_EGY", "target": "R_NILE_DELTA", "relation": "geography"}
+{"source": "C_EGY", "target": "R_SINAI_PENINSULA", "relation": "geography"}
+{"source": "C_EGY", "target": "R_MEDITERRANEAN_COAST", "relation": "geography"}
+{"source": "C_EGY", "target": "T_PAPYRUS_ART", "relation": "art"}
+{"source": "C_EGY", "target": "T_STATUES", "relation": "art"}
+{"source": "C_EGY", "target": "T_WALL_CARVINGS", "relation": "art"}
+{"source": "C_EGY", "target": "K_DESERT", "relation": "climate"}
+{"source": "C_CAN", "target": "F_POUTINE", "relation": "food"}
+{"source": "C_CAN", "target": "F_MAPLE_SYRUP", "relation": "food"}
+{"source": "C_CAN", "target": "F_NANAIMO_BAR", "relation": "food"}
+{"source": "C_CAN", "target": "F_BUTTER_TART", "relation": "food"}
+{"source": "C_CAN", "target": "F_TOURTIERE", "relation": "food"}
+{"source": "C_CAN", "target": "F_BANNOCK", "relation": "food"}
+{"source": "C_CAN", "target": "F_BEAVERTAILS", "relation": "food"}
+{"source": "C_CAN", "target": "F_MONTREAL_BAGEL", "relation": "food"}
+{"source": "C_CAN", "target": "F_PEAMEAL_BACON", "relation": "food"}
+{"source": "C_CAN", "target": "F_KETCHUP_CHIPS", "relation": "food"}
+{"source": "C_CAN", "target": "F_CAESAR_COCKTAIL", "relation": "food"}
+{"source": "C_CAN", "target": "F_SASKATOON_BERRY_PIE", "relation": "food"}
+{"source": "C_CAN", "target": "F_DONAIR", "relation": "food"}
+{"source": "C_CAN", "target": "F_SPLIT_PEA_SOUP", "relation": "food"}
+{"source": "C_CAN", "target": "F_KRAFT_DINNER", "relation": "food"}
+{"source": "C_CAN", "target": "F_COFFEE_CRISP", "relation": "food"}
+{"source": "C_CAN", "target": "F_SMARTIES", "relation": "food"}
+{"source": "C_CAN", "target": "F_ICE_WINE", "relation": "food"}
+{"source": "C_CAN", "target": "S_ICE_HOCKEY", "relation": "sport"}
+{"source": "C_CAN", "target": "S_LACROSSE", "relation": "sport"}
+{"source": "C_CAN", "target": "S_CURLING", "relation": "sport"}
+{"source": "C_CAN", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_CAN", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_CAN", "target": "S_CANADIAN_FOOTBALL", "relation": "sport"}
+{"source": "C_CAN", "target": "S_SKIING", "relation": "sport"}
+{"source": "C_CAN", "target": "S_SNOWBOARDING", "relation": "sport"}
+{"source": "C_CAN", "target": "S_FIGURE_SKATING", "relation": "sport"}
+{"source": "C_CAN", "target": "C_TOQUE", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_FLANNEL_SHIRT", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_PARKA", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_MUKLUKS", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_MITTENS", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_LONG_JOHNS", "relation": "clothing"}
+{"source": "C_CAN", "target": "C_SOREL_BOOTS", "relation": "clothing"}
+{"source": "C_CAN", "target": "A_CHATEAU_STYLE", "relation": "architecture"}
+{"source": "C_CAN", "target": "A_IGLOO", "relation": "architecture"}
+{"source": "C_CAN", "target": "A_CN_TOWER", "relation": "architecture"}
+{"source": "C_CAN", "target": "A_VICTORIAN", "relation": "architecture"}
+{"source": "C_CAN", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_CAN", "target": "L_NIAGARA_FALLS", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_CN_TOWER", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_BANFF_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_PARLIAMENT_HILL", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_JASPER_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_LAKE_LOUISE", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_HOPEWELL_ROCKS", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_OLD_QUEBEC", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_WHISTLER", "relation": "landmark"}
+{"source": "C_CAN", "target": "L_PEGGYS_COVE", "relation": "landmark"}
+{"source": "C_CAN", "target": "Y_CANADIAN_DOLLAR", "relation": "currency"}
+{"source": "C_CAN", "target": "G_ENGLISH", "relation": "language"}
+{"source": "C_CAN", "target": "G_FRENCH", "relation": "language"}
+{"source": "C_CAN", "target": "N_BEAVER", "relation": "animal"}
+{"source": "C_CAN", "target": "N_MOOSE", "relation": "animal"}
+{"source": "C_CAN", "target": "N_POLAR_BEAR", "relation": "animal"}
+{"source": "C_CAN", "target": "N_LOON", "relation": "animal"}
+{"source": "C_CAN", "target": "N_GRIZZLY_BEAR", "relation": "animal"}
+{"source": "C_CAN", "target": "N_BLACK_BEAR", "relation": "animal"}
+{"source": "C_CAN", "target": "N_WOLF", "relation": "animal"}
+{"source": "C_CAN", "target": "N_CARIBOU", "relation": "animal"}
+{"source": "C_CAN", "target": "N_ORCA", "relation": "animal"}
+{"source": "C_CAN", "target": "N_CANADA_GOOSE", "relation": "animal"}
+{"source": "C_CAN", "target": "N_PUFFIN", "relation": "animal"}
+{"source": "C_CAN", "target": "E_CANADA_DAY", "relation": "festival"}
+{"source": "C_CAN", "target": "E_CALGARY_STAMPEDE", "relation": "festival"}
+{"source": "C_CAN", "target": "E_WINTERLUDE", "relation": "festival"}
+{"source": "C_CAN", "target": "E_TORONTO_FILM_FESTIVAL", "relation": "festival"}
+{"source": "C_CAN", "target": "E_MONTREAL_JAZZ_FESTIVAL", "relation": "festival"}
+{"source": "C_CAN", "target": "E_QUEBEC_WINTER_CARNIVAL", "relation": "festival"}
+{"source": "C_CAN", "target": "D_SQUARE_DANCE", "relation": "dance"}
+{"source": "C_CAN", "target": "D_POWWOW", "relation": "dance"}
+{"source": "C_CAN", "target": "D_JIGGING", "relation": "dance"}
+{"source": "C_CAN", "target": "R_ROCKY_MOUNTAINS", "relation": "geography"}
+{"source": "C_CAN", "target": "R_PRAIRIES", "relation": "geography"}
+{"source": "C_CAN", "target": "R_CANADIAN_SHIELD", "relation": "geography"}
+{"source": "C_RUS", "target": "F_BORSCHT", "relation": "food"}
+{"source": "C_RUS", "target": "F_PELMENI", "relation": "food"}
+{"source": "C_RUS", "target": "F_BLINI", "relation": "food"}
+{"source": "C_RUS", "target": "F_BEEF_STROGANOFF", "relation": "food"}
+{"source": "C_RUS", "target": "F_PIROZHKI", "relation": "food"}
+{"source": "C_RUS", "target": "F_SHASHLIK", "relation": "food"}
+{"source": "C_RUS", "target": "F_OLIVIER_SALAD", "relation": "food"}
+{"source": "C_RUS", "target": "F_CAVIAR", "relation": "food"}
+{"source": "C_RUS", "target": "F_SYRNIKI", "relation": "food"}
+{"source": "C_RUS", "target": "F_KVASS", "relation": "food"}
+{"source": "C_RUS", "target": "F_OKROSHKA", "relation": "food"}
+{"source": "C_RUS", "target": "F_SOLFANKA", "relation": "food"}
+{"source": "C_RUS", "target": "F_KHOLODETS", "relation": "food"}
+{"source": "C_RUS", "target": "F_VARENIKI", "relation": "food"}
+{"source": "C_RUS", "target": "F_MEDOVIK", "relation": "food"}
+{"source": "C_RUS", "target": "F_VODKA", "relation": "food"}
+{"source": "C_RUS", "target": "F_TEA_WITH_JAM", "relation": "food"}
+{"source": "C_RUS", "target": "S_ICE_HOCKEY", "relation": "sport"}
+{"source": "C_RUS", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_RUS", "target": "S_FIGURE_SKATING", "relation": "sport"}
+{"source": "C_RUS", "target": "S_CHESS", "relation": "sport"}
+{"source": "C_RUS", "target": "S_BIATHLON", "relation": "sport"}
+{"source": "C_RUS", "target": "S_GYMNASTICS", "relation": "sport"}
+{"source": "C_RUS", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_RUS", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_RUS", "target": "S_SAMBO", "relation": "sport"}
+{"source": "C_RUS", "target": "C_USHANKA", "relation": "clothing"}
+{"source": "C_RUS", "target": "C_SARAFAN", "relation": "clothing"}
+{"source": "C_RUS", "target": "C_KOSOVOROTKA", "relation": "clothing"}
+{"source": "C_RUS", "target": "C_VALENKI", "relation": "clothing"}
+{"source": "C_RUS", "target": "C_FUR_COAT", "relation": "clothing"}
+{"source": "C_RUS", "target": "C_KOKOSHNIK", "relation": "clothing"}
+{"source": "C_RUS", "target": "A_ONION_DOME", "relation": "architecture"}
+{"source": "C_RUS", "target": "A_KREMLIN", "relation": "architecture"}
+{"source": "C_RUS", "target": "A_STALINIST_ARCHITECTURE", "relation": "architecture"}
+{"source": "C_RUS", "target": "A_CONSTRUCTIVISM", "relation": "architecture"}
+{"source": "C_RUS", "target": "A_ORTHODOX_CHURCH", "relation": "architecture"}
+{"source": "C_RUS", "target": "A_WOODEN_CHURCHES", "relation": "architecture"}
+{"source": "C_RUS", "target": "L_RED_SQUARE", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_SAINT_BASILS_CATHEDRAL", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_HERMITAGE_MUSEUM", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_LAKE_BAIKAL", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_KREMLIN", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_PETERHOF", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_TRANSSIBERIAN_RAILWAY", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_BOLSHOI_THEATRE", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_MOUNT_ELBRUS", "relation": "landmark"}
+{"source": "C_RUS", "target": "L_KAMCHATKA", "relation": "landmark"}
+{"source": "C_RUS", "target": "Y_RUSSIAN_RUBLE", "relation": "currency"}
+{"source": "C_RUS", "target": "G_RUSSIAN", "relation": "language"}
+{"source": "C_RUS", "target": "N_BROWN_BEAR", "relation": "animal"}
+{"source": "C_RUS", "target": "N_SIBERIAN_TIGER", "relation": "animal"}
+{"source": "C_RUS", "target": "N_WOLF", "relation": "animal"}
+{"source": "C_RUS", "target": "N_LYNX", "relation": "animal"}
+{"source": "C_RUS", "target": "N_SNOW_LEOPARD", "relation": "animal"}
+{"source": "C_RUS", "target": "N_BAIKAL_SEAL", "relation": "animal"}
+{"source": "C_RUS", "target": "E_MASLENITSA", "relation": "festival"}
+{"source": "C_RUS", "target": "E_VICTORY_DAY", "relation": "festival"}
+{"source": "C_RUS", "target": "E_NEW_YEAR", "relation": "festival"}
+{"source": "C_RUS", "target": "E_ORTHODOX_CHRISTMAS", "relation": "festival"}
+{"source": "C_RUS", "target": "E_WHITE_NIGHTS_FESTIVAL", "relation": "festival"}
+{"source": "C_RUS", "target": "D_BALLET", "relation": "dance"}
+{"source": "C_RUS", "target": "D_FOLK_DANCE", "relation": "dance"}
+{"source": "C_RUS", "target": "D_KALINKA", "relation": "dance"}
+{"source": "C_RUS", "target": "D_BARYNYA", "relation": "dance"}
+{"source": "C_RUS", "target": "D_TREPAK", "relation": "dance"}
+{"source": "C_RUS", "target": "W_TOLSTOY", "relation": "literature"}
+{"source": "C_RUS", "target": "W_DOSTOEVSKY", "relation": "literature"}
+{"source": "C_RUS", "target": "W_PUSHKIN", "relation": "literature"}
+{"source": "C_RUS", "target": "W_CHEKHOV", "relation": "literature"}
+{"source": "C_RUS", "target": "W_GOGOL", "relation": "literature"}
+{"source": "C_RUS", "target": "H_TSARS", "relation": "history"}
+{"source": "C_RUS", "target": "H_SOVIET_UNION", "relation": "history"}
+{"source": "C_RUS", "target": "H_ROMANOVS", "relation": "history"}
+{"source": "C_RUS", "target": "H_REVOLUTION", "relation": "history"}
+{"source": "C_ZAF", "target": "F_BILTONG", "relation": "food"}
+{"source": "C_ZAF", "target": "F_BOEREWORS", "relation": "food"}
+{"source": "C_ZAF", "target": "F_BOBOTIE", "relation": "food"}
+{"source": "C_ZAF", "target": "F_BUNNY_CHOW", "relation": "food"}
+{"source": "C_ZAF", "target": "F_MALVA_PUDDING", "relation": "food"}
+{"source": "C_ZAF", "target": "F_CHAKALAKA", "relation": "food"}
+{"source": "C_ZAF", "target": "F_KOEKSISTER", "relation": "food"}
+{"source": "C_ZAF", "target": "F_VETKOEK", "relation": "food"}
+{"source": "C_ZAF", "target": "F_POTJIEKOS", "relation": "food"}
+{"source": "C_ZAF", "target": "F_MELKTERT", "relation": "food"}
+{"source": "C_ZAF", "target": "F_AMARULA", "relation": "food"}
+{"source": "C_ZAF", "target": "F_ROOIBOS_TEA", "relation": "food"}
+{"source": "C_ZAF", "target": "F_PAP", "relation": "food"}
+{"source": "C_ZAF", "target": "F_SAMOSA", "relation": "food"}
+{"source": "C_ZAF", "target": "F_GATSBY", "relation": "food"}
+{"source": "C_ZAF", "target": "F_BRAAI", "relation": "food"}
+{"source": "C_ZAF", "target": "S_RUGBY", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_CRICKET", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_GOLF", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_SURFING", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_ATHLETICS", "relation": "sport"}
+{"source": "C_ZAF", "target": "S_SWIMMING", "relation": "sport"}
+{"source": "C_ZAF", "target": "C_MADIBA_SHIRT", "relation": "clothing"}
+{"source": "C_ZAF", "target": "C_SHWESHWE", "relation": "clothing"}
+{"source": "C_ZAF", "target": "C_VELDSKOEN", "relation": "clothing"}
+{"source": "C_ZAF", "target": "C_TRADITIONAL_BEADWORK", "relation": "clothing"}
+{"source": "C_ZAF", "target": "C_ANIMAL_SKINS_TRADITIONAL", "relation": "clothing"}
+{"source": "C_ZAF", "target": "A_CAPE_DUTCH", "relation": "architecture"}
+{"source": "C_ZAF", "target": "A_RONDAVEL", "relation": "architecture"}
+{"source": "C_ZAF", "target": "A_NDEBELE_ART_HOUSES", "relation": "architecture"}
+{"source": "C_ZAF", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_ZAF", "target": "L_TABLE_MOUNTAIN", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_KRUGER_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_ROBBEN_ISLAND", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_CAPE_OF_GOOD_HOPE", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_DRAKENSBERG", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_BLYDE_RIVER_CANYON", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_CRADLE_OF_HUMANKIND", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_GARDEN_ROUTE", "relation": "landmark"}
+{"source": "C_ZAF", "target": "L_VICTORIA__ALFRED_WATERFRONT", "relation": "landmark"}
+{"source": "C_ZAF", "target": "Y_SOUTH_AFRICAN_RAND", "relation": "currency"}
+{"source": "C_ZAF", "target": "G_ZULU", "relation": "language"}
+{"source": "C_ZAF", "target": "G_XHOSA", "relation": "language"}
+{"source": "C_ZAF", "target": "G_AFRIKAANS", "relation": "language"}
+{"source": "C_ZAF", "target": "G_ENGLISH", "relation": "language"}
+{"source": "C_ZAF", "target": "G_SOTHO", "relation": "language"}
+{"source": "C_ZAF", "target": "G_TSWANA", "relation": "language"}
+{"source": "C_ZAF", "target": "N_LION", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_ELEPHANT", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_LEOPARD", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_RHINO", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_BUFFALO", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_CHEETAH", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_GIRAFFE", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_ZEBRA", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_HIPPO", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_PENGUIN", "relation": "animal"}
+{"source": "C_ZAF", "target": "N_SPRINGBOK", "relation": "animal"}
+{"source": "C_ZAF", "target": "E_FREEDOM_DAY", "relation": "festival"}
+{"source": "C_ZAF", "target": "E_HERITAGE_DAY", "relation": "festival"}
+{"source": "C_ZAF", "target": "E_CAPE_TOWN_JAZZ_FESTIVAL", "relation": "festival"}
+{"source": "C_ZAF", "target": "E_NATIONAL_ARTS_FESTIVAL", "relation": "festival"}
+{"source": "C_ZAF", "target": "D_GUMBOOT_DANCE", "relation": "dance"}
+{"source": "C_ZAF", "target": "D_PANTSULA", "relation": "dance"}
+{"source": "C_ZAF", "target": "D_ZULU_WAR_DANCE", "relation": "dance"}
+{"source": "C_ZAF", "target": "D_TOYITOYI", "relation": "dance"}
+{"source": "C_ZAF", "target": "D_INDLAMU", "relation": "dance"}
+{"source": "C_ZAF", "target": "H_APARTHEID", "relation": "history"}
+{"source": "C_ZAF", "target": "H_MANDELA", "relation": "history"}
+{"source": "C_ZAF", "target": "H_BOER_WARS", "relation": "history"}
+{"source": "C_ZAF", "target": "H_ZULU_KINGDOM", "relation": "history"}
+{"source": "C_ZAF", "target": "R_VELD", "relation": "geography"}
+{"source": "C_ZAF", "target": "R_KAROO", "relation": "geography"}
+{"source": "C_ZAF", "target": "R_KALAHARI_DESERT", "relation": "geography"}
+{"source": "C_MEX", "target": "F_TACOS", "relation": "food"}
+{"source": "C_MEX", "target": "F_ENCHILADAS", "relation": "food"}
+{"source": "C_MEX", "target": "F_GUACAMOLE", "relation": "food"}
+{"source": "C_MEX", "target": "F_TAMALES", "relation": "food"}
+{"source": "C_MEX", "target": "F_CHILES_EN_NOGADA", "relation": "food"}
+{"source": "C_MEX", "target": "F_MOLE", "relation": "food"}
+{"source": "C_MEX", "target": "F_QUESADILLA", "relation": "food"}
+{"source": "C_MEX", "target": "F_POZOLE", "relation": "food"}
+{"source": "C_MEX", "target": "F_BURRITO", "relation": "food"}
+{"source": "C_MEX", "target": "F_CHURROS", "relation": "food"}
+{"source": "C_MEX", "target": "F_SALSA", "relation": "food"}
+{"source": "C_MEX", "target": "F_NACHOS", "relation": "food"}
+{"source": "C_MEX", "target": "F_FAJITAS", "relation": "food"}
+{"source": "C_MEX", "target": "F_TOSTADAS", "relation": "food"}
+{"source": "C_MEX", "target": "F_ELOTE", "relation": "food"}
+{"source": "C_MEX", "target": "F_MENUDO", "relation": "food"}
+{"source": "C_MEX", "target": "F_TEQUILA", "relation": "food"}
+{"source": "C_MEX", "target": "F_MEZCAL", "relation": "food"}
+{"source": "C_MEX", "target": "F_HORCHATA", "relation": "food"}
+{"source": "C_MEX", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_MEX", "target": "S_BOXING", "relation": "sport"}
+{"source": "C_MEX", "target": "S_LUCHA_LIBRE", "relation": "sport"}
+{"source": "C_MEX", "target": "S_BASEBALL", "relation": "sport"}
+{"source": "C_MEX", "target": "S_BULLFIGHTING", "relation": "sport"}
+{"source": "C_MEX", "target": "S_CHARREADA", "relation": "sport"}
+{"source": "C_MEX", "target": "C_SOMBRERO", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_PONCHO", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_HUIPIL", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_GUAYABERA", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_REBOZO", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_CHARRO_SUIT", "relation": "clothing"}
+{"source": "C_MEX", "target": "C_CHINA_POBLANA", "relation": "clothing"}
+{"source": "C_MEX", "target": "A_AZTEC_PYRAMID", "relation": "architecture"}
+{"source": "C_MEX", "target": "A_COLONIAL_CATHEDRAL", "relation": "architecture"}
+{"source": "C_MEX", "target": "A_HACIENDA", "relation": "architecture"}
+{"source": "C_MEX", "target": "A_MAYAN_RUINS", "relation": "architecture"}
+{"source": "C_MEX", "target": "A_BAROQUE", "relation": "architecture"}
+{"source": "C_MEX", "target": "L_CHICHEN_ITZA", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_TEOTIHUACAN", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_ZOCALO", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_CANCUN_BEACHES", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_TULUM", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_PALENQUE", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_FRIDA_KAHLO_MUSEUM", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_CHAPULTEPEC", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_CABO_SAN_LUCAS", "relation": "landmark"}
+{"source": "C_MEX", "target": "L_COPPER_CANYON", "relation": "landmark"}
+{"source": "C_MEX", "target": "Y_MEXICAN_PESO", "relation": "currency"}
+{"source": "C_MEX", "target": "G_SPANISH", "relation": "language"}
+{"source": "C_MEX", "target": "N_GOLDEN_EAGLE", "relation": "animal"}
+{"source": "C_MEX", "target": "N_JAGUAR", "relation": "animal"}
+{"source": "C_MEX", "target": "N_AXOLOTL", "relation": "animal"}
+{"source": "C_MEX", "target": "N_CHIHUAHUA", "relation": "animal"}
+{"source": "C_MEX", "target": "N_MONARCH_BUTTERFLY", "relation": "animal"}
+{"source": "C_MEX", "target": "N_XOLOITZCUINTLI", "relation": "animal"}
+{"source": "C_MEX", "target": "N_COATI", "relation": "animal"}
+{"source": "C_MEX", "target": "N_OCELOT", "relation": "animal"}
+{"source": "C_MEX", "target": "E_DAY_OF_THE_DEAD", "relation": "festival"}
+{"source": "C_MEX", "target": "E_CINCO_DE_MAYO", "relation": "festival"}
+{"source": "C_MEX", "target": "E_INDEPENDENCE_DAY", "relation": "festival"}
+{"source": "C_MEX", "target": "E_LAS_POSADAS", "relation": "festival"}
+{"source": "C_MEX", "target": "E_GUELAGUETZA", "relation": "festival"}
+{"source": "C_MEX", "target": "D_JARABE_TAPATIO", "relation": "dance"}
+{"source": "C_MEX", "target": "D_MARIACHI", "relation": "dance"}
+{"source": "C_MEX", "target": "D_FOLKLORICO", "relation": "dance"}
+{"source": "C_MEX", "target": "D_DANZA_DE_LOS_VOLADORES", "relation": "dance"}
+{"source": "C_MEX", "target": "T_MURALISM", "relation": "art"}
+{"source": "C_MEX", "target": "T_FRIDA_KAHLO", "relation": "art"}
+{"source": "C_MEX", "target": "T_DIEGO_RIVERA", "relation": "art"}
+{"source": "C_MEX", "target": "T_MAYA_ART", "relation": "art"}
+{"source": "C_MEX", "target": "T_AZTEC_ART", "relation": "art"}
+{"source": "C_MEX", "target": "H_AZTECS", "relation": "history"}
+{"source": "C_MEX", "target": "H_MAYANS", "relation": "history"}
+{"source": "C_MEX", "target": "H_SPANISH_CONQUEST", "relation": "history"}
+{"source": "C_MEX", "target": "H_MEXICAN_REVOLUTION", "relation": "history"}
+{"source": "C_ARG", "target": "F_ASADO", "relation": "food"}
+{"source": "C_ARG", "target": "F_EMPANADAS", "relation": "food"}
+{"source": "C_ARG", "target": "F_DULCE_DE_LECHE", "relation": "food"}
+{"source": "C_ARG", "target": "F_CHIMICHURRI", "relation": "food"}
+{"source": "C_ARG", "target": "F_MILANESA", "relation": "food"}
+{"source": "C_ARG", "target": "F_ALFAJOR", "relation": "food"}
+{"source": "C_ARG", "target": "F_CHORIPAN", "relation": "food"}
+{"source": "C_ARG", "target": "F_LOCRO", "relation": "food"}
+{"source": "C_ARG", "target": "F_MATAMBRE", "relation": "food"}
+{"source": "C_ARG", "target": "F_YERBA_MATE", "relation": "food"}
+{"source": "C_ARG", "target": "F_PROVOLETA", "relation": "food"}
+{"source": "C_ARG", "target": "F_FAINA", "relation": "food"}
+{"source": "C_ARG", "target": "F_MEDIALUNAS", "relation": "food"}
+{"source": "C_ARG", "target": "F_MALBEC_WINE", "relation": "food"}
+{"source": "C_ARG", "target": "F_CARBONADA", "relation": "food"}
+{"source": "C_ARG", "target": "F_HUMITA", "relation": "food"}
+{"source": "C_ARG", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_ARG", "target": "S_POLO", "relation": "sport"}
+{"source": "C_ARG", "target": "S_RUGBY", "relation": "sport"}
+{"source": "C_ARG", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_ARG", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_ARG", "target": "S_FIELD_HOCKEY", "relation": "sport"}
+{"source": "C_ARG", "target": "S_AUTO_RACING", "relation": "sport"}
+{"source": "C_ARG", "target": "C_GAUCHO_PANTS", "relation": "clothing"}
+{"source": "C_ARG", "target": "C_PONCHO", "relation": "clothing"}
+{"source": "C_ARG", "target": "C_BERET", "relation": "clothing"}
+{"source": "C_ARG", "target": "C_ESPADRILLES", "relation": "clothing"}
+{"source": "C_ARG", "target": "C_FAJA", "relation": "clothing"}
+{"source": "C_ARG", "target": "A_BEAUXARTS", "relation": "architecture"}
+{"source": "C_ARG", "target": "A_COLONIAL", "relation": "architecture"}
+{"source": "C_ARG", "target": "A_MODERN", "relation": "architecture"}
+{"source": "C_ARG", "target": "A_NEOCLASSICAL", "relation": "architecture"}
+{"source": "C_ARG", "target": "A_ART_NOUVEAU", "relation": "architecture"}
+{"source": "C_ARG", "target": "L_IGUAZU_FALLS", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_PERITO_MORENO_GLACIER", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_OBELISCO", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_LA_BOCA", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_CASA_ROSADA", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_TEATRO_COLON", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_BARILOCHE", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_MOUNT_ACONCAGUA", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_VALDES_PENINSULA", "relation": "landmark"}
+{"source": "C_ARG", "target": "L_TIERRA_DEL_FUEGO", "relation": "landmark"}
+{"source": "C_ARG", "target": "Y_ARGENTINE_PESO", "relation": "currency"}
+{"source": "C_ARG", "target": "G_SPANISH", "relation": "language"}
+{"source": "C_ARG", "target": "N_HORNERO", "relation": "animal"}
+{"source": "C_ARG", "target": "N_JAGUAR", "relation": "animal"}
+{"source": "C_ARG", "target": "N_GUANACO", "relation": "animal"}
+{"source": "C_ARG", "target": "N_PUMA", "relation": "animal"}
+{"source": "C_ARG", "target": "N_CONDOR", "relation": "animal"}
+{"source": "C_ARG", "target": "N_MARA", "relation": "animal"}
+{"source": "C_ARG", "target": "N_CAPYBARA", "relation": "animal"}
+{"source": "C_ARG", "target": "N_SOUTHERN_RIGHT_WHALE", "relation": "animal"}
+{"source": "C_ARG", "target": "N_PENGUIN", "relation": "animal"}
+{"source": "C_ARG", "target": "E_CARNIVAL", "relation": "festival"}
+{"source": "C_ARG", "target": "E_TANGO_FESTIVAL", "relation": "festival"}
+{"source": "C_ARG", "target": "E_COSQUIN_FOLK_FESTIVAL", "relation": "festival"}
+{"source": "C_ARG", "target": "E_VENDIMIA_FESTIVAL", "relation": "festival"}
+{"source": "C_ARG", "target": "D_TANGO", "relation": "dance"}
+{"source": "C_ARG", "target": "D_MILONGA", "relation": "dance"}
+{"source": "C_ARG", "target": "D_CHACARERA", "relation": "dance"}
+{"source": "C_ARG", "target": "D_ZAMBA", "relation": "dance"}
+{"source": "C_ARG", "target": "D_MALAMBO", "relation": "dance"}
+{"source": "C_ARG", "target": "H_PERONISM", "relation": "history"}
+{"source": "C_ARG", "target": "H_FALKLANDS_WAR", "relation": "history"}
+{"source": "C_ARG", "target": "H_INDEPENDENCE", "relation": "history"}
+{"source": "C_ARG", "target": "H_IMMIGRATION", "relation": "history"}
+{"source": "C_ARG", "target": "R_PAMPAS", "relation": "geography"}
+{"source": "C_ARG", "target": "R_PATAGONIA", "relation": "geography"}
+{"source": "C_ARG", "target": "R_ANDES", "relation": "geography"}
+{"source": "C_ARG", "target": "R_ATLANTIC_COAST", "relation": "geography"}
+{"source": "C_ARG", "target": "M_TANGO", "relation": "music"}
+{"source": "C_ARG", "target": "M_FOLCLORE", "relation": "music"}
+{"source": "C_ARG", "target": "M_ROCK_NACIONAL", "relation": "music"}
+{"source": "C_ARG", "target": "M_CUMBIA", "relation": "music"}
+{"source": "C_ESP", "target": "F_PAELLA", "relation": "food"}
+{"source": "C_ESP", "target": "F_TAPAS", "relation": "food"}
+{"source": "C_ESP", "target": "F_GAZPACHO", "relation": "food"}
+{"source": "C_ESP", "target": "F_JAM\u00d3N_IB\u00c9RICO", "relation": "food"}
+{"source": "C_ESP", "target": "F_TORTILLA_ESPA\u00d1OLA", "relation": "food"}
+{"source": "C_ESP", "target": "F_CHURROS", "relation": "food"}
+{"source": "C_ESP", "target": "F_PATATAS_BRAVAS", "relation": "food"}
+{"source": "C_ESP", "target": "F_SANGRIA", "relation": "food"}
+{"source": "C_ESP", "target": "F_FABADA", "relation": "food"}
+{"source": "C_ESP", "target": "F_TURRON", "relation": "food"}
+{"source": "C_ESP", "target": "F_PISTO", "relation": "food"}
+{"source": "C_ESP", "target": "F_GAMBAS_AL_AJILLO", "relation": "food"}
+{"source": "C_ESP", "target": "F_PULPO_A_LA_GALLEGA", "relation": "food"}
+{"source": "C_ESP", "target": "F_CROQUETAS", "relation": "food"}
+{"source": "C_ESP", "target": "F_MANCHEGO_CHEESE", "relation": "food"}
+{"source": "C_ESP", "target": "F_CAVA", "relation": "food"}
+{"source": "C_ESP", "target": "F_HORCHATA", "relation": "food"}
+{"source": "C_ESP", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_ESP", "target": "S_TENNIS", "relation": "sport"}
+{"source": "C_ESP", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_ESP", "target": "S_FORMULA_1", "relation": "sport"}
+{"source": "C_ESP", "target": "S_CYCLING", "relation": "sport"}
+{"source": "C_ESP", "target": "S_HANDBALL", "relation": "sport"}
+{"source": "C_ESP", "target": "S_BULLFIGHTING", "relation": "sport"}
+{"source": "C_ESP", "target": "S_PADEL", "relation": "sport"}
+{"source": "C_ESP", "target": "C_FLAMENCO_DRESS", "relation": "clothing"}
+{"source": "C_ESP", "target": "C_MANTILLA", "relation": "clothing"}
+{"source": "C_ESP", "target": "C_ESPADRILLES", "relation": "clothing"}
+{"source": "C_ESP", "target": "C_PEINETA", "relation": "clothing"}
+{"source": "C_ESP", "target": "C_GILET", "relation": "clothing"}
+{"source": "C_ESP", "target": "A_SAGRADA_FAMILIA", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_ALHAMBRA", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_MOORISH", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_GOTHIC", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_RENAISSANCE", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_MODERNISME", "relation": "architecture"}
+{"source": "C_ESP", "target": "A_MUDEJAR", "relation": "architecture"}
+{"source": "C_ESP", "target": "L_SAGRADA_FAMILIA", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_PARK_GUELL", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_ALHAMBRA", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_PRADO_MUSEUM", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_ROYAL_PALACE_OF_MADRID", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_MEZQUITA_OF_CORDOBA", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_GUGGENHEIM_BILBAO", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_CASA_BATLLO", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_IBIZA", "relation": "landmark"}
+{"source": "C_ESP", "target": "L_CAMINO_DE_SANTIAGO", "relation": "landmark"}
+{"source": "C_ESP", "target": "Y_EURO", "relation": "currency"}
+{"source": "C_ESP", "target": "G_SPANISH", "relation": "language"}
+{"source": "C_ESP", "target": "G_CATALAN", "relation": "language"}
+{"source": "C_ESP", "target": "G_BASQUE", "relation": "language"}
+{"source": "C_ESP", "target": "G_GALICIAN", "relation": "language"}
+{"source": "C_ESP", "target": "N_BULL", "relation": "animal"}
+{"source": "C_ESP", "target": "N_IBERIAN_LYNX", "relation": "animal"}
+{"source": "C_ESP", "target": "N_WOLF", "relation": "animal"}
+{"source": "C_ESP", "target": "N_EAGLE", "relation": "animal"}
+{"source": "C_ESP", "target": "N_BEAR", "relation": "animal"}
+{"source": "C_ESP", "target": "N_GECKO", "relation": "animal"}
+{"source": "C_ESP", "target": "E_LA_TOMATINA", "relation": "festival"}
+{"source": "C_ESP", "target": "E_RUNNING_OF_THE_BULLS", "relation": "festival"}
+{"source": "C_ESP", "target": "E_SEMANA_SANTA", "relation": "festival"}
+{"source": "C_ESP", "target": "E_FERIA_DE_ABRIL", "relation": "festival"}
+{"source": "C_ESP", "target": "E_LAS_FALLAS", "relation": "festival"}
+{"source": "C_ESP", "target": "D_FLAMENCO", "relation": "dance"}
+{"source": "C_ESP", "target": "D_SARDANA", "relation": "dance"}
+{"source": "C_ESP", "target": "D_JOTA", "relation": "dance"}
+{"source": "C_ESP", "target": "D_FANDANGO", "relation": "dance"}
+{"source": "C_ESP", "target": "D_PASO_DOBLE", "relation": "dance"}
+{"source": "C_ESP", "target": "T_PICASSO", "relation": "art"}
+{"source": "C_ESP", "target": "T_DALI", "relation": "art"}
+{"source": "C_ESP", "target": "T_GOYA", "relation": "art"}
+{"source": "C_ESP", "target": "T_VELAZQUEZ", "relation": "art"}
+{"source": "C_ESP", "target": "T_MIRO", "relation": "art"}
+{"source": "C_ESP", "target": "H_SPANISH_EMPIRE", "relation": "history"}
+{"source": "C_ESP", "target": "H_CIVIL_WAR", "relation": "history"}
+{"source": "C_TUR", "target": "F_KEBAB", "relation": "food"}
+{"source": "C_TUR", "target": "F_BAKLAVA", "relation": "food"}
+{"source": "C_TUR", "target": "F_TURKISH_DELIGHT", "relation": "food"}
+{"source": "C_TUR", "target": "F_MEZE", "relation": "food"}
+{"source": "C_TUR", "target": "F_DOLMA", "relation": "food"}
+{"source": "C_TUR", "target": "F_SIMIT", "relation": "food"}
+{"source": "C_TUR", "target": "F_LAHMACUN", "relation": "food"}
+{"source": "C_TUR", "target": "F_PIDE", "relation": "food"}
+{"source": "C_TUR", "target": "F_MANTI", "relation": "food"}
+{"source": "C_TUR", "target": "F_TURKISH_COFFEE", "relation": "food"}
+{"source": "C_TUR", "target": "F_TEA", "relation": "food"}
+{"source": "C_TUR", "target": "F_BOREK", "relation": "food"}
+{"source": "C_TUR", "target": "F_KUNEFE", "relation": "food"}
+{"source": "C_TUR", "target": "F_ISKENDER_KEBAB", "relation": "food"}
+{"source": "C_TUR", "target": "F_AYRAN", "relation": "food"}
+{"source": "C_TUR", "target": "F_RAKI", "relation": "food"}
+{"source": "C_TUR", "target": "F_LOKUM", "relation": "food"}
+{"source": "C_TUR", "target": "F_MENEMEN", "relation": "food"}
+{"source": "C_TUR", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_TUR", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_TUR", "target": "S_WRESTLING", "relation": "sport"}
+{"source": "C_TUR", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_TUR", "target": "S_WEIGHTLIFTING", "relation": "sport"}
+{"source": "C_TUR", "target": "S_ARCHERY", "relation": "sport"}
+{"source": "C_TUR", "target": "C_FEZ", "relation": "clothing"}
+{"source": "C_TUR", "target": "C_KAFTAN", "relation": "clothing"}
+{"source": "C_TUR", "target": "C_SHALWAR", "relation": "clothing"}
+{"source": "C_TUR", "target": "C_YELEK", "relation": "clothing"}
+{"source": "C_TUR", "target": "C_BINDALLI", "relation": "clothing"}
+{"source": "C_TUR", "target": "A_MOSQUE", "relation": "architecture"}
+{"source": "C_TUR", "target": "A_OTTOMAN_PALACE", "relation": "architecture"}
+{"source": "C_TUR", "target": "A_BAZAAR", "relation": "architecture"}
+{"source": "C_TUR", "target": "A_BYZANTINE", "relation": "architecture"}
+{"source": "C_TUR", "target": "A_SELJUK", "relation": "architecture"}
+{"source": "C_TUR", "target": "L_HAGIA_SOPHIA", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_BLUE_MOSQUE", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_CAPPADOCIA", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_GRAND_BAZAAR", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_TOPKAPI_PALACE", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_PAMUKKALE", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_EPHESUS", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_GALATA_TOWER", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_MOUNT_ARARAT", "relation": "landmark"}
+{"source": "C_TUR", "target": "L_BOSPHORUS", "relation": "landmark"}
+{"source": "C_TUR", "target": "Y_TURKISH_LIRA", "relation": "currency"}
+{"source": "C_TUR", "target": "G_TURKISH", "relation": "language"}
+{"source": "C_TUR", "target": "N_ANGORA_CAT", "relation": "animal"}
+{"source": "C_TUR", "target": "N_KANGGAL_DOG", "relation": "animal"}
+{"source": "C_TUR", "target": "N_GRAY_WOLF", "relation": "animal"}
+{"source": "C_TUR", "target": "N_VAN_CAT", "relation": "animal"}
+{"source": "C_TUR", "target": "N_SEA_TURTLE", "relation": "animal"}
+{"source": "C_TUR", "target": "E_RAMADAN", "relation": "festival"}
+{"source": "C_TUR", "target": "E_REPUBLIC_DAY", "relation": "festival"}
+{"source": "C_TUR", "target": "E_CHILDRENS_DAY", "relation": "festival"}
+{"source": "C_TUR", "target": "E_VICTORY_DAY", "relation": "festival"}
+{"source": "C_TUR", "target": "E_TULIP_FESTIVAL", "relation": "festival"}
+{"source": "C_TUR", "target": "E_CAMEL_WRESTLING_FESTIVAL", "relation": "festival"}
+{"source": "C_TUR", "target": "D_WHIRLING_DERVISHES", "relation": "dance"}
+{"source": "C_TUR", "target": "D_HALAY", "relation": "dance"}
+{"source": "C_TUR", "target": "D_BELLY_DANCE", "relation": "dance"}
+{"source": "C_TUR", "target": "D_HORON", "relation": "dance"}
+{"source": "C_TUR", "target": "D_ZEYBEK", "relation": "dance"}
+{"source": "C_TUR", "target": "H_OTTOMAN_EMPIRE", "relation": "history"}
+{"source": "C_TUR", "target": "H_BYZANTINE_EMPIRE", "relation": "history"}
+{"source": "C_TUR", "target": "H_ATATURK", "relation": "history"}
+{"source": "C_TUR", "target": "H_SILK_ROAD", "relation": "history"}
+{"source": "C_TUR", "target": "H_TROY", "relation": "history"}
+{"source": "C_TUR", "target": "R_ANATOLIA", "relation": "geography"}
+{"source": "C_TUR", "target": "R_BLACK_SEA", "relation": "geography"}
+{"source": "C_TUR", "target": "R_MEDITERRANEAN", "relation": "geography"}
+{"source": "C_TUR", "target": "R_AEGEAN", "relation": "geography"}
+{"source": "C_TUR", "target": "R_THRACE", "relation": "geography"}
+{"source": "C_TUR", "target": "T_CARPET_WEAVING", "relation": "art"}
+{"source": "C_TUR", "target": "T_CERAMICS", "relation": "art"}
+{"source": "C_TUR", "target": "T_CALLIGRAPHY", "relation": "art"}
+{"source": "C_THA", "target": "F_PAD_THAI", "relation": "food"}
+{"source": "C_THA", "target": "F_TOM_YUM_GOONG", "relation": "food"}
+{"source": "C_THA", "target": "F_GREEN_CURRY", "relation": "food"}
+{"source": "C_THA", "target": "F_SOM_TUM", "relation": "food"}
+{"source": "C_THA", "target": "F_MANGO_STICKY_RICE", "relation": "food"}
+{"source": "C_THA", "target": "F_MASSAMAN_CURRY", "relation": "food"}
+{"source": "C_THA", "target": "F_SPRING_ROLLS", "relation": "food"}
+{"source": "C_THA", "target": "F_SATAY", "relation": "food"}
+{"source": "C_THA", "target": "F_FRIED_RICE", "relation": "food"}
+{"source": "C_THA", "target": "F_THAI_ICED_TEA", "relation": "food"}
+{"source": "C_THA", "target": "F_PANANG_CURRY", "relation": "food"}
+{"source": "C_THA", "target": "F_KHAO_SOI", "relation": "food"}
+{"source": "C_THA", "target": "F_TOM_KHA_GAI", "relation": "food"}
+{"source": "C_THA", "target": "F_LARB", "relation": "food"}
+{"source": "C_THA", "target": "F_STICKY_RICE", "relation": "food"}
+{"source": "C_THA", "target": "F_COCONUT_MILK", "relation": "food"}
+{"source": "C_THA", "target": "S_MUAY_THAI", "relation": "sport"}
+{"source": "C_THA", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_THA", "target": "S_SEPAK_TAKRAW", "relation": "sport"}
+{"source": "C_THA", "target": "S_BADMINTON", "relation": "sport"}
+{"source": "C_THA", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_THA", "target": "S_BOXING", "relation": "sport"}
+{"source": "C_THA", "target": "C_CHUT_THAI", "relation": "clothing"}
+{"source": "C_THA", "target": "C_SABAI", "relation": "clothing"}
+{"source": "C_THA", "target": "C_PHA_NUNG", "relation": "clothing"}
+{"source": "C_THA", "target": "C_SINH", "relation": "clothing"}
+{"source": "C_THA", "target": "C_RAJ_PATTERN", "relation": "clothing"}
+{"source": "C_THA", "target": "A_WAT_TEMPLE", "relation": "architecture"}
+{"source": "C_THA", "target": "A_STILT_HOUSE", "relation": "architecture"}
+{"source": "C_THA", "target": "A_ROYAL_PALACE", "relation": "architecture"}
+{"source": "C_THA", "target": "A_PAGODA", "relation": "architecture"}
+{"source": "C_THA", "target": "A_SALA_THAI", "relation": "architecture"}
+{"source": "C_THA", "target": "L_GRAND_PALACE", "relation": "landmark"}
+{"source": "C_THA", "target": "L_WAT_ARUN", "relation": "landmark"}
+{"source": "C_THA", "target": "L_PHUKET_BEACHES", "relation": "landmark"}
+{"source": "C_THA", "target": "L_AYUTTHAYA", "relation": "landmark"}
+{"source": "C_THA", "target": "L_WAT_PHRA_KAEW", "relation": "landmark"}
+{"source": "C_THA", "target": "L_PHI_PHI_ISLANDS", "relation": "landmark"}
+{"source": "C_THA", "target": "L_FLOATING_MARKET", "relation": "landmark"}
+{"source": "C_THA", "target": "L_KHAO_YAI_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_THA", "target": "L_RAILAY_BEACH", "relation": "landmark"}
+{"source": "C_THA", "target": "L_SUKHOTHAI", "relation": "landmark"}
+{"source": "C_THA", "target": "Y_THAI_BAHT", "relation": "currency"}
+{"source": "C_THA", "target": "G_THAI", "relation": "language"}
+{"source": "C_THA", "target": "N_ELEPHANT", "relation": "animal"}
+{"source": "C_THA", "target": "N_TIGER", "relation": "animal"}
+{"source": "C_THA", "target": "N_SIAMESE_CAT", "relation": "animal"}
+{"source": "C_THA", "target": "N_WATER_BUFFALO", "relation": "animal"}
+{"source": "C_THA", "target": "N_GIBBON", "relation": "animal"}
+{"source": "C_THA", "target": "N_COBRA", "relation": "animal"}
+{"source": "C_THA", "target": "N_MONITOR_LIZARD", "relation": "animal"}
+{"source": "C_THA", "target": "E_SONGKRAN", "relation": "festival"}
+{"source": "C_THA", "target": "E_LOY_KRATHONG", "relation": "festival"}
+{"source": "C_THA", "target": "E_YI_PENG", "relation": "festival"}
+{"source": "C_THA", "target": "E_VEGETARIAN_FESTIVAL", "relation": "festival"}
+{"source": "C_THA", "target": "E_GHOST_FESTIVAL", "relation": "festival"}
+{"source": "C_THA", "target": "E_MONKEY_BUFFET_FESTIVAL", "relation": "festival"}
+{"source": "C_THA", "target": "D_KHON", "relation": "dance"}
+{"source": "C_THA", "target": "D_FAWN_THAI", "relation": "dance"}
+{"source": "C_THA", "target": "D_RAM_THAI", "relation": "dance"}
+{"source": "C_THA", "target": "D_LAKHON", "relation": "dance"}
+{"source": "C_THA", "target": "H_SIAM", "relation": "history"}
+{"source": "C_THA", "target": "H_AYUTTHAYA_KINGDOM", "relation": "history"}
+{"source": "C_THA", "target": "H_SUKHOTHAI_KINGDOM", "relation": "history"}
+{"source": "C_THA", "target": "H_MONARCHY", "relation": "history"}
+{"source": "C_THA", "target": "R_MEKONG_RIVER", "relation": "geography"}
+{"source": "C_THA", "target": "R_ANDAMAN_SEA", "relation": "geography"}
+{"source": "C_THA", "target": "R_GULF_OF_THAILAND", "relation": "geography"}
+{"source": "C_THA", "target": "R_TROPICAL_RAINFOREST", "relation": "geography"}
+{"source": "C_THA", "target": "R_ISAN", "relation": "geography"}
+{"source": "C_THA", "target": "B_BUDDHISM", "relation": "religion"}
+{"source": "C_THA", "target": "K_TROPICAL", "relation": "climate"}
+{"source": "C_THA", "target": "K_MONSOON", "relation": "climate"}
+{"source": "C_THA", "target": "V_STREET_FOOD_CULTURE", "relation": "living_style"}
+{"source": "C_THA", "target": "V_SANUK_FUN", "relation": "living_style"}
+{"source": "C_KOR", "target": "F_KIMCHI", "relation": "food"}
+{"source": "C_KOR", "target": "F_BIBIMBAP", "relation": "food"}
+{"source": "C_KOR", "target": "F_BULGOGI", "relation": "food"}
+{"source": "C_KOR", "target": "F_TTEOKBOKKI", "relation": "food"}
+{"source": "C_KOR", "target": "F_JAPCHAE", "relation": "food"}
+{"source": "C_KOR", "target": "F_SAMGYEOPSAL", "relation": "food"}
+{"source": "C_KOR", "target": "F_GIMBAP", "relation": "food"}
+{"source": "C_KOR", "target": "F_RAMYEON", "relation": "food"}
+{"source": "C_KOR", "target": "F_HAEMUL_PAJEON", "relation": "food"}
+{"source": "C_KOR", "target": "F_SOJU", "relation": "food"}
+{"source": "C_KOR", "target": "F_GALBI", "relation": "food"}
+{"source": "C_KOR", "target": "F_SUNDUBU_JJIGAE", "relation": "food"}
+{"source": "C_KOR", "target": "F_MANDU", "relation": "food"}
+{"source": "C_KOR", "target": "F_FRIED_CHICKEN", "relation": "food"}
+{"source": "C_KOR", "target": "F_BINGSU", "relation": "food"}
+{"source": "C_KOR", "target": "F_HOTTEOK", "relation": "food"}
+{"source": "C_KOR", "target": "F_MAKGEOLLI", "relation": "food"}
+{"source": "C_KOR", "target": "F_BANCHAN", "relation": "food"}
+{"source": "C_KOR", "target": "S_TAEKWONDO", "relation": "sport"}
+{"source": "C_KOR", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_KOR", "target": "S_BASEBALL", "relation": "sport"}
+{"source": "C_KOR", "target": "S_ARCHERY", "relation": "sport"}
+{"source": "C_KOR", "target": "S_GOLF", "relation": "sport"}
+{"source": "C_KOR", "target": "S_ESPORTS", "relation": "sport"}
+{"source": "C_KOR", "target": "S_SKATING", "relation": "sport"}
+{"source": "C_KOR", "target": "S_VOLLEYBALL", "relation": "sport"}
+{"source": "C_KOR", "target": "C_HANBOK", "relation": "clothing"}
+{"source": "C_KOR", "target": "C_GAT", "relation": "clothing"}
+{"source": "C_KOR", "target": "C_JEOGORI", "relation": "clothing"}
+{"source": "C_KOR", "target": "C_CHIMA", "relation": "clothing"}
+{"source": "C_KOR", "target": "A_HANOK", "relation": "architecture"}
+{"source": "C_KOR", "target": "A_PALACE", "relation": "architecture"}
+{"source": "C_KOR", "target": "A_BUDDHIST_TEMPLE", "relation": "architecture"}
+{"source": "C_KOR", "target": "A_PAGODA", "relation": "architecture"}
+{"source": "C_KOR", "target": "A_PAVILION", "relation": "architecture"}
+{"source": "C_KOR", "target": "A_MODERNIST", "relation": "architecture"}
+{"source": "C_KOR", "target": "L_GYEONGBOKGUNG_PALACE", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_N_SEOUL_TOWER", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_BUKCHON_HANOK_VILLAGE", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_JEJU_ISLAND", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_CHANGDEOKGUNG", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_DMZ", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_NAMDAEMUN_MARKET", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_BUSAN_HAEUNDAE_BEACH", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_SEORAKSAN_NATIONAL_PARK", "relation": "landmark"}
+{"source": "C_KOR", "target": "L_LOTTE_WORLD_TOWER", "relation": "landmark"}
+{"source": "C_KOR", "target": "Y_SOUTH_KOREAN_WON", "relation": "currency"}
+{"source": "C_KOR", "target": "G_KOREAN", "relation": "language"}
+{"source": "C_KOR", "target": "N_SIBERIAN_TIGER", "relation": "animal"}
+{"source": "C_KOR", "target": "N_MAGPIE", "relation": "animal"}
+{"source": "C_KOR", "target": "N_JINDO_DOG", "relation": "animal"}
+{"source": "C_KOR", "target": "N_BLACK_BEAR", "relation": "animal"}
+{"source": "C_KOR", "target": "N_CRANE", "relation": "animal"}
+{"source": "C_KOR", "target": "E_SEOLLAL", "relation": "festival"}
+{"source": "C_KOR", "target": "E_CHUSEOK", "relation": "festival"}
+{"source": "C_KOR", "target": "E_LANTERN_FESTIVAL", "relation": "festival"}
+{"source": "C_KOR", "target": "E_BORYEONG_MUD_FESTIVAL", "relation": "festival"}
+{"source": "C_KOR", "target": "E_CHERRY_BLOSSOM_FESTIVAL", "relation": "festival"}
+{"source": "C_KOR", "target": "D_KPOP", "relation": "dance"}
+{"source": "C_KOR", "target": "D_FAN_DANCE", "relation": "dance"}
+{"source": "C_KOR", "target": "D_MASK_DANCE", "relation": "dance"}
+{"source": "C_KOR", "target": "D_SALPURI", "relation": "dance"}
+{"source": "C_KOR", "target": "D_GANGGANGSULLAE", "relation": "dance"}
+{"source": "C_KOR", "target": "H_JOSEON_DYNASTY", "relation": "history"}
+{"source": "C_KOR", "target": "H_KOREAN_WAR", "relation": "history"}
+{"source": "C_KOR", "target": "H_THREE_KINGDOMS", "relation": "history"}
+{"source": "C_KOR", "target": "H_HANGUL_INVENTION", "relation": "history"}
+{"source": "C_KOR", "target": "R_PENINSULA", "relation": "geography"}
+{"source": "C_KOR", "target": "R_MOUNTAINS", "relation": "geography"}
+{"source": "C_KOR", "target": "R_YELLOW_SEA", "relation": "geography"}
+{"source": "C_KOR", "target": "R_SEA_OF_JAPAN", "relation": "geography"}
+{"source": "C_KOR", "target": "X_SAMSUNG", "relation": "technology"}
+{"source": "C_KOR", "target": "X_HYUNDAI", "relation": "technology"}
+{"source": "C_KOR", "target": "X_ELECTRONICS", "relation": "technology"}
+{"source": "C_KOR", "target": "X_ROBOTICS", "relation": "technology"}
+{"source": "C_GRC", "target": "F_MOUSSAKA", "relation": "food"}
+{"source": "C_GRC", "target": "F_SOUVLAKI", "relation": "food"}
+{"source": "C_GRC", "target": "F_GYRO", "relation": "food"}
+{"source": "C_GRC", "target": "F_TZATZIKI", "relation": "food"}
+{"source": "C_GRC", "target": "F_FETA_CHEESE", "relation": "food"}
+{"source": "C_GRC", "target": "F_GREEK_SALAD", "relation": "food"}
+{"source": "C_GRC", "target": "F_SPANAKOPITA", "relation": "food"}
+{"source": "C_GRC", "target": "F_DOLMADES", "relation": "food"}
+{"source": "C_GRC", "target": "F_BAKLAVA", "relation": "food"}
+{"source": "C_GRC", "target": "F_LOUKOUMADES", "relation": "food"}
+{"source": "C_GRC", "target": "F_PASTITSIO", "relation": "food"}
+{"source": "C_GRC", "target": "F_KALAMATA_OLIVES", "relation": "food"}
+{"source": "C_GRC", "target": "F_YOGURT", "relation": "food"}
+{"source": "C_GRC", "target": "F_HONEY", "relation": "food"}
+{"source": "C_GRC", "target": "F_OUZO", "relation": "food"}
+{"source": "C_GRC", "target": "F_RETSINA", "relation": "food"}
+{"source": "C_GRC", "target": "F_FRAPPE", "relation": "food"}
+{"source": "C_GRC", "target": "S_SOCCER", "relation": "sport"}
+{"source": "C_GRC", "target": "S_BASKETBALL", "relation": "sport"}
+{"source": "C_GRC", "target": "S_MARATHON", "relation": "sport"}
+{"source": "C_GRC", "target": "S_WATER_POLO", "relation": "sport"}
+{"source": "C_GRC", "target": "S_WEIGHTLIFTING", "relation": "sport"}
+{"source": "C_GRC", "target": "S_ATHLETICS", "relation": "sport"}
+{"source": "C_GRC", "target": "C_CHITON", "relation": "clothing"}
+{"source": "C_GRC", "target": "C_TOGA", "relation": "clothing"}
+{"source": "C_GRC", "target": "C_FUSTANELLA", "relation": "clothing"}
+{"source": "C_GRC", "target": "C_PEPLOS", "relation": "clothing"}
+{"source": "C_GRC", "target": "C_HIMATION", "relation": "clothing"}
+{"source": "C_GRC", "target": "A_PARTHENON", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_ACROPOLIS", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_CYCLADIC_HOUSE", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_DORIC", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_IONIC", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_CORINTHIAN", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_WHITEWASHED_HOUSES", "relation": "architecture"}
+{"source": "C_GRC", "target": "A_BYZANTINE_CHURCH", "relation": "architecture"}
+{"source": "C_GRC", "target": "L_ACROPOLIS", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_PARTHENON", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_SANTORINI", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_MYKONOS", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_DELPHI", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_METEORA", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_OLYMPIA", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_KNOSSOS", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_MOUNT_OLYMPUS", "relation": "landmark"}
+{"source": "C_GRC", "target": "L_CORINTH_CANAL", "relation": "landmark"}
+{"source": "C_GRC", "target": "Y_EURO", "relation": "currency"}
+{"source": "C_GRC", "target": "G_GREEK", "relation": "language"}
+{"source": "C_GRC", "target": "N_DOLPHIN", "relation": "animal"}
+{"source": "C_GRC", "target": "N_PHOENIX_MYTHICAL", "relation": "animal"}
+{"source": "C_GRC", "target": "N_DONKEY", "relation": "animal"}
+{"source": "C_GRC", "target": "N_GOAT", "relation": "animal"}
+{"source": "C_GRC", "target": "N_SEA_TURTLE", "relation": "animal"}
+{"source": "C_GRC", "target": "N_MONK_SEAL", "relation": "animal"}
+{"source": "C_GRC", "target": "E_EASTER", "relation": "festival"}
+{"source": "C_GRC", "target": "E_APOKRIES", "relation": "festival"}
+{"source": "C_GRC", "target": "E_HELLENIC_FESTIVAL", "relation": "festival"}
+{"source": "C_GRC", "target": "E_OHI_DAY", "relation": "festival"}
+{"source": "C_GRC", "target": "D_SIRTAKI", "relation": "dance"}
+{"source": "C_GRC", "target": "D_KALAMATIANOS", "relation": "dance"}
+{"source": "C_GRC", "target": "D_HASAPIKO", "relation": "dance"}
+{"source": "C_GRC", "target": "D_ZEIBEKIKO", "relation": "dance"}
+{"source": "C_GRC", "target": "D_TSARY", "relation": "dance"}
+{"source": "C_GRC", "target": "H_ANCIENT_OLYMPICS", "relation": "history"}
+{"source": "C_GRC", "target": "H_DEMOCRACY", "relation": "history"}
+{"source": "C_GRC", "target": "H_PHILOSOPHY", "relation": "history"}
+{"source": "C_GRC", "target": "H_ALEXANDER_THE_GREAT", "relation": "history"}
+{"source": "C_GRC", "target": "H_SPARTA", "relation": "history"}
+{"source": "C_GRC", "target": "H_ATHENS", "relation": "history"}
+{"source": "C_GRC", "target": "H_TROY", "relation": "history"}
+{"source": "C_GRC", "target": "H_MYCENAEAN", "relation": "history"}
+{"source": "C_GRC", "target": "R_AEGEAN_SEA", "relation": "geography"}
+{"source": "C_GRC", "target": "R_IONIAN_SEA", "relation": "geography"}
+{"source": "C_GRC", "target": "R_ISLANDS", "relation": "geography"}
+{"source": "C_GRC", "target": "R_PELOPONNESE", "relation": "geography"}
