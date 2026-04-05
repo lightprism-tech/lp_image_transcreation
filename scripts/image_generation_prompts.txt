@@ -1,0 +1,32 @@
+# Image Generation Prompts
+# Use these with DALL-E, Azure OpenAI image models, or similar APIs.
+
+# --- Simple test prompts ---
+A simple red circle on white background
+A blue square on a gray background
+A minimalist line drawing of a house
+
+# --- Cultural / transcreation style ---
+A traditional Indian wedding scene with vibrant colors, henna patterns, and ornate decorations
+A Japanese tea ceremony in a serene garden with cherry blossoms
+A Mexican Day of the Dead altar with marigolds and sugar skulls
+A family gathering for Diwali with diyas and rangoli
+
+# --- Product / marketing style ---
+A modern smartphone displayed on a clean white surface with soft shadows
+A bottle of perfume with elegant lighting and a luxury aesthetic
+A bowl of fresh fruit on a wooden table, natural daylight
+
+# --- Character / portrait style ---
+A professional headshot of a person in traditional attire
+A child playing in a park, warm afternoon light
+An elderly person with a warm smile, photorealistic
+
+# --- Scene / landscape ---
+A street market in Southeast Asia with vendors and colorful stalls
+A coastal village at sunset with fishing boats
+A modern city skyline at night with neon lights
+
+# --- Template for custom prompts ---
+# [Subject] + [Style] + [Setting] + [Mood/Lighting]
+# Example: A woman in a sari + photorealistic + temple courtyard + golden hour

@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Scene Perception Schema",
+  "type": "object",
+  "required": [
+    "metadata",
+    "image_type",
+    "scene",
+    "objects",
+    "text"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "image_path": {
+          "type": "string"
+        },
+        "image_name": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pipeline_version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "image_path",
+        "timestamp"
+      ]
+    },
+    "image_type": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "ad",
+            "poster",
+            "ui",
+            "product",
+            "social_media",
+            "document",
+            "other"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "setting": {
+          "type": "string"
+        },
+        "mood": {
+          "type": "string"
+        },
+        "activity": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "$ref": "object_schema.json"
+      }
+    },
+    "faces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "regions": {
+          "type": "array"
+        },
+        "extracted": {
+          "type": "array"
+        },
+        "full_text": {
+          "type": "string"
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "font_families": {
+              "type": "array"
+            },
+            "font_weights": {
+              "type": "object"
+            },
+            "avg_font_size": {
+              "type": "number"
+            },
+            "styled_regions": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "object_links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "object_index": {
+                "type": "integer",
+                "minimum": -1
+              },
+              "overlap_iou": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "quality_summary": {
+      "type": "object",
+      "properties": {
+        "object_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "face_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text_region_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ocr_text_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "linked_text_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "object_avg_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "text_region_avg_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ocr_avg_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sam_enabled": {
+          "type": "boolean"
+        },
+        "sam_available": {
+          "type": "boolean"
+        },
+        "sam_reason": {
+          "type": "string"
+        },
+        "sam_segmented_object_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

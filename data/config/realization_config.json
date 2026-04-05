@@ -1,0 +1,7 @@
+{
+  "use_inpainting": true,
+  "inpaint_model": "FLUX.2-pro",
+  "inpaint_steps": 25,
+  "use_llm_prompt_refinement": false,
+  "inpaint_mask_pad_pct": 0.35
+}

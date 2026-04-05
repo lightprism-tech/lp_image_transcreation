@@ -1,0 +1,73 @@
+# Stage-1 Perception Pipeline configuration
+# Override with environment variables (see README)
+
+environment:
+  env: development
+  debug: false
+
+paths:
+  models_dir: models
+  data_dir: data
+  cache_dir: cache
+  output_dir: data/output
+
+schemas:
+  object_schema: schemas/object_schema.json
+  scene_schema: schemas/scene_schema.json
+
+models:
+  yolo: yolo/yolov8x.pt
+  blip: Salesforce/blip-image-captioning-base
+  clip: openai/clip-vit-large-patch14
+  sam:
+    model_type: vit_b
+    checkpoint: sam/sam_vit_b_01ec64.pth
+
+thresholds:
+  object_detection: 0.5
+  text_detection: 0.6
+  classification: 0.7
+
+image:
+  max_size: [1920, 1080]
+  formats: [.jpg, .jpeg, .png, .bmp, .webp]
+
+ocr:
+  languages: [en]
+  gpu: false
+
+output:
+  save_debug_images: true
+
+pipeline:
+  enable_scene_graph: false
+  enable_sam_segmentation: true
+  enable_face_detection: true
+  enable_typography_summary: true
+  enable_model_warmup: true
+  batch_size: 1
+  fallback_actionable_classes:
+    - person
+    - bicycle
+    - sports ball
+    - baseball bat
+    - tennis racket
+    - surfboard
+    - skateboard
+    - snowboard
+    - skis
+    - backpack
+    - handbag
+    - tie
+    - umbrella
+    - pizza
+    - hot dog
+    - sandwich
+    - cake
+    - donut
+    - cup
+    - bottle
+
+logging:
+  level: INFO
+  file: pipeline.log

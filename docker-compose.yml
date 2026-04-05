@@ -1,0 +1,65 @@
+# Image Transcreation Pipeline - Docker Compose
+# Usage: docker-compose build --no-cache && docker-compose run --rm pipeline python -m perception /data/input/samples/testing_image.jpg --output /app/data/output/json/demo.json
+#
+# Environment: env_file loads the project root .env into the container. The
+# `environment` block below overrides only MODELS_DIR, DATA_DIR, CACHE_DIR, and
+# OUTPUT_DIR so paths match volume mounts inside the container; all other
+# variables (e.g. LLM_*, API keys, thresholds) come from your local .env.
+# Compose also reads a root .env file for ${...} substitution in this file, if used.
+
+name: image-transcreation-pipeline
+
+services:
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: image-transcreation-pipeline:latest
+    container_name: image-transcreation-pipeline
+
+    env_file:
+      - .env
+
+    volumes:
+      - ./data:/app/data
+      - ./data:/data
+      - ./models:/app/models
+      - ./cache:/app/cache
+      # Mount code so changes on host show in container without rebuilding
+      - ./src:/app/src
+      - ./pyproject.toml:/app/pyproject.toml
+
+    environment:
+      - MODELS_DIR=/app/models
+      - DATA_DIR=/app/data
+      - CACHE_DIR=/app/cache
+      - OUTPUT_DIR=/app/data/output
+      # Explicitly pass LLM / Azure vars used by reasoning and FLUX realization.
+      - LLM_PROVIDER=${LLM_PROVIDER}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4o}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT}
+      - AZURE_OPENAI_IMAGES_DEPLOYMENT=${AZURE_OPENAI_IMAGES_DEPLOYMENT}
+      - AZURE_FLUX_IMAGE_URL=${AZURE_FLUX_IMAGE_URL}
+      - AZURE_FLUX_MODEL=${AZURE_FLUX_MODEL}
+      - PYTHONUNBUFFERED=1
+      - OMP_NUM_THREADS=4
+      - FLAGS_use_mkldnn=false
+      - PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True
+
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 16G
+        reservations:
+          cpus: "2.0"
+          memory: 8G
+
+    command: ["/bin/bash"]
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    network_mode: bridge
