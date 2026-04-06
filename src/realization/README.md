@@ -88,7 +88,7 @@ python -m src.realization.main \
 
 ### Docker (interactive shell)
 
-Run these from the **project root** (where `Dockerfile` and `docker-compose.yml` are). Compose loads your local `.env` via `env_file` and mounts `data`, `models`, `cache`, and `src` into the container.
+Run these from the **project root** (where `Dockerfile` and `docker-compose.yml` are). Compose loads your local `.env` via `env_file` and mounts `data`, `models`, `cache`, and `src` into the container. Hub and PaddleOCR artifacts are stored under the mounted `./cache` via `HF_HOME`, `TORCH_HOME`, and `HOME` (see root `README.md`).
 
 **Docker Compose** — open a shell in the pipeline service:
 
@@ -119,6 +119,9 @@ docker run --rm -it \
   -e DATA_DIR=/app/data \
   -e CACHE_DIR=/app/cache \
   -e OUTPUT_DIR=/app/data/output \
+  -e HF_HOME=/app/cache/huggingface \
+  -e TORCH_HOME=/app/cache/torch \
+  -e HOME=/app/cache/home \
   -v "$(pwd)/data:/app/data" \
   -v "$(pwd)/models:/app/models" \
   -v "$(pwd)/cache:/app/cache" \

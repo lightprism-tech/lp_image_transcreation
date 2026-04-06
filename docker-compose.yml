@@ -2,9 +2,9 @@
 # Usage: docker-compose build --no-cache && docker-compose run --rm pipeline python -m perception /data/input/samples/testing_image.jpg --output /app/data/output/json/demo.json
 #
 # Environment: env_file loads the project root .env into the container. The
-# `environment` block below overrides only MODELS_DIR, DATA_DIR, CACHE_DIR, and
-# OUTPUT_DIR so paths match volume mounts inside the container; all other
-# variables (e.g. LLM_*, API keys, thresholds) come from your local .env.
+# `environment` block below sets paths that must match volume mounts (models, data, cache).
+# HF_HOME / TORCH_HOME / HOME keep hub and PaddleOCR downloads on ./cache across container runs.
+# Other variables (e.g. LLM_*, API keys, thresholds) come from your local .env.
 # Compose also reads a root .env file for ${...} substitution in this file, if used.
 
 name: image-transcreation-pipeline
@@ -34,6 +34,9 @@ services:
       - DATA_DIR=/app/data
       - CACHE_DIR=/app/cache
       - OUTPUT_DIR=/app/data/output
+      - HF_HOME=/app/cache/huggingface
+      - TORCH_HOME=/app/cache/torch
+      - HOME=/app/cache/home
       # Explicitly pass LLM / Azure vars used by reasoning and FLUX realization.
       - LLM_PROVIDER=${LLM_PROVIDER}
       - LLM_MODEL=${LLM_MODEL:-gpt-4o}

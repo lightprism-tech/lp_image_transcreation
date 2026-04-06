@@ -27,6 +27,10 @@ GROQ_API_KEY=your_key
 LLM_MODEL=llama-3.3-70b-versatile
 ```
 
+## Docker
+
+Stage 2 calls an LLM only; it does not load the vision weights used in Stages 1 and 3. Run it inside the same Compose service as the rest of the pipeline (root `README.md` / `docs/QUICKSTART.md`) so paths and `.env` match the container layout (`/app/data`, etc.).
+
 ## CLI usage
 
 ```bash

@@ -71,7 +71,9 @@ COPY data/ ./data/
 # Install the package in editable mode (no pip cache)
 RUN pip install --no-cache-dir -e .
 
-# Ensure full directory layout (volumes override at run)
+# Ensure full directory layout (volumes override at run).
+# Under CACHE_DIR: Hugging Face (BLIP, CLIP), PyTorch Hub, PaddleOCR (~/.paddleocr via HOME),
+# and other user-cache tools persist when the host mounts ./cache:/app/cache (docker-compose.yml).
 RUN mkdir -p \
     /app/models/yolo \
     /app/models/caption_model \
@@ -81,6 +83,9 @@ RUN mkdir -p \
     /app/data/output/json \
     /app/data/knowledge_base \
     /app/cache \
+    /app/cache/huggingface \
+    /app/cache/torch \
+    /app/cache/home \
     && chmod -R 755 /app
 
 # Set CPU optimization environment variables
@@ -92,11 +97,17 @@ ENV OMP_NUM_THREADS=4 \
     FLAGS_use_mkldnn=false \
     PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True
 
-# Default app paths (override via .env when using docker-compose)
+# Default app paths (override via .env when using docker-compose).
+# HF_HOME: transformers / huggingface_hub model cache (weights under HF_HOME/hub).
+# TORCH_HOME: torch.hub checkpoints.
+# HOME: PaddleOCR 2.x uses ~/.paddleocr (expanduser); must live under the mounted cache volume.
 ENV MODELS_DIR=/app/models \
     DATA_DIR=/app/data \
     CACHE_DIR=/app/cache \
-    OUTPUT_DIR=/app/data/output
+    OUTPUT_DIR=/app/data/output \
+    HF_HOME=/app/cache/huggingface \
+    TORCH_HOME=/app/cache/torch \
+    HOME=/app/cache/home
 
 # Expose port for potential API service
 EXPOSE 8000

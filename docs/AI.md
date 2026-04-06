@@ -16,6 +16,7 @@
 - [Edit-Plan Specification](#edit-plan-specification)
 - [Evaluation Framework](#evaluation-framework)
 - [Ethical Considerations](#ethical-considerations)
+- [Implementation and deployment note](#implementation-and-deployment-note)
 - [References](#references)
 
 ---
@@ -538,6 +539,12 @@ interface StyleAdjustment {
 3. **Avoid political manipulation** - don't use for propaganda
 4. **Provide attribution** - credit original creators
 5. **Enable user control** - allow manual review and override
+
+---
+
+## Implementation and deployment note
+
+The reference implementation runs perception and realization with downloadable vision models (Hugging Face Transformers, PaddleOCR, PyTorch Hub, and local checkpoints under `MODELS_DIR`). For Docker, the repository configures `HF_HOME`, `TORCH_HOME`, and `HOME` so caches live on a bind-mounted volume (see [QUICKSTART.md](QUICKSTART.md) and the root [README.md](../README.md)). This is an operational detail, not part of the research methodology above.
 
 ---
 

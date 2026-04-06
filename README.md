@@ -23,11 +23,12 @@
 
 Image transcreation adapts visual content for different cultural contexts while preserving semantic intent and layout. The pipeline is organized as explicit stages: Perception, Reasoning, and Realization.
 
-## Current updates (Mar 2026)
+## Current updates (Apr 2026)
 
 - Added unified full-pipeline entrypoint in `src/main.py` with two run modes:
   - full run: Stage 1 -> Stage 2 -> Stage 3
   - realization-only run from existing Stage-2 JSON via `--stage2-json`.
+- Full pipeline CLI: only `--img` and `--target` are required; defaults are `--kg data/knowledge_base/countries_graph.json`, `--output-dir data/output`, `--run-name my_run`.
 - Added stage and model caching controls in full pipeline CLI:
   - `--no-cache` disables stage output reuse
   - `--no-model-cache` disables in-process model/engine reuse.
@@ -49,18 +50,63 @@ Image transcreation adapts visual content for different cultural contexts while 
 
 ## Quick Start
 
+Compose loads `.env` from the project root. Copy `.env.example` to `.env` and set LLM/API keys before a full run (Stage 2 requires them). With the provided `docker-compose.yml`, downloaded hub and PaddleOCR weights persist under `./cache` on the host (see [Installation](#docker-recommended)).
+
+### Docker: full pipeline (Stages 1–3)
+
+From the repository root, put your image under `data/input/...` on the host (mounted at `/app/data` in the container). Outputs are written under `data/output/<run-name>/` on the host.
+
+Full pipeline: only `--img` and `--target` are required. Defaults (from `/app` in the container): `--kg` is `data/knowledge_base/countries_graph.json`, `--output-dir` is `data/output`, `--run-name` is `my_run`. Override any of these only when needed.
+
 ```bash
-# Docker (loads .env from project root; copy .env.example to .env if needed)
+docker-compose build
+docker-compose run --rm pipeline python src/main.py \
+  --img /app/data/input/samples/your_image.jpg \
+  --target India
+```
+
+Explicit knowledge graph only (output dir and run name still use defaults):
+
+```bash
+docker-compose run --rm pipeline python src/main.py \
+  --img /app/data/input/samples/your_image.jpg \
+  --target India \
+  --kg /app/data/knowledge_base/countries_graph.json
+```
+
+One line (all defaults):
+
+```bash
+docker-compose run --rm pipeline python src/main.py --img /app/data/input/samples/your_image.jpg --target India
+```
+
+Realization-only from an existing Stage-2 JSON (path matches a prior full run under `--run-name`, e.g. `my_run`):
+
+```bash
+docker-compose run --rm pipeline python src/main.py \
+  --stage2-json /app/data/output/my_run/json/your_image_stage2_reasoning.json
+```
+
+Use a different `--run-name` if you want Stage 3 outputs in a separate folder from the default `my_run`.
+
+### Docker: Stage 1 only
+
+```bash
 docker-compose build
 docker-compose run --rm pipeline python -m perception /app/data/input/samples/testing_image.jpg
-# Or: docker-compose run --rm pipeline /bin/bash
+# Interactive shell: docker-compose run --rm pipeline /bin/bash
+```
 
-# Local
+### Local
+
+```bash
 python -m venv venv
 # Windows: venv\Scripts\activate   |   Linux/Mac: source venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
-python -m perception data/input/samples/testing_image.jpg
+python src/main.py --img data/input/samples/your_image.jpg --target India
+# Optional: --kg, --output-dir (default data/output), --run-name (default my_run)
+# Stage 1 only: python -m perception data/input/samples/testing_image.jpg
 ```
 
 **Full guide:** [docs/QUICKSTART.md](docs/QUICKSTART.md)
@@ -94,6 +140,7 @@ graph LR
 ```
 image-transcreation-pipeline/
 ├── src/
+│   ├── main.py                  # Full pipeline CLI (Stages 1–3, optional Stage 3–only)
 │   ├── perception/              # Stage 1: Context Extraction
 │   │   ├── schemas/             # JSON schemas for validation
 │   │   │   ├── object_schema.json
@@ -126,7 +173,7 @@ image-transcreation-pipeline/
 ├── scripts/
 │   └── knowledge_graph/         # KG generator (countries.json, generator.py)
 ├── models/                      # Model weights (auto-downloaded)
-├── cache/                       # HuggingFace / PaddleOCR cache
+├── cache/                       # Hub + PaddleOCR caches (HF_HOME, HOME/.paddleocr; Docker bind-mount)
 ├── tests/                       # Unit and integration tests
 └── docs/                        # Documentation (AI.md, QUICKSTART.md, etc.)
 ```
@@ -154,10 +201,18 @@ cp .env.example .env   # Linux/Mac
 # Windows: copy .env.example .env
 
 docker-compose build
+
+# Full pipeline (recommended): perception -> reasoning -> realization (defaults: kg, output-dir, run-name)
+docker-compose run --rm pipeline python src/main.py --img /app/data/input/samples/your_image.jpg --target India
+
+# Stage 1 only
 docker-compose run --rm pipeline python -m perception /app/data/input/samples/testing_image.jpg
-# Or interactive shell:
+
+# Interactive shell
 docker-compose run --rm pipeline /bin/bash
 ```
+
+**Docker model and hub cache:** Compose mounts `./cache` to `/app/cache`. The Dockerfile and `docker-compose.yml` set `HF_HOME`, `TORCH_HOME`, and `HOME` so Hugging Face / Transformers, PyTorch Hub, and PaddleOCR (which uses `~/.paddleocr` from `HOME`) write under that volume. Local weights (YOLO, SAM, etc.) stay under `./models` (`MODELS_DIR`). The first run downloads each missing artifact once; later runs reuse `./cache` and `./models` if you keep those folders. Do not set `HOME` or `HF_HOME` in `.env` to paths under `/root` when using Docker, or caches will not persist across containers.
 
 ### Local Setup
 
@@ -177,7 +232,25 @@ pip install -e .
 
 ## Usage
 
-### Command Line
+### Full pipeline (CLI)
+
+Runs Stage 1, then Stage 2 (LLM + knowledge graph), then Stage 3 (realization). Use `--no-cache` / `--no-model-cache` to force recomputation; see `python src/main.py --help`.
+
+Required arguments for a full run: `--img` and `--target`. Optional: `--kg` (default `data/knowledge_base/countries_graph.json`), `--output-dir` (default `data/output`), `--run-name` (default `my_run`).
+
+```bash
+python src/main.py \
+  --img data/input/samples/your_image.jpg \
+  --target India
+```
+
+Docker (paths inside the container; same defaults under `/app`):
+
+```bash
+docker-compose run --rm pipeline python src/main.py --img /app/data/input/samples/your_image.jpg --target India
+```
+
+### Command Line (Stage 1)
 
 ```bash
 # Process an image (output to stdout or --output path)
@@ -228,9 +301,11 @@ text = ocr.extract_text("image.jpg")
 | **Perception with output** | `python -m perception image.jpg --output data/output/json/result.json` |
 | **Reasoning (Stage 2)** | `python src/reasoning/main.py --input data/output/json/Japan_stage1_perception.json --target India --kg data/knowledge_base/countries_graph.json --output data/output/json/Japan_stage2_reasoning.json` |
 | **Realization (Stage 3)** | `python -m src.realization.main --img data/input/samples/Japan.jpg --plan data/output/json/Japan_stage2_reasoning.json --output data/output/final_india.png` |
-| **Full pipeline** | `python src/main.py --img data/input/samples/Japan.jpg --target India --kg data/knowledge_base/countries_graph.json --output-dir data/output --run-name run_check` |
-| **Realization-only from Stage 2** | `python src/main.py --stage2-json data/output/json/Japan_stage2_reasoning.json --output-dir data/output --run-name run_stage3_only` |
-| **Docker: run perception** | `docker-compose run --rm pipeline python -m perception /app/data/input/samples/testing_image.jpg` |
+| **Full pipeline** | `python src/main.py --img data/input/samples/Japan.jpg --target India` (optional: `--kg`, `--output-dir`, `--run-name`; defaults: `data/knowledge_base/countries_graph.json`, `data/output`, `my_run`) |
+| **Realization-only from Stage 2** | `python src/main.py --stage2-json data/output/my_run/json/Japan_stage2_reasoning.json` (optional `--output-dir` / `--run-name`; same defaults) |
+| **Docker: full pipeline** | `docker-compose run --rm pipeline python src/main.py --img /app/data/input/samples/Japan.jpg --target India` |
+| **Docker: realization-only** | `docker-compose run --rm pipeline python src/main.py --stage2-json /app/data/output/my_run/json/Japan_stage2_reasoning.json` |
+| **Docker: Stage 1 (perception)** | `docker-compose run --rm pipeline python -m perception /app/data/input/samples/testing_image.jpg` |
 | **Docker: shell** | `docker-compose run --rm pipeline /bin/bash` |
 | **Regenerate knowledge graph** | `python scripts/knowledge_graph/generator.py` |
 | **Tests** | `pytest` or `pytest tests/unit/` |
@@ -272,8 +347,12 @@ Key variables:
 | `DEBUG` | Enable debug output | true |
 | `OBJECT_THRESHOLD` | Object detection confidence | 0.5 |
 | `TEXT_THRESHOLD` | Text detection confidence | 0.6 |
-| `MODELS_DIR` | Model weights directory | ./models |
+| `MODELS_DIR` | Model weights directory (YOLO, SAM, …) | ./models |
+| `CACHE_DIR` | Application cache directory | ./cache |
 | `OUTPUT_DIR` | Output directory | ./data/output |
+| `HF_HOME` | Hugging Face Hub cache (set in Docker image / Compose) | (local default: platform-specific) |
+| `TORCH_HOME` | PyTorch Hub cache (set in Docker image / Compose) | (local default: platform-specific) |
+| `HOME` | In Docker, set to `/app/cache/home` so PaddleOCR uses the mounted cache | (your system default) |
 | `LLM_PROVIDER` | Reasoning provider (`groq` or `openai`) | groq/openai |
 | `GROQ_API_KEY` | Groq API key | (set in .env) |
 | `LLM_API_KEY` | Generic key fallback (Groq/OpenAI) | (set in .env) |
@@ -310,15 +389,32 @@ mypy src/                           # Type check
 # Build and tag
 docker build -t image-transcreation-pipeline:latest .
 
-# Run with mounted data/models/cache; pass local .env into container
+# One-off full pipeline (writes to host ./data/output via the data volume)
+docker run --rm --env-file .env --memory="16g" --cpus="4.0" \
+  -e HF_HOME=/app/cache/huggingface \
+  -e TORCH_HOME=/app/cache/torch \
+  -e HOME=/app/cache/home \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/models:/app/models \
+  -v $(pwd)/cache:/app/cache \
+  -w /app \
+  image-transcreation-pipeline:latest \
+  python src/main.py --img /app/data/input/samples/your_image.jpg --target India
+
+# Long-running container (default CMD is bash; override as needed)
 docker run -d --name image-transcreation-pipeline \
   --env-file .env \
   --memory="16g" --cpus="4.0" \
+  -e HF_HOME=/app/cache/huggingface \
+  -e TORCH_HOME=/app/cache/torch \
+  -e HOME=/app/cache/home \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/models:/app/models \
   -v $(pwd)/cache:/app/cache \
   image-transcreation-pipeline:latest
 ```
+
+On Windows PowerShell, replace `$(pwd)` with `${PWD}` (or use `%cd%` in `cmd.exe`) for volume paths.
 
 ### Cloud Platforms
 

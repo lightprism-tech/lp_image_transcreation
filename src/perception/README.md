@@ -75,7 +75,8 @@ python src/main.py \
 
 ## Notes
 
-- First run can be slow due to model downloads (YOLO, CLIP, BLIP, PaddleOCR).
+- First run can be slow due to model downloads (YOLO, CLIP, BLIP, PaddleOCR, SAM as configured).
+- **Docker:** Use the repo `docker-compose.yml` so `./cache` is mounted at `/app/cache` and `HF_HOME`, `TORCH_HOME`, and `HOME` point inside it; otherwise PaddleOCR defaults to `/root/.paddleocr` and Hugging Face to `/root/.cache`, which are lost when the container exits. See the root `README.md` (Docker model and hub cache).
 - Duplicate Stage-1 log lines can happen due to logger handler setup; this does not affect results.
 - Optional startup warmup runs tiny inference passes for YOLO, BLIP, OCR, SAM (and face detector when enabled) to reduce first-image latency spikes.
 - Feature toggles are available in `config/settings.yaml`: `enable_face_detection`, `enable_typography_summary`, `enable_model_warmup`.

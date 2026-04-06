@@ -358,7 +358,11 @@ def main() -> None:
     )
     parser.add_argument("--img", required=False, help="Path to input image")
     parser.add_argument("--target", required=False, help="Target culture (e.g., India, Japan)")
-    parser.add_argument("--kg", required=False, help="Path to knowledge graph JSON file")
+    parser.add_argument(
+        "--kg",
+        default="data/knowledge_base/countries_graph.json",
+        help="Path to knowledge graph JSON file (default: data/knowledge_base/countries_graph.json)",
+    )
     parser.add_argument(
         "--stage2-json",
         default=None,
@@ -367,12 +371,12 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         default="data/output",
-        help="Base output directory for generated files",
+        help="Base output directory for generated files (default: data/output)",
     )
     parser.add_argument(
         "--run-name",
-        default="",
-        help="Optional run folder name under --output-dir (e.g., run_check)",
+        default="my_run",
+        help="Run folder name under --output-dir (default: my_run)",
     )
     parser.add_argument(
         "--perception-output",
@@ -441,9 +445,10 @@ def main() -> None:
         logger.info("Final image: %s", outputs["final_image_output"])
         return
 
-    if not args.img or not args.target or not args.kg:
+    if not args.img or not args.target:
         logger.error(
-            "Full run requires --img, --target, and --kg. "
+            "Full run requires --img and --target. "
+            "Optional: --kg (defaults to data/knowledge_base/countries_graph.json). "
             "Or use --stage2-json for realization-only mode."
         )
         sys.exit(1)
