@@ -89,7 +89,7 @@ RUN mkdir -p \
     && chmod -R 755 /app
 
 # Set CPU optimization environment variables
-ENV OMP_NUM_THREADS=4 \
+ENV OMP_NUM_THREADS=1 \
     MKL_NUM_THREADS=4 \
     OPENBLAS_NUM_THREADS=4 \
     VECLIB_MAXIMUM_THREADS=4 \
