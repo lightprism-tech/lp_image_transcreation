@@ -1,0 +1,79 @@
+prompts:
+  llm_system:
+    cultural_reasoning: "You are a Cultural Reasoning assistant for image transcreation. Make culturally grounded, context-aware decisions and return ONLY valid JSON."
+    cultural_reasoning_strict_json: "You are a Cultural Reasoning assistant for image transcreation. Return ONLY valid JSON with no markdown, commentary, or extra text."
+  generate_candidates:
+    template: |
+      Suggest culturally appropriate substitution candidates for image transcreation.
+      Target culture: {target_culture}
+      Object label: {obj_label}
+      Object type: {obj_type}
+      Scene context: {context}
+      Avoid list: {avoid_list}
+
+      Return exactly one JSON object with this structure only:
+      {{"candidates": ["candidate1", "candidate2", "candidate3"]}}
+      Rules:
+      - Keep candidates as short concrete noun phrases suitable for visual editing.
+      - Prioritize objects that are culturally familiar in {target_culture} and plausible in the given scene.
+      - Do not include avoided terms, close synonyms of avoided terms, or offensive stereotypes.
+      - Do not include explanatory text, numbering, or any key other than "candidates".
+  rewrite_text_region:
+    template: |
+      Rewrite one OCR text region for cultural transcreation.
+      Target culture: {target_culture}
+      Image type: {image_type}
+      Scene context: {scene_context}
+      Neighbor text context: {neighbor_text}
+      Original region text: {original_text}
+
+      Return exactly one JSON object: {{"candidates":["...","...","..."]}}
+      Rules:
+      - Preserve original semantics and communicative intent.
+      - Localize wording naturally for {target_culture} and preserve tone/register (formal vs informal).
+      - Keep brand, product, and proper names unchanged when present.
+      - Do not introduce object-substitution language or visual-edit instructions.
+      - Avoid stereotypes and avoid adding explicit culture labels unless already present in original text.
+      - Each candidate length must be <= {max_chars}.
+  choose_source_food:
+    template: |
+      Select one source food term from OCR text for region-level icon transcreation.
+      Target culture: {target_culture}
+      Scene context: {scene_context}
+      OCR full text: {ocr_text}
+      Detected source food terms: {source_food_terms}
+
+      Return JSON only: {{"source_food":"one_term_from_list"}}
+  choose_target_food:
+    template: |
+      Choose the best target replacement for region-level icon transcreation.
+      Source food term: {src_food}
+      Target culture: {target_culture}
+      Scene context: {scene_context}
+      Grounded candidate targets: {candidates}
+
+      Return JSON only: {{"target_food":"one_candidate"}}
+  object_reasoning:
+    template: |
+      You are a cultural adaptation expert. For an image adapted to {target_culture}, decide for the object '{obj_label}' (type: {obj_type}).
+      Source culture: {source_culture}
+
+      Scene: {context}
+      {style_block}{sensitivity_block}{candidate_instruction}
+      Avoid (do not use): {avoid_list}
+      Decision policy:
+      - Prefer substitutes that are commonly recognized in {target_culture} for this scene context.
+      - Reject substitutions that are culturally generic, ambiguous, or not context-plausible.
+      - Keep non-target elements unchanged and preserve scene realism.
+      - Keep replacements visually actionable for image editing (concrete object nouns, not abstract concepts).
+
+      KG-first planning rubric:
+      1) If grounded candidates exist, rank them by: (a) scene fit, (b) cultural salience, (c) visual editability.
+      2) Choose the top-ranked grounded candidate for target_object when action is "transform".
+      3) If all grounded candidates are unsuitable, set action to "preserve" and explain why.
+      4) Never invent a new target_object outside grounded candidates when they are provided.
+      5) Confidence guidance: >=0.75 for strong grounded fit, 0.55-0.74 for usable fit, <0.55 for preserve.
+      6) Keep rationale factual and brief; reference scene fit or cultural familiarity, not vague preference.
+
+      Respond with exactly one JSON object, no markdown, no code block, no extra text. Use this structure only:
+      {{"action": "transform" or "preserve", "target_object": "substitute name or same as original", "rationale": "one sentence", "confidence": 0.0 to 1.0}}

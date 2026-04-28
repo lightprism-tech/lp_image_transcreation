@@ -4,8 +4,7 @@
     "type": "object",
     "required": [
         "id",
-        "bbox",
-        "class_name"
+        "bbox"
     ],
     "properties": {
         "id": {
@@ -22,6 +21,19 @@
             "description": "Bounding box coordinates [x1, y1, x2, y2]"
         },
         "class_name": {
+            "type": "string",
+            "description": "Legacy compatibility label derived from model caption when available; may be unknown_visual_region when uncertain."
+        },
+        "label": {
+            "type": "string"
+        },
+        "original_class_name": {
+            "type": "string"
+        },
+        "detector_label": {
+            "type": "string"
+        },
+        "detector_backend": {
             "type": "string"
         },
         "confidence": {
@@ -29,9 +41,40 @@
             "minimum": 0,
             "maximum": 1
         },
+        "fused_confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "quality_flags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
         "caption": {
             "type": "string",
             "description": "Natural language description of the object"
+        },
+        "caption_candidates": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string"
+                    },
+                    "caption": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "caption_source": {
+            "type": "string"
         },
         "segmentation": {
             "type": "object",

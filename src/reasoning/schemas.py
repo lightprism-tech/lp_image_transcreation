@@ -46,6 +46,7 @@ class Transformation(BaseModel):
     target_object: str
     rationale: str
     confidence: float
+    visual_attributes: Dict[str, str] = Field(default_factory=dict)
 
 class Preservation(BaseModel):
     original_object: str
@@ -56,6 +57,8 @@ class TranscreationPlan(BaseModel):
     transformations: List[Transformation]
     preservations: List[Preservation]
     avoidance_adherence: List[str] # Notes on what was avoided
+    scene_adaptation: Dict[str, Any] = Field(default_factory=dict)
+    region_replace: List[Dict[str, Any]] = Field(default_factory=list)
 
 class ReasoningInput(BaseModel):
     scene_graph: Dict[str, Any] # Stage 1 output

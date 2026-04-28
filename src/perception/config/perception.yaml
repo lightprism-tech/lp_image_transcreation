@@ -1,0 +1,151 @@
+prompts:
+  image_type_classifier:
+    classes:
+      - advertisement
+      - poster
+      - infographic poster
+      - user interface
+      - product photo
+      - social media post
+      - document
+      - other
+    labels:
+      - ad
+      - poster
+      - infographic
+      - ui
+      - product
+      - social_media
+      - document
+      - other
+    template: "a photo of a {class_name}"
+  icon_semantic_analyzer:
+    prompts:
+      - an infographic icon
+      - a pictogram symbol
+      - a chart element
+      - a decorative shape
+      - a photo object
+    labels:
+      - icon
+      - symbol
+      - chart_element
+      - decorative
+      - photo_object
+  scene_summarizer:
+    fields:
+      description:
+        max_new_tokens: 100
+        allow_unprompted: true
+        prompts:
+          - "Describe this scene in one detailed sentence."
+          - "A detailed visual description of this image is"
+      setting:
+        max_new_tokens: 32
+        prompts:
+          - "Describe the setting or location type in this image."
+          - "Setting:"
+          - "The location type is"
+      mood:
+        max_new_tokens: 32
+        prompts:
+          - "Describe the visual mood and atmosphere of this image."
+          - "Mood:"
+          - "The visual atmosphere is"
+      activity:
+        max_new_tokens: 32
+        prompts:
+          - "Describe the main visible activity or purpose of this image."
+          - "Main activity:"
+          - "The main visible action is"
+      style:
+        max_new_tokens: 32
+        prompts:
+          - "Describe the visual style, medium, or design format of this image."
+          - "Visual style:"
+      salient_elements:
+        max_new_tokens: 48
+        prompts:
+          - "List the most visually salient elements in this image."
+          - "Important visible elements:"
+      layout:
+        max_new_tokens: 48
+        prompts:
+          - "Describe the image layout and arrangement of regions."
+          - "Layout:"
+    visual_context_fields:
+      - description
+      - setting
+      - mood
+      - activity
+      - style
+      - salient_elements
+      - layout
+  object_captioner:
+    max_new_tokens: 50
+    prompts:
+      - ""
+      - "Describe this visual region precisely."
+      - "What object, icon, text-bearing element, or symbol is visible in this region?"
+  open_vocabulary_detector:
+    use_context_prompts: true
+    max_context_terms: 12
+    prompt_templates:
+      - "{term}"
+      - "a visual region showing {term}"
+      - "an infographic icon representing {term}"
+    term_stopwords:
+      - a
+      - an
+      - and
+      - are
+      - for
+      - from
+      - in
+      - is
+      - of
+      - on
+      - or
+      - the
+      - this
+      - with
+    fallback_terms:
+      - icon
+      - symbol
+      - heading
+      - text block
+      - logo
+      - decorative shape
+      - landmark
+      - person
+      - product
+  semantic_regions:
+    unknown_label: unknown_visual_region
+    min_detector_confidence: 0.2
+    min_fused_confidence: 0.45
+    caption_consistency_match: 1.0
+    caption_consistency_partial: 0.7
+    caption_consistency_missing: 0.4
+    ocr_overlap_weight_threshold: 0.05
+    caption_name_stopwords:
+      - a
+      - an
+      - and
+      - are
+      - close
+      - image
+      - in
+      - is
+      - of
+      - on
+      - photo
+      - picture
+      - shows
+      - the
+      - this
+      - up
+      - with
+    text_roles:
+      title_min_relative_height: 1.35
+      heading_min_relative_height: 1.1
+      short_text_max_words: 5

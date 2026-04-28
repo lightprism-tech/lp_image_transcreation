@@ -3,7 +3,7 @@
 #
 # Environment: env_file loads the project root .env into the container. The
 # `environment` block below sets paths that must match volume mounts (models, data, cache).
-# HF_HOME / TORCH_HOME / HOME keep hub and PaddleOCR downloads on ./cache across container runs.
+# HF_HOME / TORCH_HOME / HOME and related cache vars keep model downloads on ./cache across container runs.
 # Other variables (e.g. LLM_*, API keys, thresholds) come from your local .env.
 # Compose also reads a root .env file for ${...} substitution in this file, if used.
 
@@ -14,6 +14,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        BLIP_MODEL: ${BLIP_MODEL:-Salesforce/blip-image-captioning-large}
+        VIT_DETECTOR_MODEL: ${VIT_DETECTOR_MODEL:-google/owlv2-large-patch14-ensemble}
+        PRELOAD_BLIP_MODEL: ${PRELOAD_BLIP_MODEL:-0}
+        PRELOAD_VIT_DETECTOR: ${PRELOAD_VIT_DETECTOR:-0}
     image: image-transcreation-pipeline:latest
     container_name: image-transcreation-pipeline
 
@@ -35,8 +40,17 @@ services:
       - CACHE_DIR=/app/cache
       - OUTPUT_DIR=/app/data/output
       - HF_HOME=/app/cache/huggingface
+      - HF_HUB_CACHE=/app/cache/huggingface/hub
+      - TRANSFORMERS_CACHE=/app/cache/huggingface/transformers
       - TORCH_HOME=/app/cache/torch
+      - XDG_CACHE_HOME=/app/cache/xdg
+      - PADDLE_HOME=/app/cache/paddle
+      - PADDLEOCR_HOME=/app/cache/paddleocr
+      - YOLO_CONFIG_DIR=/app/cache/ultralytics
+      - MPLCONFIGDIR=/app/cache/matplotlib
       - HOME=/app/cache/home
+      - BLIP_MODEL=${BLIP_MODEL:-Salesforce/blip-image-captioning-large}
+      - VIT_DETECTOR_MODEL=${VIT_DETECTOR_MODEL:-google/owlv2-large-patch14-ensemble}
       # Explicitly pass LLM / Azure vars used by reasoning and FLUX realization.
       - LLM_PROVIDER=${LLM_PROVIDER}
       - LLM_MODEL=${LLM_MODEL:-gpt-4o}
@@ -48,6 +62,10 @@ services:
       - AZURE_FLUX_IMAGE_URL=${AZURE_FLUX_IMAGE_URL}
       - AZURE_FLUX_MODEL=${AZURE_FLUX_MODEL}
       - PYTHONUNBUFFERED=1
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - TRANSFORMERS_VERBOSITY=error
       - OMP_NUM_THREADS=1
       - FLAGS_use_mkldnn=false
       - PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True

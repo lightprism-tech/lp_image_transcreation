@@ -154,7 +154,8 @@ class DebugVisualizer:
         image: np.ndarray,
         objects: list,
         text_regions: list,
-        image_name: str
+        image_name: str,
+        detector_views: dict = None,
     ):
         """
         Create comprehensive visualization of pipeline results
@@ -168,6 +169,15 @@ class DebugVisualizer:
         # Draw objects
         vis_objects = self.draw_detections(image, objects, "Objects")
         self.save_visualization(vis_objects, f"{image_name}_objects.jpg")
+
+        # Optional per-backend detector views (YOLO / DETR / ViT / fused).
+        detector_views = detector_views or {}
+        for key in ("yolo", "detr", "vit", "fused"):
+            dets = detector_views.get(key)
+            if not isinstance(dets, list):
+                continue
+            vis_backend = self.draw_detections(image, dets, f"{key.upper()} Detections")
+            self.save_visualization(vis_backend, f"{image_name}_{key}_objects.jpg")
         
         # Draw text regions
         vis_text = image.copy()

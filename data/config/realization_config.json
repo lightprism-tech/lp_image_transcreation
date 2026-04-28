@@ -1,7 +1,30 @@
 {
   "use_inpainting": true,
   "inpaint_model": "FLUX.2-pro",
+  "flux_model": "FLUX.2-pro",
+  "flux_supported_models": ["FLUX.2-pro", "flux-2-pro", "flux2-pro"],
+  "flux_width": 1024,
+  "flux_height": 1024,
+  "flux_timeout_seconds": 120,
   "inpaint_steps": 25,
+  "max_inpaint_prompt_passes": 1,
   "use_llm_prompt_refinement": false,
-  "inpaint_mask_pad_pct": 0.35
+  "inpaint_mask_pad_pct": 0.35,
+  "quality_gate": {
+    "enabled": true,
+    "text_use_ssim": false,
+    "text_use_clip_local": false
+  },
+  "text_quality_gate": {
+    "enabled": true,
+    "max_bbox_occupancy": 1.0,
+    "skip_local_quality_gate": true
+  },
+  "validation": {
+    "strict_quality_gate": true,
+    "max_quality_attempts": 2,
+    "return_best_attempt_on_quality_failure": true,
+    "min_cultural_score": 0.7,
+    "min_object_presence_score": 0.7
+  }
 }

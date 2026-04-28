@@ -58,6 +58,32 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
 FROM dependencies AS application
 
 WORKDIR /app
+ARG PRELOAD_VIT_DETECTOR=0
+ARG VIT_DETECTOR_MODEL=google/owlv2-large-patch14-ensemble
+ARG PRELOAD_BLIP_MODEL=0
+ARG BLIP_MODEL=Salesforce/blip-image-captioning-large
+
+# Default app paths (override via .env when using docker-compose).
+# HF_HOME/HF_HUB_CACHE/TRANSFORMERS_CACHE: Hugging Face / Transformers model cache.
+# TORCH_HOME: torch.hub checkpoints.
+# HOME: PaddleOCR 2.x uses ~/.paddleocr (expanduser); must live under the mounted cache volume.
+# XDG_CACHE_HOME/PADDLE_HOME/PADDLEOCR_HOME/YOLO_CONFIG_DIR keep runtime downloads and tool config reusable.
+ENV MODELS_DIR=/app/models \
+    DATA_DIR=/app/data \
+    CACHE_DIR=/app/cache \
+    OUTPUT_DIR=/app/data/output \
+    HF_HOME=/app/cache/huggingface \
+    HF_HUB_CACHE=/app/cache/huggingface/hub \
+    TRANSFORMERS_CACHE=/app/cache/huggingface/transformers \
+    TORCH_HOME=/app/cache/torch \
+    XDG_CACHE_HOME=/app/cache/xdg \
+    PADDLE_HOME=/app/cache/paddle \
+    PADDLEOCR_HOME=/app/cache/paddleocr \
+    YOLO_CONFIG_DIR=/app/cache/ultralytics \
+    MPLCONFIGDIR=/app/cache/matplotlib \
+    HOME=/app/cache/home \
+    BLIP_MODEL=${BLIP_MODEL} \
+    VIT_DETECTOR_MODEL=${VIT_DETECTOR_MODEL}
 
 # Copy project configuration files
 COPY pyproject.toml README.md ./
@@ -76,6 +102,8 @@ RUN pip install --no-cache-dir -e .
 # and other user-cache tools persist when the host mounts ./cache:/app/cache (docker-compose.yml).
 RUN mkdir -p \
     /app/models/yolo \
+    /app/models/vit \
+    /app/models/detr \
     /app/models/caption_model \
     /app/models/classifier_model \
     /app/data/input/samples \
@@ -84,30 +112,36 @@ RUN mkdir -p \
     /app/data/knowledge_base \
     /app/cache \
     /app/cache/huggingface \
+    /app/cache/huggingface/hub \
+    /app/cache/huggingface/transformers \
     /app/cache/torch \
+    /app/cache/xdg \
+    /app/cache/paddle \
+    /app/cache/paddleocr \
+    /app/cache/ultralytics \
+    /app/cache/matplotlib \
     /app/cache/home \
+    /app/cache/home/.cache \
+    /app/cache/home/.paddleocr \
     && chmod -R 755 /app
 
+# Optional: preload BLIP and open-vocabulary detector weights into the same cache layout
+# used at runtime. Keep disabled by default because these images can become very large.
+RUN if [ "${PRELOAD_BLIP_MODEL}" = "1" ]; then \
+      python -c "from transformers import BlipProcessor, BlipForConditionalGeneration; model='${BLIP_MODEL}'; BlipProcessor.from_pretrained(model); BlipForConditionalGeneration.from_pretrained(model)"; \
+    fi && \
+    if [ "${PRELOAD_VIT_DETECTOR}" = "1" ]; then \
+      python -c "from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection; model='${VIT_DETECTOR_MODEL}'; AutoProcessor.from_pretrained(model); AutoModelForZeroShotObjectDetection.from_pretrained(model)"; \
+    fi
+
 # Set CPU optimization environment variables
-ENV OMP_NUM_THREADS=1 \
+ENV OMP_NUM_THREADS=4 \
     MKL_NUM_THREADS=4 \
     OPENBLAS_NUM_THREADS=4 \
     VECLIB_MAXIMUM_THREADS=4 \
     NUMEXPR_NUM_THREADS=4 \
     FLAGS_use_mkldnn=false \
     PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK=True
-
-# Default app paths (override via .env when using docker-compose).
-# HF_HOME: transformers / huggingface_hub model cache (weights under HF_HOME/hub).
-# TORCH_HOME: torch.hub checkpoints.
-# HOME: PaddleOCR 2.x uses ~/.paddleocr (expanduser); must live under the mounted cache volume.
-ENV MODELS_DIR=/app/models \
-    DATA_DIR=/app/data \
-    CACHE_DIR=/app/cache \
-    OUTPUT_DIR=/app/data/output \
-    HF_HOME=/app/cache/huggingface \
-    TORCH_HOME=/app/cache/torch \
-    HOME=/app/cache/home
 
 # Expose port for potential API service
 EXPOSE 8000

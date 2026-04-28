@@ -1,6 +1,9 @@
 from src.reasoning.engine import (
+    _build_text_edits_for_document,
     _estimate_max_chars_for_region,
     _validate_rewrite_constraints,
+    _is_placeholder_text,
+    _rewrite_culture_title_text,
     _pick_best_rewrite_candidate,
 )
 
@@ -38,3 +41,51 @@ def test_pick_best_candidate_prefers_length_compatible():
     )
     assert isinstance(best, str)
     assert best != "A"
+
+
+def test_placeholder_text_is_not_rewritten():
+    original = "Duis aute irure dolor in reprehenderit"
+
+    assert _is_placeholder_text(original)
+    assert _is_placeholder_text("voluptate velit esse cillum dolore eu")
+    assert _is_placeholder_text("XXX")
+    assert _validate_rewrite_constraints(
+        original,
+        "Error in judgment",
+        bbox=[0, 0, 200, 30],
+        style={"font_size": 12},
+    ) == original
+
+
+def test_repeated_text_rewrite_is_consistent():
+    class FakeLLM:
+        def __init__(self):
+            self.calls = 0
+
+        def generate_reasoning(self, prompt):
+            self.calls += 1
+            return {"candidates": [f"Localized title {self.calls}"]}
+
+    llm = FakeLLM()
+    scene_graph = {
+        "image_type": {"type": "infographic"},
+        "scene": {"description": "Travel infographic"},
+        "text": {
+            "full_text": "GLOBAL GUIDE GLOBAL GUIDE",
+            "extracted": [
+                {"text": "GLOBAL GUIDE", "bbox": [0, 0, 200, 40], "style": {"font_size": 12}},
+                {"text": "GLOBAL GUIDE", "bbox": [0, 50, 200, 90], "style": {"font_size": 12}},
+            ],
+        },
+    }
+
+    edits = _build_text_edits_for_document(scene_graph, "India", llm_client=llm)
+
+    assert len(edits) == 2
+    assert edits[0]["translated"] == edits[1]["translated"]
+    assert llm.calls == 1
+
+
+def test_country_title_is_rewritten_from_scene_context():
+    assert _rewrite_culture_title_text("JAPAN", "India", "japan infographic elements") == "INDIA"
+    assert _rewrite_culture_title_text("INFOGRAPHICS ELEMENTS", "India", "japan infographic elements") is None

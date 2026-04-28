@@ -59,10 +59,13 @@ class BLIPModelManager:
         
         try:
             logger.info("Loading shared BLIP model: %s...", self.model_name)
-            self.processor = BlipProcessor.from_pretrained(self.model_name)
+            auth_token = settings.BLIP_MODEL_API_KEY or None
+            model_kwargs = {"token": auth_token} if auth_token else {}
+            self.processor = BlipProcessor.from_pretrained(self.model_name, **model_kwargs)
             self.model = BlipForConditionalGeneration.from_pretrained(
                 self.model_name,
-                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32
+                torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
+                **model_kwargs,
             ).to(self.device)
             self.available = True
             self.status_reason = "ready"

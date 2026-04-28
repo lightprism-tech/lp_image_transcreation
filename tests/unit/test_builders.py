@@ -70,6 +70,96 @@ class TestSceneJSONBuilder:
         assert scene_json["quality_summary"]["object_count"] == 1
         assert "segmentation" in scene_json["objects"][0]
 
+    def test_build_adds_semantic_regions_and_layout(self):
+        from perception.builders.scene_json_builder import SceneJSONBuilder
+
+        builder = SceneJSONBuilder()
+        scene_json = builder.build(
+            image_path="data/input/samples/test.jpg",
+            image_type={"type": "infographic", "confidence": 0.9},
+            bounding_boxes=[
+                {
+                    "bbox": [10, 20, 50, 80],
+                    "class_name": "bench",
+                    "confidence": 0.85,
+                    "semantic_type": "icon",
+                    "semantic_score": 0.9,
+                }
+            ],
+            text_boxes=[],
+            object_captions=[
+                {
+                    "caption": "red folded paper bird icon",
+                    "caption_candidates": [
+                        {"prompt": "", "caption": "paper bird"},
+                        {"prompt": "Describe this visual region precisely.", "caption": "red folded paper bird icon"},
+                    ],
+                    "source": "blip",
+                }
+            ],
+            object_attributes=[{"attributes": {}}],
+            scene_description={"description": "travel infographic", "confidence": 1.0},
+            extracted_text=[
+                {"text": "JAPAN", "bbox": [5, 1, 100, 31], "confidence": 0.95},
+                {"text": "Travel guide details for visitors", "bbox": [5, 50, 140, 62], "confidence": 0.9},
+            ],
+            infographic_analysis={"enabled": True},
+            image_shape=(100, 200, 3),
+        )
+
+        assert scene_json["objects"][0]["class_name"] == "red_folded_paper"
+        assert scene_json["objects"][0]["original_class_name"] == "bench"
+        assert len(scene_json["objects"][0]["caption_candidates"]) == 2
+        assert scene_json["objects"][0]["caption_source"] == "blip"
+        assert scene_json["visual_regions"][0]["type"] == "icon"
+        assert scene_json["visual_regions"][0]["description"] == "red folded paper bird icon"
+        assert scene_json["text_regions"][0]["role"] == "title"
+        assert "title" in scene_json["layout"]["structure"]
+        assert scene_json["quality_summary"]["visual_region_count"] == 1
+
+    def test_uncertain_visual_regions_use_unknown_label(self):
+        from perception.builders.scene_json_builder import SceneJSONBuilder
+
+        builder = SceneJSONBuilder()
+        scene_json = builder.build(
+            image_path="data/input/samples/test.jpg",
+            image_type={"type": "poster", "confidence": 0.8},
+            bounding_boxes=[{"bbox": [1, 2, 10, 20], "class_name": "umbrella", "confidence": 0.1}],
+            text_boxes=[],
+            object_captions=[{"caption": ""}],
+            object_attributes=[{"attributes": {}}],
+            scene_description={"description": "test", "confidence": 1.0},
+            extracted_text=[],
+            infographic_analysis={"enabled": False},
+        )
+
+        obj = scene_json["objects"][0]
+        assert obj["class_name"] == "unknown_visual_region"
+        assert "uncertain_label" in obj["quality_flags"]
+        assert scene_json["visual_regions"][0]["type"] == "unknown_visual_region"
+        assert scene_json["quality_summary"]["uncertain_visual_region_count"] == 1
+
+    def test_caption_label_survives_detector_mismatch(self):
+        from perception.builders.scene_json_builder import SceneJSONBuilder
+
+        builder = SceneJSONBuilder()
+        scene_json = builder.build(
+            image_path="data/input/samples/burger.jpg",
+            image_type={"type": "product", "confidence": 0.64},
+            bounding_boxes=[{"bbox": [1, 2, 10, 20], "class_name": "cake", "confidence": 0.31}],
+            text_boxes=[],
+            object_captions=[{"caption": "a close up of a hamburger with lettuce and tomato on it"}],
+            object_attributes=[{"attributes": {}}],
+            scene_description={"description": "hamburger product image", "confidence": 1.0},
+            extracted_text=[],
+            infographic_analysis={"enabled": False},
+        )
+
+        obj = scene_json["objects"][0]
+        assert obj["class_name"] == "hamburger"
+        assert "detector_caption_mismatch" in obj["quality_flags"]
+        assert "uncertain_label" not in obj["quality_flags"]
+
 
 class TestSceneGraphBuilder:
     """Tests for SceneGraphBuilder."""

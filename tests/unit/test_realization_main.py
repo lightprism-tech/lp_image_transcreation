@@ -2,7 +2,8 @@
 import json
 import os
 import pytest
-from src.realization.main import load_json, _apply_mock_overlay
+from src.realization.main import load_json, _apply_mock_overlay, _apply_mock_text_changes
+from src.realization.models import EditPlan, EditTextAction
 
 
 def test_load_json_returns_dict(tmp_path):
@@ -46,3 +47,30 @@ def test_apply_mock_overlay_uses_target_culture(tmp_path):
     assert output_img.exists()
     # Content differs from input due to overlay
     assert output_img.stat().st_size >= input_img.stat().st_size
+
+
+def test_apply_mock_text_changes_creates_output(tmp_path):
+    from PIL import Image
+
+    input_img = tmp_path / "in.png"
+    Image.new("RGB", (120, 80), color=(240, 240, 240)).save(str(input_img), "PNG")
+    output_img = tmp_path / "out.png"
+    plan = EditPlan(
+        preserve=[],
+        replace=[],
+        edit_text=[
+            EditTextAction(
+                bbox=[10, 10, 110, 40],
+                original="Global Offer",
+                translated="Local Festival Offer",
+                style={
+                    "text_color": [10, 10, 10],
+                    "background_color": [250, 250, 250],
+                    "font_size": 16,
+                },
+            )
+        ],
+    )
+    _apply_mock_text_changes(plan, str(input_img), str(output_img), "India")
+    assert output_img.exists()
+    assert output_img.stat().st_size > 0

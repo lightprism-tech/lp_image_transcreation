@@ -7,6 +7,7 @@ import logging
 
 import cv2
 import numpy as np
+from perception.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -14,9 +15,14 @@ logger = logging.getLogger(__name__)
 class FaceDetector:
     """Detects human faces in images using OpenCV Haar cascades."""
 
-    def __init__(self, scale_factor: float = 1.1, min_neighbors: int = 5):
-        self.scale_factor = scale_factor
-        self.min_neighbors = min_neighbors
+    def __init__(self, scale_factor: float = None, min_neighbors: int = None):
+        self.scale_factor = float(
+            scale_factor if scale_factor is not None else getattr(settings, "FACE_DETECT_SCALE_FACTOR", 1.1)
+        )
+        self.min_neighbors = int(
+            min_neighbors if min_neighbors is not None else getattr(settings, "FACE_DETECT_MIN_NEIGHBORS", 5)
+        )
+        self.min_size = tuple(getattr(settings, "FACE_DETECT_MIN_SIZE", (24, 24)))
         self.cascade = None
         self.available = False
         self.status_reason = "not_initialized"
@@ -53,7 +59,7 @@ class FaceDetector:
             gray,
             scaleFactor=self.scale_factor,
             minNeighbors=self.min_neighbors,
-            minSize=(24, 24),
+            minSize=(int(self.min_size[0]), int(self.min_size[1])),
         )
         results = []
         for (x, y, w, h) in faces:

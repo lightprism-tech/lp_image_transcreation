@@ -142,6 +142,7 @@ class OCREngine:
         """
         self.languages = languages or settings.OCR_LANGUAGES
         self.use_gpu = use_gpu if use_gpu is not None else settings.OCR_GPU
+        self.use_angle_cls = bool(getattr(settings, "OCR_USE_ANGLE_CLS", True))
         self.ocr = None
         self.available = False
         self.status_reason = "not_initialized"
@@ -152,11 +153,20 @@ class OCREngine:
         try:
             lang = self.languages[0] if isinstance(self.languages, list) else self.languages
             
-            # Initialize PaddleOCR with minimal parameters (defaults to CPU)
-            self.ocr = PaddleOCR(lang=lang)
+            self.ocr = PaddleOCR(
+                lang=lang,
+                use_gpu=bool(self.use_gpu),
+                use_angle_cls=self.use_angle_cls,
+                show_log=False,
+            )
             self.available = True
             self.status_reason = "ready"
-            logger.info("PaddleOCR loaded (lang=%s, CPU mode)", lang)
+            logger.info(
+                "PaddleOCR loaded (lang=%s, gpu=%s, use_angle_cls=%s)",
+                lang,
+                bool(self.use_gpu),
+                self.use_angle_cls,
+            )
         except Exception as e:
             self.available = False
             self.status_reason = "model_init_failed"

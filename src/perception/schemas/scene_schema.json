@@ -6,7 +6,9 @@
     "metadata",
     "image_type",
     "scene",
-    "objects",
+    "visual_regions",
+    "text_regions",
+    "layout",
     "text"
   ],
   "properties": {
@@ -37,15 +39,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "ad",
-            "poster",
-            "ui",
-            "product",
-            "social_media",
-            "document",
-            "other"
-          ]
+          "description": "Model-derived image modality. This is open vocabulary and must not be constrained to fixed labels."
         },
         "confidence": {
           "type": "number",
@@ -71,6 +65,29 @@
         },
         "confidence": {
           "type": "number"
+        },
+        "visual_context": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string"
+            },
+            "generated_fields": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "image_type_hint": {
+              "type": "string"
+            },
+            "ocr_text_sample": {
+              "type": "string"
+            },
+            "prompt_context": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -78,6 +95,97 @@
       "type": "array",
       "items": {
         "$ref": "object_schema.json"
+      }
+    },
+    "visual_regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "semantic_role": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "quality_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "text_regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "role": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "structure": {
+          "type": "string"
+        },
+        "image_type": {
+          "type": "string"
+        },
+        "text_role_counts": {
+          "type": "object"
+        },
+        "visual_region_type_counts": {
+          "type": "object"
+        },
+        "image_shape": {
+          "type": "array"
+        }
       }
     },
     "faces": {

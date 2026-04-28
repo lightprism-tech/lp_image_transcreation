@@ -96,3 +96,20 @@ def test_validate_edit_plan_parses_full_plan():
     assert len(plan.edit_text) == 1
     assert plan.edit_text[0].translated == "Hello"
     assert plan.adjust_style.palette == "pastel"
+
+
+def test_adapt_plan_to_edit_format_uses_region_replace_without_objects():
+    data = {
+        "objects": [],
+        "edit_plan": {
+            "preservations": [],
+            "transformations": [],
+            "region_replace": [
+                {"object_id": 100001, "original": "pizza icon", "new": "samosa icon", "bbox": [80, 40, 240, 90]}
+            ],
+        },
+    }
+    out = adapt_plan_to_edit_format(data)
+    assert len(out["replace"]) == 1
+    assert out["replace"][0]["original"] == "pizza icon"
+    assert out["replace"][0]["new"] == "samosa icon"

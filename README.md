@@ -36,21 +36,48 @@ Image transcreation adapts visual content for different cultural contexts while 
 - Added Stage-3 fail-fast checks for non-actionable plans (unless `--allow-empty-plan` is set).
 - Added better Stage-3 fallback rendering:
   - per-instance tinted bbox + label overlays when replacements contain bboxes
-  - simple adaptation label overlay when no bbox-based action is available.
+  - text-region replacement fallback when `edit_text` actions are present
+  - mock text rendering fallback (`_apply_mock_text_changes`) that draws translated strings into original text bboxes when the full inpaint backend is unavailable
+  - simple adaptation label overlay only when no bbox/text action is available.
+- Improved Stage-3 text rendering quality:
+  - preserves OCR-inferred style family and weight more reliably
+  - auto-fits translated text to original text bbox to reduce overflow/layout drift
+  - high-contrast foreground color auto-selection against the sampled background.
+- Added a text-aware post-realization quality gate with one automatic retry:
+  - checks bbox occupancy, foreground/background contrast ratio, and color delta
+  - retries with adjusted font size and color before accepting the edit
+  - SSIM / CLIP-local checks are now disabled for text edits (configurable via `realization_config.json -> quality_gate.text_use_ssim` and `text_use_clip_local`).
+- Improved transcreation prompt quality:
+  - inpaint prompt refinement now enforces explicit target-culture grounding
+  - non-grounded LLM prompt outputs are rejected and replaced with safe fallback prompts (`_is_culturally_grounded_prompt`).
+- Strengthened Stage-2 reasoning:
+  - explicit "Decision policy" and "KG-first planning rubric" in the LLM prompt
+  - normalization enforces grounded, actionable decisions, mapping LLM `target_object` back to KG candidates (or the top candidate) instead of free-text output
+  - confidence parsing and safer defaulting for weak / ambiguous LLM responses.
+- Removed hardcoded object names, food lists, and weekday tokens from Stage-2:
+  - cultural-type inference is driven entirely by KG `label_to_type` + detected attributes
+  - food terms are discovered dynamically from KG `label_to_type` and KB substitutions for `FOOD` entries
+  - infographic row anchors are detected geometrically from OCR regions via `_infer_row_label_bboxes` instead of a fixed day-of-week list.
+- Added `region_replace` action type for infographic / icon-grid layouts:
+  - `build_region_replacements` uses KG candidates plus an LLM pass to pick the best source food term and the best target replacement
+  - `region_replace` actions flow through `adapt_plan_to_edit_format` and are honored by Stage-3 even when Stage-1 returned zero detected objects.
 
 ### Key Features (Current)
 
 - Structured 3-stage pipeline with JSON handoff between stages.
-- Grounded cultural reasoning with KB candidates and avoid lists.
-- Infographic-aware policy to reduce unsafe/object-drift substitutions.
+- Grounded cultural reasoning with KB candidates and avoid lists; no hardcoded object/food/day lists.
+- KG-first planning rubric with LLM-assisted candidate selection for both object and region replacements.
+- Infographic-aware policy with dynamic row/region detection to reduce unsafe/object-drift substitutions.
 - OCR-region-aware text rewrite with layout constraints.
-- Stage-3 mask-based edit/inpaint flow with quality gates.
+- Style-family-aware text replacement (font family/weight/size fit) in realization.
+- Stage-3 mask-based edit/inpaint flow with object and text quality gates, including an automatic retry pass for text edits.
+- Robust multi-level Stage-3 fallback (bbox overlay -> mock text -> adaptation label) so runs produce a meaningful output even without a full inpaint backend.
 
 ---
 
 ## Quick Start
 
-Compose loads `.env` from the project root. Copy `.env.example` to `.env` and set LLM/API keys before a full run (Stage 2 requires them). With the provided `docker-compose.yml`, downloaded hub and PaddleOCR weights persist under `./cache` on the host (see [Installation](#docker-recommended)).
+Compose loads `.env` from the project root. Copy `.env.example` to `.env` and set LLM/API keys before a full run (Stage 2 requires them). With the provided `docker-compose.yml`, downloaded BLIP/CLIP/OWL-ViT, Hugging Face, PyTorch, Ultralytics, and PaddleOCR artifacts persist under `./cache` on the host (see [Installation](#docker-recommended)).
 
 ### Docker: full pipeline (Stages 1–3)
 
@@ -64,6 +91,8 @@ docker-compose run --rm pipeline python src/main.py \
   --img /app/data/input/samples/your_image.jpg \
   --target India
 ```
+
+Rebuild the image after changing `Dockerfile`, `requirements.txt`, or Docker build args. Python source changes under `src/` are mounted by Compose and usually do not require a rebuild.
 
 Explicit knowledge graph only (output dir and run name still use defaults):
 
@@ -212,7 +241,17 @@ docker-compose run --rm pipeline python -m perception /app/data/input/samples/te
 docker-compose run --rm pipeline /bin/bash
 ```
 
-**Docker model and hub cache:** Compose mounts `./cache` to `/app/cache`. The Dockerfile and `docker-compose.yml` set `HF_HOME`, `TORCH_HOME`, and `HOME` so Hugging Face / Transformers, PyTorch Hub, and PaddleOCR (which uses `~/.paddleocr` from `HOME`) write under that volume. Local weights (YOLO, SAM, etc.) stay under `./models` (`MODELS_DIR`). The first run downloads each missing artifact once; later runs reuse `./cache` and `./models` if you keep those folders. Do not set `HOME` or `HF_HOME` in `.env` to paths under `/root` when using Docker, or caches will not persist across containers.
+**Docker model and hub cache:** Compose mounts `./cache` to `/app/cache`. The Dockerfile and `docker-compose.yml` set `HF_HOME`, `HF_HUB_CACHE`, `TRANSFORMERS_CACHE`, `TORCH_HOME`, `XDG_CACHE_HOME`, `PADDLE_HOME`, `PADDLEOCR_HOME`, `YOLO_CONFIG_DIR`, `MPLCONFIGDIR`, and `HOME` so Hugging Face / Transformers, PyTorch Hub, PaddleOCR, Ultralytics, and related runtime downloads write under that volume. Local weights (YOLO, SAM, etc.) stay under `./models` (`MODELS_DIR`). The first run downloads each missing artifact once; later runs reuse `./cache` and `./models` if you keep those folders. Do not set `HOME`, `HF_HOME`, or related Docker cache variables in `.env` to paths under `/root`, or caches will not persist across containers.
+
+Optional build-time preloading is available via `.env`:
+
+```bash
+PRELOAD_BLIP_MODEL=1
+PRELOAD_VIT_DETECTOR=1
+docker-compose build pipeline
+```
+
+Keep these disabled for normal development because they increase image size. Runtime downloads are still cached and reused through `./cache`.
 
 ### Local Setup
 
@@ -315,8 +354,23 @@ text = ocr.extract_text("image.jpg")
 ## Output Format
 
 - Stage-1 JSON: perception output (`*_stage1_perception.json`)
-- Stage-2 JSON: adapted scene + `edit_plan` + optional `edit_text` (`*_stage2_reasoning.json`)
+- Stage-2 JSON: adapted scene + `edit_plan` + optional `edit_text` + optional `region_replace` (`*_stage2_reasoning.json`)
 - Stage-3 image: realized image (`*_stage3_realized.png`)
+
+Stage-2 `edit_plan` action kinds:
+- `replace` / `preserve` on detected objects (KG-grounded target).
+- `edit_text` on OCR regions with translated strings and preserved style metadata.
+- `region_replace` on geometrically-inferred regions (e.g. infographic cells) with a KG-selected target term, used when Stage-1 detection is sparse but OCR anchors exist.
+
+Stage-3 fallback behavior (when no real generated image file is returned):
+- If replace actions contain bbox -> draw per-instance replacement overlays.
+- Else if `region_replace` entries exist -> overlay the target term into each inferred region.
+- Else if `edit_text` exists -> apply bbox text replacements in mock mode with style-family and contrast preservation.
+- Else -> apply adaptation label overlay.
+
+Stage-3 text quality gate (see `data/config/realization_config.json -> quality_gate`):
+- `text_use_ssim` (default `false`) and `text_use_clip_local` (default `false`) skip image-level similarity checks for text edits.
+- Text edits are accepted based on bbox occupancy, contrast ratio, and color delta; one automatic retry is attempted with adjusted font size / color before falling back.
 
 ### Debug Visualizations
 
@@ -350,12 +404,34 @@ Key variables:
 | `MODELS_DIR` | Model weights directory (YOLO, SAM, …) | ./models |
 | `CACHE_DIR` | Application cache directory | ./cache |
 | `OUTPUT_DIR` | Output directory | ./data/output |
-| `HF_HOME` | Hugging Face Hub cache (set in Docker image / Compose) | (local default: platform-specific) |
-| `TORCH_HOME` | PyTorch Hub cache (set in Docker image / Compose) | (local default: platform-specific) |
-| `HOME` | In Docker, set to `/app/cache/home` so PaddleOCR uses the mounted cache | (your system default) |
+| `BLIP_MODEL` | BLIP caption/scene model used by Stage 1 | Salesforce/blip-image-captioning-large |
+| `CLIP_MODEL` | CLIP model for image-type and semantic analysis | openai/clip-vit-large-patch14 |
+| `VIT_DETECTOR_MODEL` | OWL-ViT/open-vocabulary detector model | google/owlv2-large-patch14-ensemble |
+| `PRELOAD_BLIP_MODEL` | Docker build-time BLIP preload into image cache (`0`/`1`) | 0 |
+| `PRELOAD_VIT_DETECTOR` | Docker build-time open-vocabulary detector preload (`0`/`1`) | 0 |
+| `HF_HOME` | Hugging Face root cache (Docker: `/app/cache/huggingface`) | (local default: platform-specific) |
+| `HF_HUB_CACHE` | Hugging Face Hub artifact cache (Docker: `/app/cache/huggingface/hub`) | (local default) |
+| `TRANSFORMERS_CACHE` | Transformers cache (Docker: `/app/cache/huggingface/transformers`) | (local default) |
+| `TORCH_HOME` | PyTorch Hub cache (Docker: `/app/cache/torch`) | (local default) |
+| `XDG_CACHE_HOME` | General Linux cache root for libraries (Docker: `/app/cache/xdg`) | (local default) |
+| `PADDLE_HOME` | Paddle cache (Docker: `/app/cache/paddle`) | (local default) |
+| `PADDLEOCR_HOME` | PaddleOCR cache (Docker: `/app/cache/paddleocr`) | (local default) |
+| `YOLO_CONFIG_DIR` | Ultralytics config/cache directory (Docker: `/app/cache/ultralytics`) | (local default) |
+| `MPLCONFIGDIR` | Matplotlib config/cache directory (Docker: `/app/cache/matplotlib`) | (local default) |
+| `HOME` | In Docker, set to `/app/cache/home` so tools using `~` stay under mounted cache | (your system default) |
 | `LLM_PROVIDER` | Reasoning provider (`groq` or `openai`) | groq/openai |
 | `GROQ_API_KEY` | Groq API key | (set in .env) |
 | `LLM_API_KEY` | Generic key fallback (Groq/OpenAI) | (set in .env) |
+
+Realization quality-gate tuning lives in `data/config/realization_config.json` under `quality_gate`:
+
+| Key | Purpose | Default |
+|-----|---------|---------|
+| `text_use_ssim` | Enable SSIM check for text edits (usually noisy, off by default) | `false` |
+| `text_use_clip_local` | Enable CLIP-local consistency check for text edits | `false` |
+| `text_min_occupancy` | Minimum fraction of the text bbox that rendered glyphs must cover | tuned per-config |
+| `text_min_contrast` | Minimum foreground/background contrast ratio accepted for a text edit | tuned per-config |
+| `text_min_color_delta` | Minimum color delta between rendered text and sampled bg | tuned per-config |
 
 **All options:** [src/perception/config/settings.yaml](src/perception/config/settings.yaml)
 
@@ -392,7 +468,14 @@ docker build -t image-transcreation-pipeline:latest .
 # One-off full pipeline (writes to host ./data/output via the data volume)
 docker run --rm --env-file .env --memory="16g" --cpus="4.0" \
   -e HF_HOME=/app/cache/huggingface \
+  -e HF_HUB_CACHE=/app/cache/huggingface/hub \
+  -e TRANSFORMERS_CACHE=/app/cache/huggingface/transformers \
   -e TORCH_HOME=/app/cache/torch \
+  -e XDG_CACHE_HOME=/app/cache/xdg \
+  -e PADDLE_HOME=/app/cache/paddle \
+  -e PADDLEOCR_HOME=/app/cache/paddleocr \
+  -e YOLO_CONFIG_DIR=/app/cache/ultralytics \
+  -e MPLCONFIGDIR=/app/cache/matplotlib \
   -e HOME=/app/cache/home \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/models:/app/models \
@@ -406,7 +489,14 @@ docker run -d --name image-transcreation-pipeline \
   --env-file .env \
   --memory="16g" --cpus="4.0" \
   -e HF_HOME=/app/cache/huggingface \
+  -e HF_HUB_CACHE=/app/cache/huggingface/hub \
+  -e TRANSFORMERS_CACHE=/app/cache/huggingface/transformers \
   -e TORCH_HOME=/app/cache/torch \
+  -e XDG_CACHE_HOME=/app/cache/xdg \
+  -e PADDLE_HOME=/app/cache/paddle \
+  -e PADDLEOCR_HOME=/app/cache/paddleocr \
+  -e YOLO_CONFIG_DIR=/app/cache/ultralytics \
+  -e MPLCONFIGDIR=/app/cache/matplotlib \
   -e HOME=/app/cache/home \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/models:/app/models \
@@ -429,8 +519,13 @@ On Windows PowerShell, replace `$(pwd)` with `${PWD}` (or use `%cd%` in `cmd.exe
 ## Current Technical Notes
 
 - Stage-1 now includes infographic-focused icon semantics and OCR style extraction.
-- Stage-2 includes constrained OCR text rewrite candidate selection.
-- Stage-3 includes richer quality gates (distribution + SSIM + optional CLIP local consistency).
+- Stage-2 includes constrained OCR text rewrite candidate selection with stronger cultural rewrite rules (tone preservation, brand-name preservation, anti-stereotype guidance).
+- Stage-2 decision-making is fully KG-driven: there are no hardcoded object names, food lists, or weekday/row tokens; cultural-type inference and food-term discovery flow from `label_to_type` and KB substitutions, and row anchors are inferred geometrically from OCR regions.
+- Stage-2 emits an additional `region_replace` action kind, letting Stage-3 patch icon-grid / infographic regions even when Stage-1 detects zero objects in those cells. Target terms for `region_replace` are selected by an LLM pass restricted to KG candidates for the input culture.
+- Stage-2 inpaint prompt refinement rejects non-grounded prompts (`_is_culturally_grounded_prompt`) and substitutes a deterministic culture-grounded fallback to avoid generic / off-target outputs.
+- Stage-3 includes richer object-edit quality gates (distribution + SSIM + optional CLIP local consistency) and a separate, relaxed text-edit quality gate (bbox occupancy, contrast ratio, color delta) with one automatic retry and no SSIM/CLIP-local dependency.
+- Stage-3 text edits now include better style-family matching, bold-variant selection, bbox-aware font fitting, and high-contrast foreground color picking against the sampled background.
+- Stage-3 falls back gracefully through bbox overlays, `region_replace` overlays, and mock text rendering so a realized output is always produced even without a full inpainting backend.
 
 ---
 

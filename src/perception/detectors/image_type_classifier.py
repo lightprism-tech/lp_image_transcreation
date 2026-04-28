@@ -25,11 +25,20 @@ class ImageTypeClassifier:
         self.model = None
         self.processor = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        
-        # Image type categories with descriptive prompts
-        self.classes = ['advertisement', 'poster', 'infographic poster', 'user interface', 'product photo',
-                       'social media post', 'document', 'other']
-        self.class_labels = ['ad', 'poster', 'infographic', 'ui', 'product', 'social_media', 'document', 'other']
+        prompts_cfg = getattr(settings, "PERCEPTION_PROMPTS", {}).get("image_type_classifier", {})
+        self.classes = [str(item).strip() for item in prompts_cfg.get("classes", []) if str(item).strip()]
+        self.class_labels = [str(item).strip() for item in prompts_cfg.get("labels", []) if str(item).strip()]
+        self.prompt_template = str(prompts_cfg.get("template", "")).strip()
+        if not self.classes:
+            raise ValueError("Missing prompts.image_type_classifier.classes in perception.yaml")
+        if not self.class_labels:
+            raise ValueError("Missing prompts.image_type_classifier.labels in perception.yaml")
+        if len(self.classes) != len(self.class_labels):
+            raise ValueError("prompts.image_type_classifier.classes and labels must have same length")
+        if "{class_name}" not in self.prompt_template:
+            raise ValueError(
+                "prompts.image_type_classifier.template must include '{class_name}' placeholder"
+            )
         
         self._load_model()
     
@@ -64,8 +73,8 @@ class ImageTypeClassifier:
         # Convert numpy array to PIL Image
         pil_image = Image.fromarray(image.astype('uint8'))
         
-        # Create text prompts for each class
-        text_prompts = [f"a photo of a {cls}" for cls in self.classes]
+        # Create text prompts for each class from configurable template.
+        text_prompts = [self.prompt_template.format(class_name=cls) for cls in self.classes]
         
         # Prepare inputs
         inputs = self.processor(
@@ -84,12 +93,17 @@ class ImageTypeClassifier:
         # Find best match
         best_idx = np.argmax(probs)
         best_score = float(probs[best_idx])
+        best_label = self.class_labels[best_idx]
+        quality_flags = []
+        if best_score < self.threshold:
+            quality_flags.append("low_confidence_image_type")
         
         # Create scores dictionary
         all_scores = {label: float(prob) for label, prob in zip(self.class_labels, probs)}
         
         return {
-            'type': self.class_labels[best_idx],
+            'type': best_label,
             'confidence': best_score,
-            'all_scores': all_scores
+            'all_scores': all_scores,
+            'quality_flags': quality_flags,
         }

@@ -18,6 +18,7 @@ PACKAGE_DIR = CONFIG_DIR.parent
 BASE_DIR = PACKAGE_DIR.parent.parent
 
 _DEFAULT_CONFIG_PATH = CONFIG_DIR / "settings.yaml"
+_PERCEPTION_PROMPTS_PATH = CONFIG_DIR / "perception.yaml"
 
 
 def _load_yaml(path: Path) -> dict:
@@ -49,12 +50,14 @@ def _env_int(key: str, default: int) -> int:
 def load_settings(config_path: Path | None = None) -> "Settings":
     config_path = config_path or _DEFAULT_CONFIG_PATH
     data = _load_yaml(config_path)
+    prompts_data = _load_yaml(_PERCEPTION_PROMPTS_PATH)
 
     env_cfg = data.get("environment", {})
     paths_cfg = data.get("paths", {})
     schemas_cfg = data.get("schemas", {})
     models_cfg = data.get("models", {})
     thresholds_cfg = data.get("thresholds", {})
+    detectors_cfg = data.get("detectors", {})
     image_cfg = data.get("image", {})
     ocr_cfg = data.get("ocr", {})
     output_cfg = data.get("output", {})
@@ -77,8 +80,14 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         YOLO_MODEL_PATH = Path(os.getenv("YOLO_MODEL_PATH"))
     else:
         YOLO_MODEL_PATH = MODELS_DIR / yolo_rel
+    DETR_MODEL_NAME = os.getenv("DETR_MODEL", models_cfg.get("detr", "facebook/detr-resnet-50"))
+    VIT_DETECTOR_MODEL_NAME = os.getenv(
+        "VIT_DETECTOR_MODEL",
+        models_cfg.get("vit_detector", "google/owlv2-large-patch14-ensemble"),
+    )
 
     BLIP2_MODEL_NAME = os.getenv("BLIP_MODEL", models_cfg.get("blip", "Salesforce/blip-image-captioning-base"))
+    BLIP_MODEL_API_KEY = os.getenv("BLIP_MODEL_API_KEY", "")
     CLIP_MODEL_NAME = os.getenv("CLIP_MODEL", models_cfg.get("clip", "openai/clip-vit-large-patch14"))
     sam_cfg = models_cfg.get("sam", {})
     SAM_MODEL_TYPE = os.getenv("SAM_MODEL_TYPE", sam_cfg.get("model_type", "vit_b"))
@@ -98,6 +107,7 @@ def load_settings(config_path: Path | None = None) -> "Settings":
 
     OCR_LANGUAGES: List[str] = ocr_cfg.get("languages", ["en"])
     OCR_GPU = _env_bool("OCR_GPU", ocr_cfg.get("gpu", False))
+    OCR_USE_ANGLE_CLS = _env_bool("OCR_USE_ANGLE_CLS", ocr_cfg.get("use_angle_cls", True))
 
     SAVE_DEBUG_IMAGES = _env_bool("SAVE_DEBUG", output_cfg.get("save_debug_images", True))
     DEBUG_IMAGES_DIR = OUTPUT_DIR / "debug"
@@ -124,6 +134,52 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         "fallback_actionable_classes",
         [],
     )
+    yolo_cfg = detectors_cfg.get("yolo", {})
+    yolo_sup_cfg = yolo_cfg.get("supplemental", {})
+    hybrid_cfg = detectors_cfg.get("hybrid", {})
+    detr_cfg = detectors_cfg.get("detr", {})
+    vit_cfg = detectors_cfg.get("vit", {})
+    text_det_cfg = detectors_cfg.get("text", {})
+    face_det_cfg = detectors_cfg.get("face", {})
+    YOLO_IOU_THRESHOLD = _env_float("YOLO_IOU_THRESHOLD", yolo_cfg.get("iou_threshold", 0.45))
+    YOLO_IMAGE_SIZE = _env_int("YOLO_IMAGE_SIZE", yolo_cfg.get("imgsz", 1280))
+    YOLO_MAX_DET = _env_int("YOLO_MAX_DET", yolo_cfg.get("max_det", 300))
+    YOLO_SUPPLEMENTAL_ENABLED = _env_bool(
+        "YOLO_SUPPLEMENTAL_ENABLED", yolo_sup_cfg.get("enabled", True)
+    )
+    YOLO_SUPPLEMENTAL_MIN_THRESHOLD = _env_float(
+        "YOLO_SUPPLEMENTAL_MIN_THRESHOLD", yolo_sup_cfg.get("min_threshold", 0.2)
+    )
+    YOLO_SUPPLEMENTAL_THRESHOLD_RATIO = _env_float(
+        "YOLO_SUPPLEMENTAL_THRESHOLD_RATIO", yolo_sup_cfg.get("threshold_ratio", 0.6)
+    )
+    YOLO_SUPPLEMENTAL_MAX_CANDIDATES = _env_int(
+        "YOLO_SUPPLEMENTAL_MAX_CANDIDATES", yolo_sup_cfg.get("max_candidates", 5)
+    )
+    YOLO_DUPLICATE_IOU = _env_float("YOLO_DUPLICATE_IOU", yolo_sup_cfg.get("duplicate_iou", 0.55))
+    DETECTOR_HYBRID_MODE = os.getenv("DETECTOR_HYBRID_MODE", hybrid_cfg.get("mode", "yolo_only"))
+    HYBRID_DUPLICATE_IOU = _env_float("HYBRID_DUPLICATE_IOU", hybrid_cfg.get("duplicate_iou", 0.55))
+    ENABLE_DETR = _env_bool("ENABLE_DETR", detr_cfg.get("enabled", False))
+    DETR_CONFIDENCE_THRESHOLD = _env_float("DETR_THRESHOLD", detr_cfg.get("conf_threshold", 0.5))
+    ENABLE_VIT_DETECTOR = _env_bool("ENABLE_VIT_DETECTOR", vit_cfg.get("enabled", False))
+    VIT_CONFIDENCE_THRESHOLD = _env_float("VIT_THRESHOLD", vit_cfg.get("conf_threshold", 0.3))
+    VIT_DETECTOR_LABELS: List[str] = [
+        str(v).strip()
+        for v in vit_cfg.get("labels", [])
+        if str(v).strip()
+    ]
+    TEXT_DETECT_RETRY_UPSCALE_FACTOR = _env_float(
+        "TEXT_DETECT_RETRY_UPSCALE_FACTOR", text_det_cfg.get("retry_upscale_factor", 1.5)
+    )
+    TEXT_DETECT_MAX_RETRIES = _env_int("TEXT_DETECT_MAX_RETRIES", text_det_cfg.get("max_retries", 1))
+    FACE_DETECT_SCALE_FACTOR = _env_float(
+        "FACE_DETECT_SCALE_FACTOR", face_det_cfg.get("scale_factor", 1.1)
+    )
+    FACE_DETECT_MIN_NEIGHBORS = _env_int(
+        "FACE_DETECT_MIN_NEIGHBORS", face_det_cfg.get("min_neighbors", 5)
+    )
+    face_min_size = face_det_cfg.get("min_size", [24, 24])
+    FACE_DETECT_MIN_SIZE: Tuple[int, int] = (int(face_min_size[0]), int(face_min_size[1]))
 
     LOG_LEVEL = os.getenv("LOG_LEVEL", logging_cfg.get("level", "INFO"))
     LOG_FILE = BASE_DIR / logging_cfg.get("file", "pipeline.log")
@@ -132,6 +188,8 @@ def load_settings(config_path: Path | None = None) -> "Settings":
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     DEBUG_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+    prompts_cfg = prompts_data.get("prompts", {})
 
     return Settings(
         BASE_DIR=BASE_DIR,
@@ -145,7 +203,10 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         OBJECT_SCHEMA_PATH=OBJECT_SCHEMA_PATH,
         SCENE_SCHEMA_PATH=SCENE_SCHEMA_PATH,
         YOLO_MODEL_PATH=YOLO_MODEL_PATH,
+        DETR_MODEL_NAME=DETR_MODEL_NAME,
+        VIT_DETECTOR_MODEL_NAME=VIT_DETECTOR_MODEL_NAME,
         BLIP2_MODEL_NAME=BLIP2_MODEL_NAME,
+        BLIP_MODEL_API_KEY=BLIP_MODEL_API_KEY,
         CLIP_MODEL_NAME=CLIP_MODEL_NAME,
         SAM_MODEL_TYPE=SAM_MODEL_TYPE,
         SAM_CHECKPOINT_PATH=SAM_CHECKPOINT_PATH,
@@ -156,6 +217,7 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         IMAGE_FORMATS=IMAGE_FORMATS,
         OCR_LANGUAGES=OCR_LANGUAGES,
         OCR_GPU=OCR_GPU,
+        OCR_USE_ANGLE_CLS=OCR_USE_ANGLE_CLS,
         SAVE_DEBUG_IMAGES=SAVE_DEBUG_IMAGES,
         DEBUG_IMAGES_DIR=DEBUG_IMAGES_DIR,
         ENABLE_SCENE_GRAPH=ENABLE_SCENE_GRAPH,
@@ -165,8 +227,31 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         ENABLE_MODEL_WARMUP=ENABLE_MODEL_WARMUP,
         BATCH_SIZE=BATCH_SIZE,
         FALLBACK_ACTIONABLE_CLASSES=FALLBACK_ACTIONABLE_CLASSES,
+        YOLO_IOU_THRESHOLD=YOLO_IOU_THRESHOLD,
+        YOLO_IMAGE_SIZE=YOLO_IMAGE_SIZE,
+        YOLO_MAX_DET=YOLO_MAX_DET,
+        YOLO_SUPPLEMENTAL_ENABLED=YOLO_SUPPLEMENTAL_ENABLED,
+        YOLO_SUPPLEMENTAL_MIN_THRESHOLD=YOLO_SUPPLEMENTAL_MIN_THRESHOLD,
+        YOLO_SUPPLEMENTAL_THRESHOLD_RATIO=YOLO_SUPPLEMENTAL_THRESHOLD_RATIO,
+        YOLO_SUPPLEMENTAL_MAX_CANDIDATES=YOLO_SUPPLEMENTAL_MAX_CANDIDATES,
+        YOLO_DUPLICATE_IOU=YOLO_DUPLICATE_IOU,
+        DETECTOR_HYBRID_MODE=DETECTOR_HYBRID_MODE,
+        HYBRID_DUPLICATE_IOU=HYBRID_DUPLICATE_IOU,
+        ENABLE_DETR=ENABLE_DETR,
+        DETR_CONFIDENCE_THRESHOLD=DETR_CONFIDENCE_THRESHOLD,
+        ENABLE_VIT_DETECTOR=ENABLE_VIT_DETECTOR,
+        VIT_CONFIDENCE_THRESHOLD=VIT_CONFIDENCE_THRESHOLD,
+        VIT_DETECTOR_LABELS=VIT_DETECTOR_LABELS,
+        TEXT_DETECT_RETRY_UPSCALE_FACTOR=TEXT_DETECT_RETRY_UPSCALE_FACTOR,
+        TEXT_DETECT_MAX_RETRIES=TEXT_DETECT_MAX_RETRIES,
+        FACE_DETECT_SCALE_FACTOR=FACE_DETECT_SCALE_FACTOR,
+        FACE_DETECT_MIN_NEIGHBORS=FACE_DETECT_MIN_NEIGHBORS,
+        FACE_DETECT_MIN_SIZE=FACE_DETECT_MIN_SIZE,
         LOG_LEVEL=LOG_LEVEL,
         LOG_FILE=LOG_FILE,
+        PERCEPTION_PROMPTS=prompts_cfg,
+        OPEN_VOCABULARY_DETECTOR=prompts_cfg.get("open_vocabulary_detector", {}),
+        SEMANTIC_REGION_CONFIG=prompts_cfg.get("semantic_regions", {}),
     )
 
 

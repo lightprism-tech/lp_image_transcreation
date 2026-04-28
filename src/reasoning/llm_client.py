@@ -7,12 +7,21 @@ import requests
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
+from src.reasoning.prompt_config import get_prompt
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
 logger = logging.getLogger(__name__)
 
 _FALLBACK_RESPONSE = {"action": "preserve", "rationale": "LLM returned invalid or empty JSON", "confidence": 0.0}
+_SYSTEM_PROMPT = get_prompt(
+    "llm_system.cultural_reasoning",
+    "You are a Cultural Reasoning assistant. You help adapt images from one culture to another. Return ONLY valid JSON.",
+)
+_SYSTEM_PROMPT_STRICT = get_prompt(
+    "llm_system.cultural_reasoning_strict_json",
+    "You are a Cultural Reasoning assistant. You help adapt images from one culture to another. Return ONLY valid JSON, no other text.",
+)
 
 
 def _parse_llm_json(content: Optional[str]) -> Dict[str, Any]:
@@ -122,16 +131,25 @@ class LLMClient:
         Used only when KB has no candidates.
         """
         avoid_list = avoid_list or []
-        prompt = (
-            "Suggest culturally appropriate substitution candidates.\n"
-            f"Target culture: {target_culture}\n"
-            f"Object label: {obj_label}\n"
-            f"Object type: {obj_type}\n"
-            f"Scene context: {context}\n"
-            f"Avoid list: {avoid_list}\n\n"
-            "Return exactly one JSON object with this structure only:\n"
-            '{"candidates": ["candidate1", "candidate2", "candidate3"]}\n'
-            "Rules: keep candidates short noun phrases, do not include avoided terms."
+        template = get_prompt(
+            "generate_candidates.template",
+            (
+                "Suggest culturally appropriate substitution candidates.\n"
+                "Target culture: {target_culture}\n"
+                "Object label: {obj_label}\n"
+                "Object type: {obj_type}\n"
+                "Scene context: {context}\n"
+                "Avoid list: {avoid_list}\n\n"
+                'Return exactly one JSON object with this structure only:\n{"candidates": ["candidate1", "candidate2", "candidate3"]}\n'
+                "Rules: keep candidates short noun phrases, do not include avoided terms."
+            ),
+        )
+        prompt = template.format(
+            target_culture=target_culture,
+            obj_label=obj_label,
+            obj_type=obj_type,
+            context=context,
+            avoid_list=avoid_list,
         )
 
         if self.provider == "openai":
@@ -181,7 +199,7 @@ class LLMClient:
             "messages": [
                 {
                     "role": "system", 
-                    "content": "You are a Cultural Reasoning assistant. You help adapt images from one culture to another. Return ONLY valid JSON."
+                    "content": _SYSTEM_PROMPT
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -242,10 +260,7 @@ class LLMClient:
             "messages": [
                 {
                     "role": "system",
-                    "content": (
-                        "You are a Cultural Reasoning assistant. You help adapt images "
-                        "from one culture to another. Return ONLY valid JSON."
-                    ),
+                    "content": _SYSTEM_PROMPT,
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -330,7 +345,7 @@ class LLMClient:
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are a Cultural Reasoning assistant. You help adapt images from one culture to another. Return ONLY valid JSON, no other text.",
+                    "content": _SYSTEM_PROMPT_STRICT,
                 },
                 {"role": "user", "content": prompt},
             ],

@@ -35,6 +35,7 @@ transformers==4.36.2               # BLIP-2 & CLIP - compatible with PyTorch 2.0
 tokenizers==0.15.2                 # Tokenizer library - compatible with transformers 4.36.2
 accelerate>=0.20.0,<1.0.0      # Faster inference
 sentencepiece>=0.1.99,<1.0.0   # Tokenizer for BLIP-2
+timm>=0.9.0,<1.0.0             # Vision backbones used by OWLv2 ViT detector
 
 # ============================================================================
 # IMAGE PROCESSING

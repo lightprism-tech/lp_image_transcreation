@@ -1,7 +1,8 @@
 import json
 import logging
 import os
-from typing import List, Dict, Optional, Union, Set
+import re
+from typing import List, Dict, Optional, Union, Set, Any, Tuple
 from src.reasoning.schemas import CulturalNode, CulturalKBEntry, StylePriors, SubstitutionEntry
 
 logger = logging.getLogger(__name__)
@@ -36,6 +37,7 @@ class KnowledgeLoader:
         self._label_to_type: Dict[str, str] = {}
         self._preferred_substitutions: List[Dict[str, str]] = []
         self._cultural_types: Set[str] = set()
+        self._embedding_components = None
 
         self._load(graph_path)
         self._load_cultural_mappings(graph_path)
@@ -218,3 +220,121 @@ class KnowledgeLoader:
         """Sensitivity notes that discourage harmful or cliched edits."""
         entry = self.get_kb_entry(culture_name)
         return list(entry.sensitivity_notes) if entry else []
+
+    def get_item_by_label(self, label: str, culture_name: Optional[str] = None) -> Optional[Dict[str, Any]]:
+        key = (label or "").strip().lower()
+        if not key:
+            return None
+        for node in self.nodes.values():
+            node_label = str(node.get("label") or "").strip().lower()
+            if node_label != key:
+                continue
+            node_culture = self._node_to_country.get(str(node.get("id")))
+            if culture_name and node_culture and node_culture.lower() != culture_name.lower():
+                continue
+            return dict(node)
+        return None
+
+    def get_visual_attributes(self, label: str, obj_type: str, culture_name: str = "") -> Dict[str, str]:
+        item = self.get_item_by_label(label, culture_name=culture_name) or {}
+        existing = item.get("visual_attributes")
+        if isinstance(existing, dict):
+            attrs = {
+                "shape": str(existing.get("shape") or "").strip(),
+                "color": str(existing.get("color") or "").strip(),
+                "texture": str(existing.get("texture") or "").strip(),
+                "context": str(existing.get("context") or "").strip(),
+            }
+            if all(attrs.values()):
+                return attrs
+        return self._infer_visual_attributes(label, obj_type, culture_name)
+
+    def _infer_visual_attributes(self, label: str, obj_type: str, culture_name: str = "") -> Dict[str, str]:
+        text = re.sub(r"[^a-z0-9 ]+", " ", (label or "").lower()).strip()
+        tokens = [t for t in text.split() if t]
+        base_color = "multicolor"
+        if any(t in text for t in ("rice", "bread", "naan", "bun", "chapati", "idli")):
+            base_color = "warm beige"
+        elif any(t in text for t in ("soup", "curry", "stew", "sauce", "dal")):
+            base_color = "golden yellow"
+        elif any(t in text for t in ("tea", "coffee")):
+            base_color = "deep brown"
+        shape = "recognizable local form"
+        if any(t in text for t in ("ball", "dumpling", "jamun")):
+            shape = "rounded"
+        elif any(t in text for t in ("roll", "wrap", "pav", "sandwich")):
+            shape = "elongated handheld"
+        elif any(t in text for t in ("plate", "bowl", "cup")):
+            shape = "container-centered"
+        texture = "natural material texture"
+        if (obj_type or "").upper() == "FOOD":
+            texture = "fresh cooked texture"
+        elif (obj_type or "").upper() in {"CLOTHING", "ART"}:
+            texture = "woven textile texture"
+        context = "placed naturally in the scene"
+        if culture_name:
+            context = f"placed naturally in a {culture_name} cultural setting"
+        if tokens:
+            context = f"{context}, featuring {tokens[0]}"
+        return {
+            "shape": shape,
+            "color": base_color,
+            "texture": texture,
+            "context": context,
+        }
+
+    def get_scene_candidates(self, culture_name: str) -> List[Dict[str, Any]]:
+        scenes: List[Dict[str, Any]] = []
+        for node in self.nodes.values():
+            node_type = str(node.get("type") or "").upper()
+            if node_type not in {"SCENE", "PLACE", "EVENT", "ARCHITECTURE"}:
+                continue
+            node_id = str(node.get("id") or "")
+            country = self._node_to_country.get(node_id, "")
+            if culture_name and country and country.lower() != culture_name.lower():
+                continue
+            name = str(node.get("label") or "").strip()
+            if not name:
+                continue
+            scenes.append(
+                {
+                    "name": name,
+                    "tags": [node_type.lower(), culture_name.lower() if culture_name else "culture"],
+                    "elements": [f"{name} details", f"{culture_name} local context".strip()],
+                    "lighting": "natural",
+                    "style": "vibrant",
+                }
+            )
+        if scenes:
+            return scenes
+        fallback_name = f"{culture_name} street market".strip() if culture_name else "local street market"
+        return [
+            {
+                "name": fallback_name,
+                "tags": ["food", "crowded", "local"],
+                "elements": ["vendors", "signboards", "people"],
+                "lighting": "natural",
+                "style": "vibrant",
+            }
+        ]
+
+    def rank_candidates_by_embedding(self, query: str, candidates: List[str]) -> List[str]:
+        if not query or not candidates:
+            return candidates
+        try:
+            from sentence_transformers import SentenceTransformer
+            from sklearn.metrics.pairwise import cosine_similarity
+        except Exception:
+            return candidates
+        try:
+            if self._embedding_components is None:
+                self._embedding_components = SentenceTransformer("all-MiniLM-L6-v2")
+            model = self._embedding_components
+            q_emb = model.encode([query])
+            c_emb = model.encode(candidates)
+            sims = cosine_similarity(q_emb, c_emb)[0]
+            pairs: List[Tuple[float, str]] = list(zip(sims.tolist(), candidates))
+            pairs.sort(key=lambda x: x[0], reverse=True)
+            return [p[1] for p in pairs]
+        except Exception:
+            return candidates

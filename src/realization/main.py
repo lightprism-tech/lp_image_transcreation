@@ -125,6 +125,71 @@ def _apply_mock_overlay(input_path: str, output_path: str, target_culture: str) 
     img.save(output_path, "PNG")
 
 
+def _apply_mock_text_changes(plan: EditPlan, input_path: str, output_path: str, target_culture: str) -> None:
+    """
+    Apply text-region replacements in mock mode so Stage 3 still produces visible
+    transcreation edits when text actions exist but pixel-generation is unavailable.
+    """
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        _apply_mock_overlay(input_path, output_path, target_culture)
+        return
+
+    img = Image.open(input_path).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    w, h = img.size
+
+    for action in plan.edit_text or []:
+        if not action.bbox or len(action.bbox) < 4:
+            continue
+        x1, y1, x2, y2 = [int(v) for v in action.bbox[:4]]
+        x1, x2 = max(0, min(x1, x2)), min(w, max(x1, x2))
+        y1, y2 = max(0, min(y1, y2)), min(h, max(y1, y2))
+        if x2 <= x1 or y2 <= y1:
+            continue
+
+        style = action.style or {}
+        bg = tuple(style.get("background_color", [245, 245, 245])[:3])
+        fg = tuple(style.get("text_color", [20, 20, 20])[:3])
+        draw.rectangle([x1, y1, x2, y2], fill=bg)
+
+        text = (action.translated or action.original or "").strip()
+        if not text:
+            continue
+        box_h = max(1, y2 - y1)
+        size = int(style.get("font_size", max(10, int(box_h * 0.65))))
+        size = max(8, min(72, size))
+        font = _get_font(max(x2 - x1, 10), size_factor=max(12, int(500 / max(8, size))))
+        if font is None:
+            try:
+                font = ImageFont.load_default()
+            except Exception:
+                font = None
+        if not font:
+            continue
+        tb = draw.textbbox((0, 0), text, font=font)
+        tw, th = tb[2] - tb[0], tb[3] - tb[1]
+        tx = x1 + 4
+        ty = y1 + max(1, (box_h - th) // 2)
+        if tx + tw > x2 - 2:
+            tx = max(x1 + 2, x2 - tw - 2)
+        draw.text((tx, ty), text, fill=fg, font=font)
+
+    # Add corner label to indicate adaptation context in mock mode.
+    label = f"Adapted for {target_culture}"
+    font = _get_font(img.width)
+    if font:
+        tb = draw.textbbox((0, 0), label, font=font)
+        tw, th = tb[2] - tb[0], tb[3] - tb[1]
+        x = img.width - tw - 16
+        y = img.height - th - 16
+        draw.rectangle((x - 4, y - 2, x + tw + 4, y + th + 2), fill=(0, 0, 0), outline=(255, 255, 255))
+        draw.text((x, y), label, fill=(255, 255, 255), font=font)
+
+    img.save(output_path, "PNG")
+
+
 def _plan_actionability_summary(plan: EditPlan) -> dict:
     """Return counts used to decide whether realization can apply visible edits."""
     replace_count = len(plan.replace or [])
@@ -222,32 +287,20 @@ def main():
         logger.info("Generating image based on plan: %s", args.plan)
         output_path = engine.generate(plan, args.img)
 
-        if not os.path.exists(os.path.dirname(args.output)):
-            os.makedirs(os.path.dirname(args.output), exist_ok=True)
+        output_dir = os.path.dirname(args.output)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
 
         # If the engine wrote a real file at output_path, copy it to the requested output
         if os.path.exists(output_path):
             shutil.copy2(output_path, args.output)
             logger.info("Success! Image generated at: %s", output_path)
         else:
-            # Mock: no inpainting ran; apply per-instance visual changes instead of overlay only
-            has_bbox_replaces = any(
-                r.bbox and len(r.bbox) >= 4 for r in plan.replace
+            logger.error(
+                "Realization failed: no generated image was produced by the inpainting backend. "
+                "Fallback rendering is disabled."
             )
-            if has_bbox_replaces:
-                logger.warning(
-                    "Inpainting not available. Drawing per-instance changes (tinted bboxes + labels) instead of overlay only. "
-                    "For real pixel edits: install diffusers and set use_inpainting=true in config."
-                )
-                _apply_mock_instance_changes(plan, args.img, args.output, target_culture)
-                logger.info("Success! (Mock) Output saved with per-instance changes to: %s", args.output)
-            else:
-                logger.warning(
-                    "No pixel-level edits applied. Realization used mock overlay only. "
-                    "To get real object/clothing replacement: set use_inpainting=true in config and install diffusers."
-                )
-                _apply_mock_overlay(args.img, args.output, target_culture)
-                logger.info("Success! (Mock) Output saved with adaptation label to: %s", args.output)
+            sys.exit(3)
 
         logger.info("Saved result to: %s", args.output)
 

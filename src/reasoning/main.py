@@ -62,7 +62,7 @@ def main():
 
     # 2. Init Engine
     try:
-        engine = CulturalReasoningEngine(args.kg)
+        engine = CulturalReasoningEngine(args.kg, strict_mode=True)
     except FileNotFoundError:
         logger.error("Error: Knowledge Graph file '%s' not found.", args.kg)
         sys.exit(1)
@@ -78,11 +78,14 @@ def main():
     logger.info("Running Cultural Reasoning for target: %s...", args.target)
     plan = engine.analyze_image(reasoning_input)
     edit_text = engine.build_text_edits(reasoning_input)
+    region_replace = list(plan.region_replace or [])
 
     # 5. Apply plan to input: same format as input, only data replaced for target culture
     output_data = apply_plan_to_input(scene_graph, plan)
     if edit_text:
         output_data["edit_text"] = edit_text
+    if region_replace:
+        output_data["region_replace"] = region_replace
 
     # 6. Embed edit_plan so realization can use this file (objects + plan + bboxes)
     output_data["edit_plan"] = {
@@ -90,6 +93,8 @@ def main():
         "transformations": [t.model_dump() for t in plan.transformations],
         "preservations": [p.model_dump() for p in plan.preservations],
         "edit_text": edit_text,
+        "region_replace": region_replace,
+        "scene_adaptation": plan.scene_adaptation,
     }
 
     # 7. Save output (preserves input structure; only values replaced)

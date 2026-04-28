@@ -12,6 +12,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, List
 import requests
 from dotenv import load_dotenv
+from src.realization.prompt_config import get_prompt, get_prompt_list
 
 logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -39,15 +40,41 @@ def _bbox_to_mask_pil(bbox: List[int], width: int, height: int, pad_pct: float =
     return Image.fromarray(mask)
 
 
-def _build_inpaint_prompt(original_label: str, new_label: str) -> str:
+def _build_inpaint_prompt(original_label: str, new_label: str, target_culture: str = "target") -> str:
     """Build a prompt for inpainting (e.g. clothing -> person wearing X)."""
-    original_lower = (original_label or "").lower()
-    new_lower = (new_label or "").lower()
-    if original_lower in ("person", "people", "man", "woman", "child"):
-        return f"person wearing {new_label}, same pose and lighting, photorealistic"
-    if "cloth" in original_lower or "shirt" in original_lower or "dress" in original_lower:
-        return f"person wearing {new_label}, same pose, photorealistic"
-    return f"{new_label}, same scene and lighting, photorealistic"
+    original_lower = (original_label or "").strip().lower()
+    person_tokens = [
+        str(t).strip().lower()
+        for t in get_prompt_list(
+            "inpaint.label_groups.person",
+            ["person", "people", "man", "woman", "child"],
+        )
+    ]
+    clothing_tokens = [
+        str(t).strip().lower()
+        for t in get_prompt_list(
+            "inpaint.label_groups.clothing",
+            ["cloth", "shirt", "dress"],
+        )
+    ]
+
+    if original_lower in set(person_tokens):
+        template = get_prompt(
+            "inpaint.person_template",
+            "person wearing {new_label}, same pose and lighting, photorealistic",
+        )
+        return template.format(new_label=new_label, target_culture=target_culture)
+    if any(token and token in original_lower for token in clothing_tokens):
+        template = get_prompt(
+            "inpaint.clothing_template",
+            "person wearing {new_label}, same pose, photorealistic",
+        )
+        return template.format(new_label=new_label, target_culture=target_culture)
+    template = get_prompt(
+        "inpaint.generic_template",
+        "{new_label}, same scene and lighting, photorealistic",
+    )
+    return template.format(new_label=new_label, target_culture=target_culture)
 
 
 class Inpainter(ABC):
@@ -190,7 +217,12 @@ def _decode_flux_response_image(response: requests.Response):
 def _get_flux_inpainter(config: dict) -> Optional[Inpainter]:
     """Build a Flux/Azure image-edit backend using source image + mask + prompt."""
     model_name = str(config.get("inpaint_model") or "").strip().lower()
-    if model_name not in ("flux.2-pro", "flux-2-pro", "flux2-pro"):
+    supported_models = {
+        str(m).strip().lower()
+        for m in (config.get("flux_supported_models") or ["flux.2-pro", "flux-2-pro", "flux2-pro"])
+        if str(m).strip()
+    }
+    if model_name not in supported_models:
         return None
 
     endpoint = (
@@ -198,8 +230,10 @@ def _get_flux_inpainter(config: dict) -> Optional[Inpainter]:
         or os.getenv("AZURE_FLUX_IMAGE_URL", "").strip()
     )
     api_key = os.getenv("AZURE_OPENAI_API_KEY", "").strip()
-    flux_model = os.getenv("AZURE_FLUX_MODEL", "FLUX.2-pro").strip() or "FLUX.2-pro"
-    output_format = str(config.get("flux_output_format") or "png").strip() or "png"
+    flux_model = str(config.get("flux_model") or os.getenv("AZURE_FLUX_MODEL", "FLUX.2-pro")).strip() or "FLUX.2-pro"
+    output_format = str(config.get("flux_output_format") or os.getenv("FLUX_OUTPUT_FORMAT", "png")).strip() or "png"
+    flux_width = int(config.get("flux_width", os.getenv("FLUX_WIDTH", 1024)))
+    flux_height = int(config.get("flux_height", os.getenv("FLUX_HEIGHT", 1024)))
     if not endpoint or not api_key:
         logger.warning(
             "FLUX.2-pro selected but AZURE_FLUX_IMAGE_URL / AZURE_OPENAI_API_KEY is missing."
@@ -212,6 +246,38 @@ def _get_flux_inpainter(config: dict) -> Optional[Inpainter]:
     class FluxInpainter(Inpainter):
         def __init__(self):
             self.mask_pad_pct = float(config.get("inpaint_mask_pad_pct", 0.25))
+            self.generation_timeout_s = int(config.get("flux_timeout_seconds", os.getenv("FLUX_TIMEOUT_SECONDS", 120)))
+
+        def _request_flux_generated_image(self, prompt: str):
+            """
+            Call Azure FLUX using the same JSON request shape as scripts/test_api.py,
+            which is known to work for this endpoint.
+            """
+            headers = {"Content-Type": "application/json", "api-key": api_key}
+            payload = {
+                "prompt": prompt,
+                "n": 1,
+                "width": flux_width,
+                "height": flux_height,
+                "output_format": output_format,
+                "model": flux_model,
+            }
+            resp = requests.post(endpoint, headers=headers, json=payload, timeout=self.generation_timeout_s)
+            try:
+                resp.raise_for_status()
+            except requests.HTTPError as http_err:
+                body = (resp.text or "").strip()
+                preview = (body[:600] + "...") if len(body) > 600 else body
+                logger.warning(
+                    "FLUX request failed status=%s endpoint=%s payload_model=%s body=%s error=%s",
+                    resp.status_code,
+                    endpoint,
+                    flux_model,
+                    preview,
+                    http_err,
+                )
+                raise
+            return _decode_flux_response_image(resp)
 
         def inpaint(
             self,
@@ -223,30 +289,10 @@ def _get_flux_inpainter(config: dict) -> Optional[Inpainter]:
             try:
                 img = Image.open(image_path).convert("RGB")
                 w_orig, h_orig = img.size
-                mask = _bbox_to_mask_pil(bbox, w_orig, h_orig, pad_pct=self.mask_pad_pct)
-
-                img_bytes = io.BytesIO()
-                mask_bytes = io.BytesIO()
-                img.save(img_bytes, format="PNG")
-                mask.save(mask_bytes, format="PNG")
-                img_bytes.seek(0)
-                mask_bytes.seek(0)
-
-                headers = {"api-key": api_key}
-                data = {
-                    "prompt": prompt,
-                    "model": flux_model,
-                    "n": 1,
-                    "output_format": output_format,
-                }
-                files = {
-                    "image": ("image.png", img_bytes.getvalue(), "image/png"),
-                    "mask": ("mask.png", mask_bytes.getvalue(), "image/png"),
-                }
-                resp = requests.post(endpoint, headers=headers, data=data, files=files, timeout=120)
-                resp.raise_for_status()
-                gen = _decode_flux_response_image(resp)
-                result = gen.resize((w_orig, h_orig))
+                gen = self._request_flux_generated_image(prompt)
+                gen_resized = gen.resize((w_orig, h_orig))
+                result_arr = _apply_mask_composite(img, gen_resized, bbox, self.mask_pad_pct)
+                result = Image.fromarray(result_arr)
 
                 fd, path = tempfile.mkstemp(suffix=".png")
                 os.close(fd)
@@ -376,11 +422,10 @@ def get_inpainter(config: Optional[dict] = None) -> Inpainter:
     """
     config = config or {}
     if not config.get("use_inpainting", False):
-        logger.info(
-            "Inpainting disabled (use_inpainting not true in config). "
-            "Output image will not be modified; mock overlay only."
+        raise RuntimeError(
+            "Realization requires real inpainting, but use_inpainting is false. "
+            "Enable use_inpainting in realization config."
         )
-        return MockInpainter()
     # Diffusers backend intentionally disabled.
     # impl = _get_diffusers_inpainter(config)
     # if impl is not None:
@@ -390,8 +435,7 @@ def get_inpainter(config: Optional[dict] = None) -> Inpainter:
     if flux_impl is not None:
         logger.info("Using FLUX image-edit backend for model=%s", config.get("inpaint_model"))
         return flux_impl
-    logger.warning(
-        "Inpainting enabled but no valid edit/inpaint backend is available. "
-        "Output image will not be modified; mock overlay only."
+    raise RuntimeError(
+        "Inpainting is enabled but no valid image-edit backend is available. "
+        "Configure FLUX endpoint/API key for real generation."
     )
-    return MockInpainter()

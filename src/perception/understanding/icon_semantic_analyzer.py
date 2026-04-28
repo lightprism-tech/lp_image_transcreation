@@ -8,6 +8,8 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
+from perception.config import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -55,6 +57,15 @@ class IconSemanticAnalyzer:
         self._model = None
         self._processor = None
         self._device = None
+        cfg = getattr(settings, "PERCEPTION_PROMPTS", {}).get("icon_semantic_analyzer", {})
+        self._semantic_prompts = [str(item).strip() for item in cfg.get("prompts", []) if str(item).strip()]
+        self._semantic_labels = [str(item).strip() for item in cfg.get("labels", []) if str(item).strip()]
+        if not self._semantic_prompts:
+            raise ValueError("Missing prompts.icon_semantic_analyzer.prompts in perception.yaml")
+        if not self._semantic_labels:
+            raise ValueError("Missing prompts.icon_semantic_analyzer.labels in perception.yaml")
+        if len(self._semantic_prompts) != len(self._semantic_labels):
+            raise ValueError("prompts.icon_semantic_analyzer.prompts and labels must have same length")
         self._load_clip()
 
     def _load_clip(self) -> None:
@@ -73,14 +84,6 @@ class IconSemanticAnalyzer:
             self._device = None
 
     def _classify_crop_semantics(self, crop: np.ndarray) -> Tuple[str, float]:
-        prompts = [
-            "an infographic icon",
-            "a pictogram symbol",
-            "a chart element",
-            "a decorative shape",
-            "a photo object",
-        ]
-        labels = ["icon", "symbol", "chart_element", "decorative", "photo_object"]
         if self._model is None or self._processor is None:
             h, w = crop.shape[:2]
             area = h * w
@@ -92,12 +95,17 @@ class IconSemanticAnalyzer:
             from PIL import Image
 
             image = Image.fromarray(crop.astype(np.uint8))
-            inputs = self._processor(text=prompts, images=image, return_tensors="pt", padding=True).to(self._device)
+            inputs = self._processor(
+                text=self._semantic_prompts,
+                images=image,
+                return_tensors="pt",
+                padding=True,
+            ).to(self._device)
             with torch.no_grad():
                 logits = self._model(**inputs).logits_per_image
                 probs = logits.softmax(dim=1).cpu().numpy()[0]
             idx = int(np.argmax(probs))
-            return labels[idx], float(probs[idx])
+            return self._semantic_labels[idx], float(probs[idx])
         except Exception:
             return "icon", 0.50
 

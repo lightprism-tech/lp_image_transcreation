@@ -49,12 +49,19 @@ def adapt_plan_to_edit_format(plan_data: dict) -> dict:
     # Stage 2 format: edit_plan embedded + objects with original_class_name and bbox
     edit_plan = plan_data.get("edit_plan") or {}
     objects = plan_data.get("objects", [])
-    if edit_plan and objects:
+    if isinstance(edit_plan, dict) and edit_plan:
         preservations = edit_plan.get("preservations", [])
         transformations = edit_plan.get("transformations", [])
         tr_by_original, tr_by_object_id = _build_transformation_maps(transformations)
+        visual_by_original = {}
+        for t in transformations:
+            if not isinstance(t, dict):
+                continue
+            key = _norm_label(t.get("original_object"))
+            if key:
+                visual_by_original[key] = t.get("visual_attributes")
         replace_list = []
-        for obj in objects:
+        for obj in objects if isinstance(objects, list) else []:
             if not isinstance(obj, dict):
                 continue
             oid = obj.get("id", len(replace_list))
@@ -81,14 +88,55 @@ def adapt_plan_to_edit_format(plan_data: dict) -> dict:
             )
             if not original or not new_label:
                 continue
-            if _norm_label(new_label) in {_norm_label(original), _norm_label(current)}:
+            # Keep actionable replacements when Stage 2 already rewrote class_name to target.
+            # In that case current may equal new_label, but original_class_name still indicates
+            # a real transform that should be executed with this object's bbox.
+            has_original_marker = bool(obj.get("original_class_name") or obj.get("original_label"))
+            if _norm_label(new_label) == _norm_label(original):
+                continue
+            if (
+                _norm_label(new_label) == _norm_label(current)
+                and not has_original_marker
+            ):
                 continue
             bbox = obj.get("bbox")
+            visual_attributes = visual_by_original.get(_norm_label(original))
+            if not visual_attributes:
+                visual_attributes = visual_by_original.get(_norm_label(current))
             replace_list.append({
                 "object_id": oid,
                 "original": original,
                 "new": new_label,
                 "bbox": bbox if isinstance(bbox, list) and len(bbox) >= 4 else None,
+                "constraints": {
+                    "visual_attributes": visual_attributes,
+                    "scene_adaptation": edit_plan.get("scene_adaptation"),
+                },
+            })
+
+        # Optional region-level replacements for infographic/document rows when
+        # object detection has no actionable bbox objects.
+        for i, region in enumerate(edit_plan.get("region_replace", []) or []):
+            if not isinstance(region, dict):
+                continue
+            original = (region.get("original") or "").strip()
+            new_label = (region.get("new") or "").strip()
+            bbox = region.get("bbox")
+            if not original or not new_label:
+                continue
+            if _norm_label(new_label) == _norm_label(original):
+                continue
+            if not isinstance(bbox, list) or len(bbox) < 4:
+                continue
+            replace_list.append({
+                "object_id": int(region.get("object_id", 100000 + i)),
+                "original": original,
+                "new": new_label,
+                "bbox": bbox[:4],
+                "constraints": {
+                    "visual_attributes": region.get("visual_attributes"),
+                    "scene_adaptation": edit_plan.get("scene_adaptation"),
+                },
             })
         return {
             "preserve": [p.get("original_object", "") for p in preservations if isinstance(p, dict)],

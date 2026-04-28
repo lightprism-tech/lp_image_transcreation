@@ -7,6 +7,7 @@ import logging
 import sys
 from pathlib import Path
 from perception.config import settings
+from src.utilities.terminal_logger import _ColorFormatter, _supports_color
 
 
 def setup_logger(
@@ -41,10 +42,7 @@ def setup_logger(
     logger.handlers = []
     
     # Create formatter
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    formatter = _ColorFormatter(use_color=_supports_color())
     
     # Console handler
     console_handler = logging.StreamHandler(sys.stdout)

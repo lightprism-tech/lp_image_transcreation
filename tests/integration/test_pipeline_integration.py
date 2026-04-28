@@ -41,22 +41,24 @@ def test_pipeline_end_to_end(test_image_path, temp_output_dir):
     
     # Check essential top-level keys
     expected_keys = [
-        "image_path", 
+        "metadata", 
         "image_type", 
         "objects", 
+        "visual_regions",
         "text_regions", 
-        "scene_description", 
-        "text_content"
+        "layout",
+        "scene", 
+        "text"
     ]
     for key in expected_keys:
         assert key in result, f"Missing key in output: {key}"
 
     # Verify Image Path (should be absolute or relative as processed)
-    assert str(result["image_path"]) == str(test_image_path)
+    assert str(result["metadata"]["image_path"]) == str(test_image_path)
 
     # Verify Image Type
-    assert isinstance(result["image_type"], str), "image_type should be a string"
-    assert len(result["image_type"]) > 0, "image_type should not be empty"
+    assert isinstance(result["image_type"], dict), "image_type should be a structured object"
+    assert len(result["image_type"].get("type", "")) > 0, "image_type.type should not be empty"
 
     # Verify Objects List
     assert isinstance(result["objects"], list), "objects should be a list"
@@ -65,12 +67,13 @@ def test_pipeline_end_to_end(test_image_path, temp_output_dir):
     if len(result["objects"]) > 0:
         obj = result["objects"][0]
         assert "label" in obj, "Object should have a label"
-        assert "box_2d" in obj, "Object should have a bounding box"
+        assert "bbox" in obj, "Object should have a bounding box"
         assert "attributes" in obj, "Object should have attributes"
-        assert "captions" in obj, "Object should have captions"
+        assert "caption" in obj, "Object should have a BLIP caption"
 
     # Verify Scene Description
-    assert isinstance(result["scene_description"], str), "scene_description should be a string"
+    assert isinstance(result["scene"]["description"], str), "scene.description should be a string"
+    assert result["scene"]["visual_context"]["source"] == "blip"
     # Note: Description might be empty if model fails or image is blank, but usually it produces something
     
     # Verify File Creation

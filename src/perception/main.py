@@ -138,18 +138,44 @@ def main(image_path: str, output_path: str = None):
     logger.info("Step 1: Loading image...")
     image = load_image(image_path)
 
-    # Step 2: Detection
-    logger.info("Step 2: Running detectors...")
-    object_detector = ObjectDetector()
+    # Step 2: Context-first analysis for model-driven detection
+    logger.info("Step 2: Building image context...")
     text_detector = TextDetector()
     image_classifier = ImageTypeClassifier()
     face_detector = FaceDetector() if settings.ENABLE_FACE_DETECTION else None
     ocr_engine = OCREngine()
     sam_segmenter = SAMSegmenter()
     blip_manager = BLIPModelManager()
+    scene_summarizer = SceneSummarizer()
+
+    text_boxes = text_detector.detect(image)
+    image_type = image_classifier.classify(image)
+    faces = face_detector.detect(image) if face_detector is not None else []
+    logger.info("Step 2.5: Extracting text for OCR-first context...")
+    text_postprocessor = TextPostProcessor()
+    extracted_text = ocr_engine.extract(image, text_boxes)
+    text_boxes = calibrate_text_region_confidence(text_boxes, extracted_text)
+    typography = (
+        text_postprocessor.summarize_styles(extracted_text)
+        if settings.ENABLE_TYPOGRAPHY_SUMMARY
+        else {}
+    )
+    scene_description = scene_summarizer.summarize(
+        image,
+        image_type=image_type,
+        extracted_text=extracted_text,
+    )
+
+    object_detector = ObjectDetector(
+        context={
+            "image_type": image_type,
+            "scene": scene_description,
+            "extracted_text": extracted_text,
+        }
+    )
 
     if settings.ENABLE_MODEL_WARMUP:
-        logger.info("Step 2.0: Running model warmup...")
+        logger.info("Step 2.6: Running model warmup...")
         _run_model_warmup(
             object_detector=object_detector,
             blip_manager=blip_manager,
@@ -158,10 +184,9 @@ def main(image_path: str, output_path: str = None):
             face_detector=face_detector,
         )
 
-    bounding_boxes = object_detector.detect(image)
-    text_boxes = text_detector.detect(image)
-    image_type = image_classifier.classify(image)
-    faces = face_detector.detect(image) if face_detector is not None else []
+    detector_bundle = object_detector.detect_with_debug(image)
+    bounding_boxes = detector_bundle.get("final", [])
+    detector_views = detector_bundle.get("debug_views", {})
     sam_status = sam_segmenter.get_status()
     logger.info(
         "SAM status: enabled=%s available=%s reason=%s model_type=%s checkpoint=%s",
@@ -181,16 +206,14 @@ def main(image_path: str, output_path: str = None):
     logger.info(f"  - Detected {len(text_boxes)} text regions")
     logger.info(f"  - Image type: {image_type}")
 
-    # Step 3: Understanding
+    # Step 3: Region understanding
     logger.info("Step 3: Understanding scene...")
     object_captioner = ObjectCaptioner()
     attribute_extractor = AttributeExtractor()
-    scene_summarizer = SceneSummarizer()
     icon_analyzer = IconSemanticAnalyzer(model_name=settings.CLIP_MODEL_NAME)
 
     object_captions = object_captioner.caption(image, bounding_boxes)
     object_attributes = attribute_extractor.extract(image, bounding_boxes, object_captions)
-    scene_description = scene_summarizer.summarize(image)
     icon_semantics = icon_analyzer.analyze(image, bounding_boxes, image_type)
     for entry in icon_semantics.get("objects", []):
         idx = entry.get("object_index")
@@ -199,15 +222,6 @@ def main(image_path: str, output_path: str = None):
             bounding_boxes[idx]["semantic_score"] = entry.get("semantic_score")
             bounding_boxes[idx]["icon_cluster_id"] = entry.get("icon_cluster_id", -1)
 
-    # Step 4: OCR
-    logger.info("Step 4: Extracting text...")
-    text_postprocessor = TextPostProcessor()
-    extracted_text = ocr_engine.extract(image, text_boxes)
-    typography = (
-        text_postprocessor.summarize_styles(extracted_text)
-        if settings.ENABLE_TYPOGRAPHY_SUMMARY
-        else {}
-    )
     object_text_links = _build_object_text_links(bounding_boxes, extracted_text)
     quality_summary = _build_quality_summary(
         objects=bounding_boxes,
@@ -217,7 +231,6 @@ def main(image_path: str, output_path: str = None):
         object_text_links=object_text_links,
         sam_status=sam_status,
     )
-    text_boxes = calibrate_text_region_confidence(text_boxes, extracted_text)
     infographic_analysis = compute_infographic_analysis(image_type, bounding_boxes, extracted_text)
     infographic_analysis["icon_cluster_count"] = max(
         int(infographic_analysis.get("icon_cluster_count", 0) or 0),
@@ -229,7 +242,13 @@ def main(image_path: str, output_path: str = None):
         logger.info("Step 4.5: Saving debug visualization...")
         visualizer = DebugVisualizer()
         image_name = Path(image_path).stem
-        visualizer.visualize_pipeline_results(image, bounding_boxes, text_boxes, image_name)
+        visualizer.visualize_pipeline_results(
+            image=image,
+            objects=bounding_boxes,
+            text_regions=text_boxes,
+            image_name=image_name,
+            detector_views=detector_views,
+        )
         logger.info(f"  - Debug images saved to: {settings.DEBUG_IMAGES_DIR}")
 
     # Step 5: Build final JSON
@@ -249,6 +268,7 @@ def main(image_path: str, output_path: str = None):
         object_text_links=object_text_links,
         quality_summary=quality_summary,
         infographic_analysis=infographic_analysis,
+        image_shape=image.shape,
     )
 
     # Save output

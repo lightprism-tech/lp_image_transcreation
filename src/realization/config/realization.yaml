@@ -1,0 +1,111 @@
+prompts:
+  prompt_builder:
+    # All fields are dynamically resolved from perception or inference
+    inputs:
+      - target_culture
+      - original_label
+      - new_label
+      - detected_attributes   # shape, color, texture (from vision model)
+      - scene_context         # scene classification
+      - lighting_context      # lighting estimation
+      - style_context         # realism/style detection
+
+    dynamic_resolution:
+      shape: "{detected_attributes.shape | infer:object_geometry}"
+      color: "{detected_attributes.color | infer:dominant_palette}"
+      texture: "{detected_attributes.texture | infer:material_texture}"
+      scene_name: "{scene_context | infer:real_world_setting(target_culture)}"
+      scene_elements: >
+        {scene_context.elements
+         | filter: culturally_valid(target_culture)
+         | limit:2
+         | fallback:minimal_elements}
+      scene_lighting: "{lighting_context | infer:lighting_direction_intensity}"
+      scene_style: "{style_context | infer:photorealism_level}"
+
+    uncertainty_handling: >
+      If any attribute is missing or low confidence:
+      - infer from surrounding objects and scene context
+      - prefer minimal, non-intrusive assumptions
+      - do not introduce new objects unless strongly supported
+
+    prompt_template: >
+      Photorealistic cultural edit for {target_culture}. Replace only the target
+      {original_label} with {new_label}.
+
+      Keep scene identity unchanged: same layout, camera angle, perspective,
+      depth, lighting direction, and shadows.
+
+      Match local visual attributes: shape {shape}, color {color}, texture {texture}.
+      Keep scale consistent with nearby objects and preserve scene context {context}.
+
+      Scene context: {scene_name}. Supporting elements: {scene_elements}.
+      Lighting: {scene_lighting}. Style: {scene_style}.
+
+      Do not add new unrelated objects, text, logos, or overlays.
+      Keep all non-target content visually consistent with the original image.
+      Output must remain strictly photorealistic and naturally blended.
+
+    negative_template: >
+      residual parts of {original_label}, culturally incorrect representation,
+      generic or low-detail object, hallucinated elements, excessive props,
+      visible seams, mask boundary artifacts, lighting mismatch,
+      shadow inconsistency, scale errors, perspective distortion,
+      blur, oversharpening, duplication, stylization, cartoon effects
+
+  prompt_refiner:
+    request_template: |
+      Generate one high-quality prompt for masked cultural image transcreation.
+
+      Inputs:
+      - Target culture: {target_culture}
+      - Original object: {original_label}
+      - Replacement object: {new_label}
+      - Scene context: {scene_name}
+      - Visual attributes: shape={shape}, color={color}, texture={texture}
+
+      Objective:
+      Produce a culturally accurate, locally constrained replacement.
+
+      Constraints:
+      1) Mention {target_culture} explicitly.
+      2) Mention {new_label} explicitly.
+      3) Preserve camera angle, perspective, lighting direction, shadows, and depth.
+      4) Describe only the intended target edit; do not introduce unrelated scene changes.
+      5) Maintain correct scale and proportions.
+      6) Ensure seamless blending with no visible boundaries or artifacts.
+      7) Use specific, culturally accurate visual descriptors (materials, patterns, preparation).
+      8) If any input is uncertain, infer minimally from context without hallucination.
+      9) Avoid stereotypes or exaggerated cultural elements.
+      10) Maintain strict photorealism with natural texture and lighting continuity.
+      11) Output exactly one sentence.
+
+      Return ONLY:
+      {{"inpaint_prompt":"..."}}
+
+  inpaint:
+    label_groups:
+      person:
+        - person
+        - people
+        - man
+        - woman
+        - child
+      clothing:
+        - cloth
+        - shirt
+        - dress
+
+    person_template: >
+      person wearing {new_label} adapted to {target_culture} with realistic fabric,
+      texture, and construction details, maintaining original pose, lighting,
+      camera angle, and proportions, seamlessly blended with surroundings
+
+    clothing_template: >
+      {new_label} rendered with culturally accurate material and stitching,
+      aligned with body geometry, lighting, and perspective, with seamless blending
+
+    generic_template: >
+      {new_label} rendered using realistic material, texture, and culturally accurate form,
+      integrated seamlessly into the scene with matching lighting, shadows,
+      perspective, and scale, with no visible mask boundaries

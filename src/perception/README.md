@@ -1,47 +1,46 @@
 # Perception Package (Stage 1)
 
-Stage-1 extracts structured scene data used by Stage-2 and Stage-3.
+Stage-1 converts an input image into a structured scene JSON consumed by Stage-2 (reasoning) and Stage-3 (realization).
 
-## What changed recently
+## Purpose in the full pipeline
 
-- Image type classification now includes explicit `infographic` category.
-- Added infographic-focused analysis:
-  - icon cluster semantics
-  - text density signals
-  - semantic focus hints.
-- Added OCR text-region confidence calibration.
-- Added OCR style extraction improvements:
-  - color/background estimation
-  - font size/weight estimation
-  - broader font identification coverage using discovered system fonts.
-- Added icon semantic analyzer:
-  - CLIP-based semantic typing for object crops
-  - cluster IDs for icon-like objects.
-- Added scene-level `quality_summary` to report object/text confidence aggregates, SAM availability, and segmentation readiness.
-- Added text-to-object linking (`text.object_links`) to support downstream OCR-aware edits.
+Perception is responsible for:
 
-## Main outputs
+- identifying image modality (`photo`, `infographic`, `document`, etc.)
+- detecting objects and geometry (labels, confidence, bounding boxes)
+- extracting OCR text with style hints (font size, colors, weight)
+- producing infographic-specific signals for chart/table-like layouts.
 
-Stage-1 JSON now includes:
+Downstream stages depend on this output for grounded planning and edit execution. If Stage-1 misses or mislabels core entities, Stage-2/Stage-3 quality drops quickly.
+
+## Output contract (what Stage-2/Stage-3 rely on)
+
+The Stage-1 JSON includes:
 
 - `image_type`
 - `scene`
-- `objects` (with optional `semantic_type`, `semantic_score`, `icon_cluster_id`)
-- `faces` (detected face regions)
-- `text.regions` (calibrated confidence)
+- `objects` (with `class_name`/`label`, confidence, bbox; optional semantic fields)
+- `faces`
+- `text.regions`
 - `text.extracted` (OCR text + style metadata)
-- `text.typography` (font-family/weight/size summary)
-- `text.object_links` (text-to-object association using bbox IoU)
-- `quality_summary` (scene-level quality and SAM readiness metrics)
-- `infographic_analysis`.
+- `text.typography`
+- `text.object_links`
+- `quality_summary`
+- `infographic_analysis`
 
-## Run
+Most important for later stages:
+
+- **Object grounding:** object labels and bboxes are used for cultural substitution and inpainting targets.
+- **Text transcreation:** OCR regions and style metadata are used for localized text replacement.
+- **Infographic fallback:** dense text/icon signals help Stage-2 plan `region_replace` actions when object detection is sparse.
+
+## Run Stage-1 only
 
 ```bash
 python -m perception data/input/samples/Japan.jpg --output data/output/json/Japan_stage1_perception.json
 ```
 
-Run Stage-1 as part of full pipeline:
+## Run via full pipeline
 
 ```bash
 python src/main.py \
@@ -54,35 +53,34 @@ python src/main.py \
 
 ## Key files
 
-- `main.py`: orchestrates detectors, OCR, understanding, and builders.
-- `detectors/face_detector.py`: face detection (OpenCV Haar cascade).
-- `understanding/icon_semantic_analyzer.py`: dedicated icon semantic typing and clustering.
-- `segmentation/sam_segmenter.py`: SAM-based object segmentation from detected boxes.
-- `ocr/ocr_engine.py`: OCR extraction + style estimation + font identification.
-- `ocr/text_postprocess.py`: text cleanup and typography summary.
-- `utils/infographic.py`: confidence calibration and infographic analytics.
+- `main.py`: stage orchestration for detection, OCR, understanding, and JSON build.
+- `detectors/object_detector.py`: object detection and base class labels.
+- `detectors/text_detector.py`: text region detection for OCR.
+- `understanding/icon_semantic_analyzer.py`: icon-like semantic typing and clustering.
+- `segmentation/sam_segmenter.py`: SAM segmentation support from object boxes.
+- `ocr/ocr_engine.py`: OCR extraction and style estimation.
+- `ocr/text_postprocess.py`: OCR cleanup and typography aggregation.
+- `utils/infographic.py`: infographic confidence calibration and analytics.
 - `builders/scene_json_builder.py`: final Stage-1 JSON assembly.
 
-## Current pipeline model mapping
+## Model mapping
 
-| Task             | Best Model | Current in pipeline | Status |
-| ---------------- | ---------- | ------------------- | ------ |
-| Detect objects   | YOLOv8x    | YOLOv8x             | Using |
-| Describe image   | BLIP       | BLIP                | Using |
-| Understand image | CLIP       | CLIP                | Using |
-| Read text        | OCR        | PaddleOCR           | Using |
-| Segment objects  | SAM        | SAM (box-prompted)  | Using |
+| Task             | Model used          |
+| ---------------- | ------------------- |
+| Detect objects   | YOLOv8x             |
+| Scene captioning | BLIP                |
+| Semantic cues    | CLIP                |
+| OCR              | PaddleOCR           |
+| Segmentation     | SAM (box-prompted)  |
 
-## Notes
+## Operational notes
 
-- First run can be slow due to model downloads (YOLO, CLIP, BLIP, PaddleOCR, SAM as configured).
-- **Docker:** Use the repo `docker-compose.yml` so `./cache` is mounted at `/app/cache` and `HF_HOME`, `TORCH_HOME`, and `HOME` point inside it; otherwise PaddleOCR defaults to `/root/.paddleocr` and Hugging Face to `/root/.cache`, which are lost when the container exits. See the root `README.md` (Docker model and hub cache).
-- Duplicate Stage-1 log lines can happen due to logger handler setup; this does not affect results.
-- Optional startup warmup runs tiny inference passes for YOLO, BLIP, OCR, SAM (and face detector when enabled) to reduce first-image latency spikes.
-- Feature toggles are available in `config/settings.yaml`: `enable_face_detection`, `enable_typography_summary`, `enable_model_warmup`.
-- Debug images are enabled by default (`output.save_debug_images: true`) and written under `data/output/debug/`.
+- First run may be slow due to model downloads.
+- Debug images are enabled by default and written to `data/output/debug/`.
+- Warmup can be toggled in `config/settings.yaml` (`enable_model_warmup`) to reduce first-image latency spikes.
+- Additional toggles in `config/settings.yaml` include `enable_face_detection` and `enable_typography_summary`.
+- OCR backend is PaddleOCR (Tesseract/EasyOCR are not used in this module).
 
-## Not used in this module
+## Docker caching reminder
 
-- Tesseract OCR / EasyOCR are not used; OCR backend is PaddleOCR.
-- Alternate object detectors like YOLOv9/YOLOv10 are not present in this module.
+Use the repo `docker-compose.yml` so cache directories are persisted (`./cache` -> `/app/cache`) and `HF_HOME`, `TORCH_HOME`, and `HOME` point to that mounted path. Without this, model/OCR caches are lost across container restarts.
