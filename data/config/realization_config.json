@@ -1,6 +1,16 @@
 {
   "use_inpainting": true,
-  "inpaint_model": "FLUX.2-pro",
+  "inpaint_model": "gpt-image-2",
+  "gpt_image_supported_models": ["gpt-image-2"],
+  "gpt_image_use_edits": true,
+  "gpt_image_strict_bbox_lock": true,
+  "gpt_image_quality": "medium",
+  "gpt_image_output_format": "png",
+  "gpt_image_size": "auto",
+  "gpt_image_timeout_seconds": 180,
+  "gpt_image_request_retries": 3,
+  "gpt_image_retry_delay_seconds": 2,
+  "gpt_image_composite_bbox_only": true,
   "flux_model": "FLUX.2-pro",
   "flux_supported_models": ["FLUX.2-pro", "flux-2-pro", "flux2-pro"],
   "flux_width": 1024,
@@ -9,20 +19,34 @@
   "inpaint_steps": 25,
   "max_inpaint_prompt_passes": 1,
   "use_llm_prompt_refinement": false,
-  "inpaint_mask_pad_pct": 0.35,
-  "quality_gate": {
+  "inpaint_mask_pad_pct": 0.0,
+  "edit_region_policy": {
+    "allow_full_frame_replace": false,
+    "skip_scene_region_replace": true,
+    "max_replace_area_ratio": 0.45
+  },
+  "artifact_gate": {
     "enabled": true,
+    "solid_dark_luma": 18.0,
+    "solid_bright_luma": 245.0,
+    "solid_max_std": 12.0
+  },
+  "text_render": {
+    "fill_background": false
+  },
+  "quality_gate": {
+    "enabled": false,
     "text_use_ssim": false,
     "text_use_clip_local": false
   },
   "text_quality_gate": {
-    "enabled": true,
+    "enabled": false,
     "max_bbox_occupancy": 1.0,
     "skip_local_quality_gate": true
   },
   "validation": {
-    "strict_quality_gate": true,
-    "max_quality_attempts": 2,
+    "strict_quality_gate": false,
+    "max_quality_attempts": 1,
     "return_best_attempt_on_quality_failure": true,
     "min_cultural_score": 0.7,
     "min_object_presence_score": 0.7

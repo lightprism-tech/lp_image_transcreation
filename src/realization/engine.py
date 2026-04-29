@@ -8,10 +8,14 @@ import re
 from src.realization.models import EditPlan, ReplaceAction, EditTextAction, AdjustStyleAction
 from src.realization.inpaint import get_inpainter, _build_inpaint_prompt
 from src.realization.prompt_refiner import refine_inpaint_prompt
-from src.realization.metrics import cultural_score, object_presence_score
 from src.realization.prompt_builder import build_prompt
+from src.realization.metrics import cultural_score, object_presence_score
 
 logger = logging.getLogger(__name__)
+
+DEFAULT_MAX_REPLACE_AREA_RATIO = 0.45
+DEFAULT_SKIP_SCENE_REGION_REPLACE = True
+DEFAULT_ALLOW_FULL_FRAME_REPLACE = False
 
 
 class RealizationEngine:
@@ -25,11 +29,15 @@ class RealizationEngine:
         self._inpainter = get_inpainter(self.config)
         self._quality_gate_config = self.config.get("quality_gate", {})
         self._text_quality_config = self.config.get("text_quality_gate", {})
+        self._artifact_gate_config = self.config.get("artifact_gate", {})
         self._clip_components = None
         self._debug_prompt = bool(self.config.get("debug_prompt", False))
         self._run_metrics = {}
         self._validation_config = self.config.get("validation", {})
         self._max_inpaint_prompt_passes = max(1, int(self.config.get("max_inpaint_prompt_passes", 1)))
+        self._edit_region_policy = self.config.get("edit_region_policy", {})
+        self._last_replace_status = ""
+        self._last_replace_reason = ""
 
     def generate(self, plan: EditPlan, input_image_path: str) -> str:
         """
@@ -44,15 +52,28 @@ class RealizationEngine:
             self._adjust_style(plan.adjust_style)
 
         # 2. Object Replacement (Inpainting) - chain results so each replace uses updated image
-        for replacement in plan.replace:
+        replacements = list(plan.replace or [])
+        replace_stats = {
+            "planned": len(plan.replace or []),
+            "attempted": len(replacements),
+            "succeeded": 0,
+            "failed": 0,
+            "skipped": 0,
+        }
+        for replacement in replacements:
             next_path = self._replace_object(current_path, replacement)
             if next_path and os.path.exists(next_path):
+                replace_stats["succeeded"] += 1
                 if current_path != input_image_path:
                     try:
                         os.remove(current_path)
                     except OSError:
                         pass
                 current_path = next_path
+            elif self._last_replace_status == "skipped":
+                replace_stats["skipped"] += 1
+            else:
+                replace_stats["failed"] += 1
 
         # 3. Text Editing
         for text_edit in plan.edit_text:
@@ -70,17 +91,22 @@ class RealizationEngine:
 
         logger.info("Realization complete.")
         final_image_path = current_path if current_path != input_image_path else input_image_path
-        target_culture = str(self.config.get("target_culture", "")).strip()
-        target_objects = [r.new for r in plan.replace if isinstance(r.new, str) and r.new.strip()]
+        replace_count = len(plan.replace or [])
+        edit_text_count = len(plan.edit_text or [])
+        has_adjust_style = bool(plan.adjust_style)
         self._run_metrics = {
-            "cultural_score": round(cultural_score(final_image_path, target_culture), 4),
-            "object_presence_score": round(object_presence_score(final_image_path, target_objects), 4),
+            "edits_executed": bool(current_path != input_image_path),
+            "replace_actions": replace_count,
+            "replace_actions_planned": replace_stats["planned"],
+            "replace_actions_attempted": replace_stats["attempted"],
+            "replace_actions_succeeded": replace_stats["succeeded"],
+            "replace_actions_failed": replace_stats["failed"],
+            "replace_actions_skipped": replace_stats["skipped"],
+            "edit_text_actions": edit_text_count,
+            "adjust_style_applied": has_adjust_style,
+            "output_image_path": final_image_path,
         }
-        logger.info(
-            "Realization metrics: cultural_score=%.4f, object_presence_score=%.4f",
-            self._run_metrics["cultural_score"],
-            self._run_metrics["object_presence_score"],
-        )
+        logger.info("Realization metrics: %s", self._run_metrics)
         if current_path != input_image_path:
             return current_path
         return ""  # Signal: no real output, use mock overlay
@@ -97,9 +123,23 @@ class RealizationEngine:
         Performs object substitution (inpainting) when bbox is available.
         Returns path to new image if inpainting succeeded, else None.
         """
+        self._last_replace_status = "failed"
+        self._last_replace_reason = ""
         logger.info("Replacing object %s ('%s') with '%s'", action.object_id, action.original, action.new)
-        if not action.bbox or len(action.bbox) < 4:
-            logger.debug("No bbox for object_id=%s; skipping inpainting", action.object_id)
+        bbox = self._resolve_edit_bbox(image_path, action)
+        if not bbox:
+            self._last_replace_status = "skipped"
+            self._last_replace_reason = "missing_localized_region"
+            logger.debug("No valid localized region for object_id=%s; skipping inpainting", action.object_id)
+            return None
+        if self._should_skip_replace_action(image_path, action, bbox):
+            self._last_replace_status = "skipped"
+            self._last_replace_reason = "edit_region_policy"
+            logger.info(
+                "Skipping replace action object_id=%s due to edit region policy (bbox=%s)",
+                action.object_id,
+                bbox,
+            )
             return None
         target_culture = self.config.get("target_culture") or "target"
         constraints = action.constraints if isinstance(action.constraints, dict) else {}
@@ -108,6 +148,7 @@ class RealizationEngine:
             new_label=action.new,
             target_culture=target_culture,
             constraints=constraints,
+            bbox=bbox,
         )
         fallback = _build_inpaint_prompt(action.original, action.new, str(target_culture))
         prompt_candidates = [
@@ -127,13 +168,23 @@ class RealizationEngine:
                 logger.info("Stage-3 final prompt for object_id=%s: %s", action.object_id, prompt)
             candidate_path = self._inpainter.inpaint(
                 image_path,
-                action.bbox,
+                bbox,
                 prompt,
                 negative_prompt=negative,
             )
             if not candidate_path:
                 continue
-            if self._fails_local_quality_gate(image_path, candidate_path, action.bbox):
+            if self._fails_generation_artifact_gate(candidate_path, bbox):
+                logger.warning(
+                    "Rejected replacement for object_id=%s because generated bbox looked blank/solid.",
+                    action.object_id,
+                )
+                try:
+                    os.remove(candidate_path)
+                except OSError:
+                    pass
+                continue
+            if self._fails_local_quality_gate(image_path, candidate_path, bbox):
                 logger.warning(
                     "Rejected inpainted replacement for object_id=%s by quality gate (pass=%d).",
                     action.object_id,
@@ -144,8 +195,148 @@ class RealizationEngine:
                 except OSError:
                     pass
                 continue
+            self._last_replace_status = "succeeded"
             return candidate_path
+        self._last_replace_status = "failed"
+        self._last_replace_reason = "inpaint_backend_failed"
         return None
+
+    def _fails_generation_artifact_gate(self, output_path: str, bbox: List[int]) -> bool:
+        """Reject obvious failed generations such as solid black/white bbox patches."""
+        if not self._artifact_gate_config.get("enabled", True):
+            return False
+        try:
+            from PIL import Image
+
+            out = np.array(Image.open(output_path).convert("RGB"))
+            x1, y1, x2, y2 = [int(v) for v in bbox[:4]]
+            x1, x2 = max(0, min(x1, x2)), min(out.shape[1], max(x1, x2))
+            y1, y2 = max(0, min(y1, y2)), min(out.shape[0], max(y1, y2))
+            if x2 <= x1 or y2 <= y1:
+                return False
+            region = out[y1:y2, x1:x2].astype(np.float32)
+            luminance = (
+                0.2126 * region[:, :, 0]
+                + 0.7152 * region[:, :, 1]
+                + 0.0722 * region[:, :, 2]
+            )
+            mean_luma = float(luminance.mean())
+            std_luma = float(luminance.std())
+            dark_threshold = float(self._artifact_gate_config.get("solid_dark_luma", 18.0))
+            bright_threshold = float(self._artifact_gate_config.get("solid_bright_luma", 245.0))
+            max_std = float(self._artifact_gate_config.get("solid_max_std", 12.0))
+            return (mean_luma <= dark_threshold or mean_luma >= bright_threshold) and std_luma <= max_std
+        except Exception as e:
+            logger.warning("Artifact gate check failed; allowing output. Reason: %s", e)
+            return False
+
+    def _resolve_edit_bbox(self, image_path: str, action: ReplaceAction) -> Optional[List[int]]:
+        """Resolve localized edit box from action bbox or polygon constraints."""
+        try:
+            from PIL import Image
+            with Image.open(image_path).convert("RGB") as src_img:
+                image_width, image_height = src_img.size
+        except Exception as e:
+            logger.warning("Could not read image dimensions for object_id=%s: %s", action.object_id, e)
+            return None
+
+        bbox = self._normalize_bbox(action.bbox, image_width, image_height)
+        if bbox:
+            return bbox
+        polygon = self._extract_polygon_from_constraints(action.constraints)
+        return self._bbox_from_polygon(polygon, image_width, image_height)
+
+    def _normalize_bbox(
+        self,
+        bbox: Optional[List[int]],
+        image_width: int,
+        image_height: int,
+    ) -> Optional[List[int]]:
+        if not bbox or len(bbox) < 4:
+            return None
+        try:
+            x1, y1, x2, y2 = [int(round(float(v))) for v in bbox[:4]]
+        except Exception:
+            return None
+        left = max(0, min(x1, x2))
+        right = min(image_width, max(x1, x2))
+        top = max(0, min(y1, y2))
+        bottom = min(image_height, max(y1, y2))
+        if right <= left or bottom <= top:
+            return None
+        return [left, top, right, bottom]
+
+    def _extract_polygon_from_constraints(self, constraints: Optional[Dict[str, Any]]) -> Optional[List[Any]]:
+        if not isinstance(constraints, dict):
+            return None
+        candidates = [
+            constraints.get("polygon"),
+            constraints.get("mask_polygon"),
+            (constraints.get("segmentation") or {}).get("polygon")
+            if isinstance(constraints.get("segmentation"), dict)
+            else None,
+        ]
+        for candidate in candidates:
+            if isinstance(candidate, list) and candidate:
+                return candidate
+        return None
+
+    def _bbox_from_polygon(
+        self,
+        polygon: Optional[List[Any]],
+        image_width: int,
+        image_height: int,
+    ) -> Optional[List[int]]:
+        if not isinstance(polygon, list) or not polygon:
+            return None
+        xs: List[float] = []
+        ys: List[float] = []
+        for point in polygon:
+            if isinstance(point, (list, tuple)) and len(point) >= 2:
+                try:
+                    xs.append(float(point[0]))
+                    ys.append(float(point[1]))
+                except Exception:
+                    continue
+            elif isinstance(point, dict):
+                try:
+                    xs.append(float(point.get("x")))
+                    ys.append(float(point.get("y")))
+                except Exception:
+                    continue
+        if not xs or not ys:
+            return None
+        derived_bbox = [
+            int(round(min(xs))),
+            int(round(min(ys))),
+            int(round(max(xs))),
+            int(round(max(ys))),
+        ]
+        return self._normalize_bbox(derived_bbox, image_width, image_height)
+
+    def _should_skip_replace_action(self, image_path: str, action: ReplaceAction, bbox: List[int]) -> bool:
+        try:
+            from PIL import Image
+            with Image.open(image_path).convert("RGB") as src_img:
+                image_width, image_height = src_img.size
+        except Exception:
+            return False
+        if image_width <= 0 or image_height <= 0:
+            return False
+        policy = self._edit_region_policy if isinstance(self._edit_region_policy, dict) else {}
+        allow_full_frame = bool(policy.get("allow_full_frame_replace", DEFAULT_ALLOW_FULL_FRAME_REPLACE))
+        skip_scene_region = bool(policy.get("skip_scene_region_replace", DEFAULT_SKIP_SCENE_REGION_REPLACE))
+        max_area_ratio = float(policy.get("max_replace_area_ratio", DEFAULT_MAX_REPLACE_AREA_RATIO))
+        bbox_area = float(max(1, bbox[2] - bbox[0]) * max(1, bbox[3] - bbox[1]))
+        image_area = float(image_width * image_height)
+        area_ratio = bbox_area / image_area if image_area > 0 else 0.0
+        is_full_frame = bbox[0] <= 0 and bbox[1] <= 0 and bbox[2] >= image_width and bbox[3] >= image_height
+        is_scene_region = "scene region" in (action.original or "").strip().lower()
+        if not allow_full_frame and is_full_frame:
+            return True
+        if skip_scene_region and is_scene_region:
+            return True
+        return area_ratio > max_area_ratio
 
     def _edit_text(self, image_path: str, action: EditTextAction) -> Optional[str]:
         """
@@ -236,7 +427,9 @@ class RealizationEngine:
         fg = self._as_rgb_tuple(style.get("text_color"), fallback=(20, 20, 20))
         if force_high_contrast:
             fg = self._pick_high_contrast_text_color(bg)
-        draw.rectangle([x1, y1, x2, y2], fill=bg)
+        render_cfg = self.config.get("text_render", {}) if isinstance(self.config.get("text_render"), dict) else {}
+        if bool(render_cfg.get("fill_background", False)):
+            draw.rectangle([x1, y1, x2, y2], fill=bg)
         text = action.translated.strip() or action.original
         box_h = max(1, y2 - y1)
         src_font_size = int(style.get("font_size", max(12, int(box_h * 0.65))))

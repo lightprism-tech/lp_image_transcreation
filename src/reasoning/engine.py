@@ -9,7 +9,7 @@ from src.reasoning.schemas import (
 )
 from src.reasoning.knowledge_loader import KnowledgeLoader
 from src.reasoning.llm_client import LLMClient
-from src.reasoning.prompt_config import get_prompt
+from src.reasoning.prompt_config import get_prompt, get_prompt_list
 
 logger = logging.getLogger(__name__)
 
@@ -39,44 +39,31 @@ def _env_set(name: str, default: Set[str]) -> Set[str]:
     return parsed or set(default)
 
 
-STRICT_KB_GROUNDED_TRANSFORMS = _env_bool("REASONING_STRICT_KB_GROUNDED_TRANSFORMS", True)
+# Default uses KG first, then Groq candidate generation when the KG has no match.
+STRICT_KB_GROUNDED_TRANSFORMS = _env_bool("REASONING_STRICT_KB_GROUNDED_TRANSFORMS", False)
 MIN_CULTURAL_DENSITY = _env_int("REASONING_MIN_CULTURAL_DENSITY", 2)
-_WESTERN_TOKENS = {
-    "burger",
-    "pizza",
-    "hot dog",
-    "sandwich",
-    "fries",
-    "western",
-    "european",
-    "american",
-}
 _SCENE_OVERRIDE_ALLOWED_IMAGE_TYPES = _env_set(
     "REASONING_SCENE_OVERRIDE_ALLOWED_IMAGE_TYPES",
-    {"document", "infographic", "poster", "ui"},
+    {"infographic", "poster", "ui"},
 )
 ALLOW_CROSS_TYPE_FORCED_FALLBACK = _env_bool("REASONING_ALLOW_CROSS_TYPE_FORCED_FALLBACK", False)
-PLACEHOLDER_TEXT_TOKENS = {
-    "lorem",
-    "ipsum",
-    "dolor",
-    "amet",
-    "consectetur",
-    "adipis",
-    "adipiscing",
-    "elit",
-    "duis",
-    "aute",
-    "irure",
-    "reprehenderit",
-    "voluptate",
-    "cillum",
-    "fugiat",
-    "pariatur",
-    "occaecat",
-    "cupidatat",
-    "proident",
+_DEFAULT_PLACEHOLDER_TEXT_TOKENS = {
+    str(t).strip().lower()
+    for t in get_prompt_list("tokens.placeholder_text", [])
+    if str(t).strip()
 }
+PLACEHOLDER_TEXT_TOKENS = _env_set(
+    "REASONING_PLACEHOLDER_TEXT_TOKENS", _DEFAULT_PLACEHOLDER_TEXT_TOKENS
+)
+_DEFAULT_INFOGRAPHIC_CULTURAL_CUE_TOKENS = {
+    str(t).strip().lower()
+    for t in get_prompt_list("tokens.infographic_cultural_cues", [])
+    if str(t).strip()
+}
+INFOGRAPHIC_CULTURAL_CUE_TOKENS = _env_set(
+    "REASONING_INFOGRAPHIC_CULTURAL_CUE_TOKENS", _DEFAULT_INFOGRAPHIC_CULTURAL_CUE_TOKENS
+)
+ENABLE_LLM_PLACEHOLDER_CLASSIFIER = _env_bool("REASONING_ENABLE_LLM_PLACEHOLDER_CLASSIFIER", True)
 
 
 def apply_plan_to_input(input_data: Dict[str, Any], plan: TranscreationPlan) -> Dict[str, Any]:
@@ -131,9 +118,20 @@ def _infer_cultural_type(
 ) -> Optional[str]:
     """Infer a cultural type from KB label_to_type or object attributes so we can fetch KB candidates."""
     label_to_type = label_to_type or {}
+    normalized_label_to_type: Dict[str, str] = {}
+    for key, value in label_to_type.items():
+        key_text = str(key or "").strip().lower()
+        value_text = str(value or "").strip()
+        if key_text and value_text:
+            normalized_label_to_type[key_text] = value_text
     label_lower = (obj_label or "").lower()
-    if label_lower in label_to_type:
-        return label_to_type[label_lower]
+    if label_lower in normalized_label_to_type:
+        return normalized_label_to_type[label_lower]
+    # Fuzzy token-level match for detector labels like "there_plate_sushi".
+    label_tokens = [t for t in re.split(r"[^a-z0-9]+", label_lower) if t]
+    for token in label_tokens:
+        if token in normalized_label_to_type:
+            return normalized_label_to_type[token]
     # If label_to_type is missing for this label, avoid hardcoded class maps.
     # Keep only lightweight signal extraction from object attributes.
     attrs = obj.get("attributes") or {}
@@ -203,7 +201,7 @@ def _build_text_edits_for_document(
         if culture_title:
             translated = culture_title
             rewrite_cache[_normalize_key(original_clean)] = translated
-        elif _is_placeholder_text(original_clean):
+        elif _is_placeholder_text_dynamic(original_clean, llm_client=llm_client):
             logger.info("Skipping placeholder OCR text rewrite: '%s'", original_clean[:80])
             continue
         else:
@@ -255,7 +253,7 @@ def _rewrite_text_for_region(
     original_clean = (original or "").strip()
     if not original_clean:
         return original
-    if _is_placeholder_text(original_clean):
+    if _is_placeholder_text_dynamic(original_clean, llm_client=llm_client):
         return original_clean
     if llm_client is None:
         candidate = re.sub(
@@ -324,6 +322,39 @@ def _is_placeholder_text(text: str) -> bool:
         return False
     placeholder_hits = sum(1 for word in words if word in PLACEHOLDER_TEXT_TOKENS)
     return placeholder_hits >= 2
+
+
+def _is_placeholder_text_dynamic(text: str, llm_client: Optional[LLMClient] = None) -> bool:
+    """Heuristic placeholder detection with optional LLM fallback."""
+    if _is_placeholder_text(text):
+        return True
+    if (not ENABLE_LLM_PLACEHOLDER_CLASSIFIER) or llm_client is None:
+        return False
+    cleaned = (text or "").strip()
+    if len(cleaned) < 8:
+        return False
+    words = re.findall(r"[A-Za-z]+", cleaned.lower())
+    if not words:
+        return False
+    unique_ratio = float(len(set(words))) / float(len(words))
+    likely_ambiguous = (len(words) >= 4 and unique_ratio <= 0.65) or (
+        len(words) >= 8 and unique_ratio <= 0.8
+    )
+    if not likely_ambiguous:
+        return False
+    try:
+        template = get_prompt(
+            "classify_placeholder_text.template",
+            (
+                "Classify whether the OCR text is placeholder/dummy filler text.\n"
+                "Text: {text}\n\n"
+                'Return exactly one JSON object: {"is_placeholder": true or false}'
+            ),
+        )
+        result = llm_client.generate_reasoning(template.format(text=cleaned[:200]))
+        return bool(result.get("is_placeholder") is True)
+    except Exception:
+        return False
 
 
 def _rewrite_culture_title_text(original: str, target_culture: str, scene_context: str) -> Optional[str]:
@@ -491,9 +522,7 @@ def _needs_scene_override(
     if not transformations:
         return False
     mismatch = _scene_mismatch_score(scene_context, scene_adaptation)
-    transformed_labels = " ".join(t.target_object.lower() for t in transformations)
-    western_hits = sum(1 for token in _WESTERN_TOKENS if token in transformed_labels or token in scene_context.lower())
-    return mismatch >= 0.85 or western_hits >= 2
+    return mismatch >= 0.85
 
 
 def _coerce_positive_int(value: Any) -> Optional[int]:
@@ -624,7 +653,7 @@ def _allows_full_scene_override(scene_graph: Dict[str, Any]) -> bool:
     a full-frame inpaint often produces soft/blurred outputs.
     """
     image_type = ((scene_graph.get("image_type") or {}).get("type") or "").strip().lower()
-    return image_type in _SCENE_OVERRIDE_ALLOWED_IMAGE_TYPES
+    return image_type in _SCENE_OVERRIDE_ALLOWED_IMAGE_TYPES and _is_infographic_mode(scene_graph)
 
 
 def _enforce_multi_object_coordination(
@@ -921,17 +950,26 @@ def _infer_row_label_bboxes(extracted: List[Dict[str, Any]]) -> List[List[int]]:
 
 
 def _is_infographic_mode(scene_graph: Dict[str, Any]) -> bool:
-    image_type = ((scene_graph.get("image_type") or {}).get("type") or "").lower()
+    image_info = scene_graph.get("image_type") if isinstance(scene_graph.get("image_type"), dict) else {}
+    image_type = ((image_info or {}).get("type") or "").lower()
+    confidence = float((image_info or {}).get("confidence", 1.0) if "confidence" in (image_info or {}) else 1.0)
+    quality_flags = set((image_info or {}).get("quality_flags") or [])
+    extracted = ((scene_graph.get("text") or {}).get("extracted") or [])
+    text_count = len(extracted) if isinstance(extracted, list) else 0
+    analysis = scene_graph.get("infographic_analysis") or {}
+    icon_cluster_count = int(analysis.get("icon_cluster_count", 0) or 0)
     # Keep strict safeguards for true infographic/document layouts.
     # Posters frequently contain natural-image objects and should stay transformable
     # unless stronger infographic signals are present.
-    if image_type in {"infographic", "document"}:
+    if image_type == "infographic":
+        return confidence >= 0.5 or text_count >= 6 or icon_cluster_count >= 3
+    if image_type == "document":
+        return text_count >= 6 and "low_confidence_image_type" not in quality_flags
+    if image_type == "ui":
         return True
-    analysis = scene_graph.get("infographic_analysis") or {}
-    if analysis.get("enabled") and int(analysis.get("icon_cluster_count", 0) or 0) >= 3:
+    if analysis.get("enabled") and icon_cluster_count >= 3:
         return True
-    extracted = ((scene_graph.get("text") or {}).get("extracted") or [])
-    return isinstance(extracted, list) and len(extracted) >= 6
+    return text_count >= 6
 
 
 def _is_ambiguous_person_in_infographic(
@@ -964,8 +1002,13 @@ def _should_preserve_non_text_in_infographic(
     semantic_type = (obj.get("semantic_type") or "").lower()
     confidence = float(obj.get("confidence", 0.0) or 0.0)
     has_icon_anchor = semantic_type in {"icon", "symbol", "logo"} or obj.get("icon_cluster_id") is not None
+    label_text = str(obj.get("label") or obj.get("class_name") or "").lower()
+    has_cultural_cue = any(token in label_text for token in INFOGRAPHIC_CULTURAL_CUE_TOKENS)
 
-    if obj_type_upper in {"FOOD", "SPORT", "CLOTHING"} and (has_icon_anchor or confidence >= 0.65):
+    if has_cultural_cue:
+        return False
+
+    if obj_type_upper in {"FOOD", "SPORT", "CLOTHING"} and has_icon_anchor and confidence >= 0.65:
         return False
 
     return True
@@ -1074,15 +1117,8 @@ class CulturalReasoningEngine:
                 logger.info("Reasoning preserve: %s (infographic COCO-style policy)", obj_label)
                 continue
 
-            # Only change culture-related types: obj_type must be in the KG's cultural types
-            cultural_types = self.kg_loader.get_cultural_types()
-            if cultural_types and obj_type not in cultural_types:
-                preservations.append(Preservation(
-                    original_object=obj_label,
-                    rationale="Not a culture-related type in KB; preserved.",
-                ))
-                logger.info("Reasoning preserve: %s (type=%s not cultural in KB)", obj_label, obj_type)
-                continue
+            # Do not hard-gate by cultural type. We still require grounded KB candidates
+            # (or strict fallback logic) before creating a transform.
 
             # (2) Retrieve candidate substitutes from KB first (or from graph by type + culture)
             candidate_labels = self.kg_loader.get_candidates_from_kb(target_culture, obj_label, obj_type)
@@ -1105,9 +1141,10 @@ class CulturalReasoningEngine:
                         len(candidate_labels),
                         candidate_labels[0],
                     )
-            # Strict KB-gated policy: do not synthesize transform candidates from LLM
-            # when the knowledge graph has no grounded options.
-            if not candidate_labels and STRICT_KB_GROUNDED_TRANSFORMS:
+            has_local_edit_region = isinstance(obj.get("bbox"), list) and len(obj.get("bbox") or []) >= 4
+            # Do not synthesize object replacements when there is no localized region
+            # for Stage 3 to edit safely.
+            if not candidate_labels and (STRICT_KB_GROUNDED_TRANSFORMS or not has_local_edit_region):
                 preservations.append(Preservation(
                     original_object=obj_label,
                     rationale="No grounded KB candidates; preserved by KB-first policy.",
@@ -1132,6 +1169,8 @@ class CulturalReasoningEngine:
                     context=input_data.scene_graph.get("scene", {}).get("description", ""),
                     avoid_list=avoid_list,
                 )
+                if not isinstance(candidate_labels, list):
+                    candidate_labels = []
                 logger.info(
                     "LLM candidates received: label=%s, count=%d, sample=%s",
                     obj_label,
@@ -1250,21 +1289,29 @@ class CulturalReasoningEngine:
                             "visual_attributes": visual_attributes,
                         }
                     )
-            elif candidate_labels:
+            elif candidate_labels and (infographic_mode or self.strict_mode):
                 # Deterministic fallback: if grounded candidates exist but model preserves,
                 # select top grounded candidate so downstream realization has actionable edits.
                 fallback_target = candidate_labels[0]
+                fallback_visual_attributes = self.kg_loader.get_visual_attributes(
+                    label=fallback_target,
+                    obj_type=obj_type,
+                    culture_name=target_culture,
+                )
+                if not isinstance(fallback_visual_attributes, dict):
+                    fallback_visual_attributes = {
+                        "shape": "recognizable local form",
+                        "color": "locally appropriate colors",
+                        "texture": "natural texture",
+                        "context": f"placed in {target_culture} local context",
+                    }
                 transformations.append(Transformation(
                     original_object=obj_label,
                     original_type=obj_type,
                     target_object=fallback_target,
                     rationale="Grounded fallback: candidates available in KB; selected top candidate.",
                     confidence=0.55,
-                    visual_attributes=self.kg_loader.get_visual_attributes(
-                        label=fallback_target,
-                        obj_type=obj_type,
-                        culture_name=target_culture,
-                    ),
+                    visual_attributes=fallback_visual_attributes,
                 ))
                 logger.info(
                     "Applied grounded fallback transform for '%s' -> '%s' (type=%s)",

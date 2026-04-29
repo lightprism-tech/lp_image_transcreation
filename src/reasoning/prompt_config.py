@@ -21,3 +21,13 @@ def get_prompt(path: str, default: str = "") -> str:
             return default
         node = node.get(key)
     return str(node) if isinstance(node, str) else default
+
+
+def get_prompt_list(path: str, default: list | None = None) -> list:
+    default = default or []
+    node: Any = _PROMPTS
+    for key in (path or "").split("."):
+        if not isinstance(node, dict):
+            return list(default)
+        node = node.get(key)
+    return list(node) if isinstance(node, list) else list(default)

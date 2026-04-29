@@ -58,6 +58,17 @@ def _normalize_provider(value: str) -> str:
     return normalized or "openai"
 
 
+def _env_str(name: str, default: str = "") -> str:
+    """Read env var and normalize surrounding whitespace/quotes."""
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    value = str(raw).strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+        value = value[1:-1].strip()
+    return value if value else default
+
+
 def _build_azure_chat_url(base_url: str, deployment: str) -> str:
     """Build full Azure chat completions URL from base endpoint and deployment (see scripts/test_api.py)."""
     base = base_url.rstrip("/")
@@ -77,22 +88,32 @@ def _extract_deployment_from_chat_url(chat_url: str) -> Optional[str]:
 
 class LLMClient:
     def __init__(self):
-        raw = os.getenv("LLM_PROVIDER", "openai")
+        raw = _env_str("LLM_PROVIDER", "openai")
         self.provider = _normalize_provider(raw)
-
-        # Azure is intentionally disabled for this pipeline build.
-        # Even if LLM_PROVIDER is set to "azure", we fall back to Groq/OpenAI keys.
         if self.provider == "azure":
-            logger.warning("Azure provider disabled in llm_client; falling back to groq/openai.")
-            self.provider = "groq" if (os.getenv("GROQ_API_KEY") or os.getenv("LLM_API_KEY") or os.getenv("API_KEY")) else "openai"
+            # Stage-2 reasoning is configured to use KG + Groq only.
+            self.provider = "groq"
+            logger.info("LLM provider override for reasoning: azure -> groq")
 
-        self.api_key = os.getenv("GROQ_API_KEY") or os.getenv("LLM_API_KEY") or os.getenv("API_KEY")
-        self.model = os.getenv(
+        self.api_key = None
+        if self.provider == "azure":
+            self.api_key = _env_str("AZURE_OPENAI_API_KEY") or _env_str("LLM_API_KEY") or None
+            azure_endpoint = _env_str("AZURE_OPENAI_ENDPOINT")
+            azure_deployment = _env_str("AZURE_OPENAI_DEPLOYMENT")
+            self._azure_chat_url = _env_str("AZURE_OPENAI_CHAT_URL")
+            if not self._azure_chat_url and azure_endpoint and azure_deployment:
+                self._azure_chat_url = _build_azure_chat_url(azure_endpoint, azure_deployment)
+            self.azure_deployment = azure_deployment or _extract_deployment_from_chat_url(self._azure_chat_url)
+        else:
+            self.api_key = _env_str("GROQ_API_KEY") or _env_str("LLM_API_KEY") or _env_str("API_KEY") or None
+        self.model = _env_str(
             "LLM_MODEL",
-            "gpt-4o" if self.provider == "openai" else "llama-3.1-8b-instant",
+            default="gpt-4o" if self.provider == "openai" else "llama-3.1-8b-instant",
         )
-        self.azure_deployment = None
-        self._azure_chat_url = None
+        if self.provider == "azure":
+            self.model = self.azure_deployment or self.model
+        self.azure_deployment = getattr(self, "azure_deployment", None)
+        self._azure_chat_url = getattr(self, "_azure_chat_url", None)
         self._azure_fallback_deployments = []
 
         if not self.api_key:
@@ -105,6 +126,40 @@ class LLMClient:
         self._service_unavailable = False
         self._service_unavailable_reason = ""
 
+    def _call_groq_fallback(self, prompt: str) -> Optional[Dict[str, Any]]:
+        """Fallback for Azure misconfiguration: use Groq when key is available."""
+        groq_key = _env_str("GROQ_API_KEY") or _env_str("LLM_API_KEY")
+        if not groq_key:
+            return None
+        groq_model = _env_str("GROQ_MODEL") or _env_str("LLM_GROQ_MODEL") or "llama-3.3-70b-versatile"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {groq_key}",
+        }
+        payload = {
+            "model": groq_model,
+            "messages": [
+                {"role": "system", "content": _SYSTEM_PROMPT_STRICT},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0.2,
+        }
+        try:
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=30,
+            )
+            response.raise_for_status()
+            result = response.json()
+            content = (result.get("choices") or [{}])[0].get("message", {}).get("content")
+            logger.warning("Azure Stage-2 call failed; used Groq fallback model=%s", groq_model)
+            return _parse_llm_json(content)
+        except Exception as e:
+            logger.warning("Groq fallback after Azure failure did not succeed: %s", e)
+            return None
+
     def generate_reasoning(self, prompt: str) -> Dict[str, Any]:
         """
         Sends a prompt to the LLM and expects a JSON response.
@@ -115,7 +170,7 @@ class LLMClient:
         if self.provider == "groq":
             return self._call_groq(prompt)
         if self.provider == "azure":
-            return _FALLBACK_RESPONSE
+            return self._call_azure(prompt)
         raise ValueError(f"Unsupported LLM provider: {self.provider}")
 
     def generate_candidates(
@@ -159,7 +214,7 @@ class LLMClient:
             logger.info("LLM generate_candidates via groq: obj=%s type=%s", obj_label, obj_type)
             result = self._call_groq(prompt)
         elif self.provider == "azure":
-            result = _FALLBACK_RESPONSE
+            result = self._call_azure(prompt)
         else:
             raise ValueError(f"Unsupported LLM provider: {self.provider}")
 
@@ -295,6 +350,7 @@ class LLMClient:
                     return _parse_llm_json(content)
                 except requests.exceptions.RequestException as e:
                     attempted_urls.append(url)
+                    status = getattr(getattr(e, "response", None), "status_code", None)
                     logger.warning(
                         "Azure OpenAI API call failed (attempt %s/%s) on %s: %s",
                         attempt + 1,
@@ -302,11 +358,13 @@ class LLMClient:
                         url,
                         e,
                     )
+                    if status == 404:
+                        # Deployment does not exist; no need to keep retrying this endpoint.
+                        break
                     if attempt < retries - 1:
                         time.sleep(2**attempt)
                     else:
                         # If this URL is a 404 and we have fallback URLs, continue to next URL.
-                        status = getattr(getattr(e, "response", None), "status_code", None)
                         if status == 404 and url != candidate_urls[-1]:
                             logger.warning(
                                 "Azure deployment not found at %s, trying fallback deployment URL.",
@@ -326,6 +384,9 @@ class LLMClient:
                     return {"error": str(e)}
 
         attempted = ", ".join(dict.fromkeys(attempted_urls)) if attempted_urls else "none"
+        groq_fallback = self._call_groq_fallback(prompt)
+        if groq_fallback is not None:
+            return groq_fallback
         self._service_unavailable = True
         self._service_unavailable_reason = f"LLM Service Unavailable (attempted: {attempted})"
         return {

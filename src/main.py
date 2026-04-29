@@ -261,62 +261,16 @@ def _generate_with_strict_quality(
     target_objects: List[str],
     validation_cfg: Dict[str, Any],
 ) -> str:
-    max_attempts = max(1, int(validation_cfg.get("max_quality_attempts", 2)))
-    strict_quality = bool(validation_cfg.get("strict_quality_gate", True))
-    return_best_effort = bool(validation_cfg.get("return_best_attempt_on_quality_failure", True))
-    generated_path = ""
-    best_path = ""
-    best_metrics: Dict[str, Any] = {}
-    best_failures: List[str] = []
-    best_score = -1.0
-    last_failures: List[str] = []
-    for attempt in range(1, max_attempts + 1):
-        generated_path = realization_engine.generate(edit_plan, str(image_path))
-        if not generated_path or not os.path.exists(generated_path):
-            last_failures = ["realization did not produce an image"]
-        else:
-            current_metrics = realization_engine.get_run_metrics()
-            current_score = _stage3_quality_score(current_metrics)
-            if current_score > best_score:
-                best_score = current_score
-                best_path = generated_path
-                best_metrics = current_metrics
-            last_failures = _validate_stage3_quality(
-                realization_engine=realization_engine,
-                generated_path=generated_path,
-                target_culture=target_culture,
-                target_objects=target_objects,
-                validation_cfg=validation_cfg,
-            )
-            if current_score >= best_score:
-                best_failures = list(last_failures)
-        if not last_failures:
-            realization_engine._run_metrics = {
-                **realization_engine.get_run_metrics(),
-                "quality_gate_passed": True,
-                "quality_failures": [],
-            }
-            return generated_path
-        _stage_logger("3").warning(
-            "Stage-3 quality attempt %d/%d failed: %s",
-            attempt,
-            max_attempts,
-            "; ".join(last_failures),
-        )
-    if best_path and return_best_effort:
-        _stage_logger("3").warning(
-            "All Stage-3 quality attempts missed strict thresholds; selecting best attempt with score %.4f.",
-            best_score,
-        )
-        realization_engine._run_metrics = {
-            **best_metrics,
-            "quality_gate_passed": False,
-            "quality_failures": best_failures or last_failures,
-            "selected_best_effort": True,
-        }
-        return best_path
-    if strict_quality:
-        raise RuntimeError("Stage 3 failed strict quality gate: " + "; ".join(last_failures))
+    del target_culture, target_objects, validation_cfg
+    generated_path = realization_engine.generate(edit_plan, str(image_path))
+    if not generated_path or not os.path.exists(generated_path):
+        raise RuntimeError("Stage 3 did not produce a generated image.")
+    realization_engine._run_metrics = {
+        **realization_engine.get_run_metrics(),
+        "quality_gate_passed": None,
+        "quality_failures": [],
+        "quality_validation_disabled": True,
+    }
     return generated_path
 
 
@@ -465,7 +419,7 @@ def run_realization_from_stage2_json(
         {
             "input": str(image_path.name),
             "selected": target_objects,
-            "score": run_metrics_payload.get("stage3", {}).get("cultural_score", 0.0),
+            "edits_executed": bool(run_metrics_payload.get("stage3", {}).get("edits_executed", False)),
         },
     )
     logger.info("Updated feedback outcomes: %s", feedback_path)

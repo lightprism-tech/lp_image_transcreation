@@ -111,6 +111,11 @@ def adapt_plan_to_edit_format(plan_data: dict) -> dict:
                 "constraints": {
                     "visual_attributes": visual_attributes,
                     "scene_adaptation": edit_plan.get("scene_adaptation"),
+                    "polygon": (
+                        (obj.get("segmentation") or {}).get("polygon")
+                        if isinstance(obj.get("segmentation"), dict)
+                        else obj.get("polygon")
+                    ),
                 },
             })
 
@@ -136,6 +141,7 @@ def adapt_plan_to_edit_format(plan_data: dict) -> dict:
                 "constraints": {
                     "visual_attributes": region.get("visual_attributes"),
                     "scene_adaptation": edit_plan.get("scene_adaptation"),
+                    "polygon": region.get("polygon"),
                 },
             })
         return {

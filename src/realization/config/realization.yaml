@@ -44,6 +44,13 @@ prompts:
 
       Do not add new unrelated objects, text, logos, or overlays.
       Keep all non-target content visually consistent with the original image.
+      Perform a localized masked transcreation only; keep all pixels outside the
+      target mask unchanged.
+      Prioritize edge continuity at mask boundaries and preserve neighboring
+      object geometry, shadows, and fine details.
+      If the target is an infographic/icon region, preserve grid alignment,
+      panel spacing, and typography blocks outside the mask.
+      {bbox_instruction}
       Output must remain strictly photorealistic and naturally blended.
 
     negative_template: >
@@ -78,7 +85,9 @@ prompts:
       8) If any input is uncertain, infer minimally from context without hallucination.
       9) Avoid stereotypes or exaggerated cultural elements.
       10) Maintain strict photorealism with natural texture and lighting continuity.
-      11) Output exactly one sentence.
+      11) Treat edit as bbox-localized; avoid instructions that imply full-frame regeneration.
+      12) Keep wording concise and deterministic so repeated retries remain stable.
+      13) Output exactly one sentence.
 
       Return ONLY:
       {{"inpaint_prompt":"..."}}
@@ -99,13 +108,16 @@ prompts:
     person_template: >
       person wearing {new_label} adapted to {target_culture} with realistic fabric,
       texture, and construction details, maintaining original pose, lighting,
-      camera angle, and proportions, seamlessly blended with surroundings
+      camera angle, and proportions, seamlessly blended with surroundings,
+      preserving all non-target regions outside the edit mask
 
     clothing_template: >
       {new_label} rendered with culturally accurate material and stitching,
-      aligned with body geometry, lighting, and perspective, with seamless blending
+      aligned with body geometry, lighting, and perspective, with seamless blending,
+      preserving body silhouette and surrounding pixels outside mask
 
     generic_template: >
       {new_label} rendered using realistic material, texture, and culturally accurate form,
       integrated seamlessly into the scene with matching lighting, shadows,
-      perspective, and scale, with no visible mask boundaries
+      perspective, and scale, with no visible mask boundaries, and no changes
+      outside the masked edit region

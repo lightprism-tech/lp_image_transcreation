@@ -41,7 +41,6 @@ services:
       - OUTPUT_DIR=/app/data/output
       - HF_HOME=/app/cache/huggingface
       - HF_HUB_CACHE=/app/cache/huggingface/hub
-      - TRANSFORMERS_CACHE=/app/cache/huggingface/transformers
       - TORCH_HOME=/app/cache/torch
       - XDG_CACHE_HOME=/app/cache/xdg
       - PADDLE_HOME=/app/cache/paddle
@@ -52,15 +51,16 @@ services:
       - BLIP_MODEL=${BLIP_MODEL:-Salesforce/blip-image-captioning-large}
       - VIT_DETECTOR_MODEL=${VIT_DETECTOR_MODEL:-google/owlv2-large-patch14-ensemble}
       # Explicitly pass LLM / Azure vars used by reasoning and FLUX realization.
-      - LLM_PROVIDER=${LLM_PROVIDER}
+      - LLM_PROVIDER=${LLM_PROVIDER:-}
       - LLM_MODEL=${LLM_MODEL:-gpt-4o}
-      - LLM_API_KEY=${LLM_API_KEY}
-      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
-      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
-      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT}
-      - AZURE_OPENAI_IMAGES_DEPLOYMENT=${AZURE_OPENAI_IMAGES_DEPLOYMENT}
-      - AZURE_FLUX_IMAGE_URL=${AZURE_FLUX_IMAGE_URL}
-      - AZURE_FLUX_MODEL=${AZURE_FLUX_MODEL}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT:-}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY:-}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT:-}
+      - AZURE_OPENAI_IMAGE_DEPLOYMENT=${AZURE_OPENAI_IMAGE_DEPLOYMENT:-}
+      - AZURE_OPENAI_IMAGES_DEPLOYMENT=${AZURE_OPENAI_IMAGES_DEPLOYMENT:-}
+      - AZURE_FLUX_IMAGE_URL=${AZURE_FLUX_IMAGE_URL:-}
+      - AZURE_FLUX_MODEL=${AZURE_FLUX_MODEL:-}
       - PYTHONUNBUFFERED=1
       - PY_COLORS=1
       - FORCE_COLOR=1
