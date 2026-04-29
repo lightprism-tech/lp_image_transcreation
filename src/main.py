@@ -242,6 +242,17 @@ def _edit_plan_has_actions(edit_plan: Any) -> bool:
     )
 
 
+def _stage3_skip_reason(edit_plan: Any) -> str:
+    """Build a human-readable reason for Stage 3 skip."""
+    replace_count = len(getattr(edit_plan, "replace", None) or [])
+    edit_text_count = len(getattr(edit_plan, "edit_text", None) or [])
+    has_adjust_style = bool(getattr(edit_plan, "adjust_style", None))
+    return (
+        "no actionable edits in plan "
+        f"(replace={replace_count}, edit_text={edit_text_count}, adjust_style={has_adjust_style})"
+    )
+
+
 def _generate_with_strict_quality(
     realization_engine: RealizationEngine,
     edit_plan: Any,
@@ -387,7 +398,8 @@ def run_realization_from_stage2_json(
 
         final_image_output.parent.mkdir(parents=True, exist_ok=True)
         copy2(image_path, final_image_output)
-        _stage_log("3", "SKIPPED", "no actionable edits; copied source image")
+        skip_reason = _stage3_skip_reason(edit_plan)
+        _stage_log("3", "SKIPPED", f"{skip_reason}; copied source image")
         run_metrics_path = metrics_output or (stage2_json_path.parent / f"{stage2_json_path.stem}_run_metrics.json")
         run_metrics_payload = _build_run_metrics_payload(
             stage2_trace={},
@@ -395,6 +407,7 @@ def run_realization_from_stage2_json(
                 "quality_gate_passed": False,
                 "quality_failures": ["no_actionable_edits"],
                 "skipped": True,
+                "skip_reason": skip_reason,
             },
             run_context={
                 "stage2_json": str(stage2_json_path),
@@ -613,7 +626,8 @@ def run_full_pipeline(
 
         final_image_output.parent.mkdir(parents=True, exist_ok=True)
         copy2(image_path, final_image_output)
-        _stage_log("3", "SKIPPED", "no actionable edits; copied source image")
+        skip_reason = _stage3_skip_reason(edit_plan)
+        _stage_log("3", "SKIPPED", f"{skip_reason}; copied source image")
         run_metrics_path = metrics_output or (reasoning_output.parent / f"{image_path.stem}_run_metrics.json")
         run_metrics_payload = _build_run_metrics_payload(
             stage2_trace=engine.get_debug_trace() if "engine" in locals() else {},
@@ -621,6 +635,7 @@ def run_full_pipeline(
                 "quality_gate_passed": False,
                 "quality_failures": ["no_actionable_edits"],
                 "skipped": True,
+                "skip_reason": skip_reason,
             },
             run_context={
                 "image_path": str(image_path),
@@ -632,8 +647,8 @@ def run_full_pipeline(
         _save_json(run_metrics_payload, run_metrics_path)
         logger.info("Saved run metrics to: %s", run_metrics_path)
         return {
-            "perception_json": str(perception_output),
-            "reasoning_json": str(reasoning_output),
+            "perception_output": str(perception_output),
+            "reasoning_output": str(reasoning_output),
             "final_image": str(final_image_output),
             "metrics_output": str(run_metrics_path),
         }
@@ -880,10 +895,19 @@ def main() -> None:
         sys.exit(1)
 
     logger.info("Pipeline complete")
-    logger.info("Perception JSON: %s", outputs["perception_output"])
-    logger.info("Reasoning JSON: %s", outputs["reasoning_output"])
-    logger.info("Final image: %s", outputs["final_image_output"])
-    logger.info("Run metrics JSON: %s", outputs["metrics_output"])
+    perception_out = outputs.get("perception_output") or outputs.get("perception_json")
+    reasoning_out = outputs.get("reasoning_output") or outputs.get("reasoning_json")
+    final_image_out = outputs.get("final_image_output") or outputs.get("final_image")
+    metrics_out = outputs.get("metrics_output")
+
+    if perception_out:
+        logger.info("Perception JSON: %s", perception_out)
+    if reasoning_out:
+        logger.info("Reasoning JSON: %s", reasoning_out)
+    if final_image_out:
+        logger.info("Final image: %s", final_image_out)
+    if metrics_out:
+        logger.info("Run metrics JSON: %s", metrics_out)
 
 
 if __name__ == "__main__":
