@@ -1,7 +1,11 @@
 """Pytest for realization engine: one test per method."""
 import logging
+
 import numpy as np
+import pytest
 from PIL import Image
+from unittest.mock import MagicMock, patch
+
 from src.realization.engine import RealizationEngine
 from src.realization.models import (
     EditPlan,
@@ -11,19 +15,27 @@ from src.realization.models import (
 )
 
 
+@pytest.fixture(autouse=True)
+def _mock_inpainter():
+    with patch("src.realization.engine.get_inpainter", return_value=MagicMock()):
+        yield
+
+
 def test_realization_engine_init_default_config():
     engine = RealizationEngine()
-    assert engine.config == {}
+    assert "artifact_gate" in engine.config
+    assert "min_mean_abs_change" in engine.config["artifact_gate"]
 
 
 def test_realization_engine_init_with_config():
     engine = RealizationEngine(config={"key": "value"})
-    assert engine.config == {"key": "value"}
+    assert engine.config["key"] == "value"
+    assert "artifact_gate" in engine.config
 
 
 def test_realization_engine_init_with_none_config():
     engine = RealizationEngine(config=None)
-    assert engine.config == {}
+    assert "artifact_gate" in engine.config
 
 
 def test_realization_engine_generate_returns_mock_path():
@@ -150,6 +162,7 @@ def test_text_edit_skips_local_quality_gate_by_default(tmp_path):
     src_path = tmp_path / "src.png"
     Image.fromarray(np.full((80, 240, 3), 245, dtype=np.uint8)).save(src_path)
     engine = RealizationEngine.__new__(RealizationEngine)
+    engine.config = {}
     engine._text_quality_config = {"enabled": True, "max_bbox_occupancy": 1.0}
     engine._quality_gate_config = {"enabled": True}
     engine._fails_local_quality_gate = lambda *args, **kwargs: True
@@ -203,3 +216,67 @@ def test_local_quality_gate_text_mode_skips_ssim_clip_by_default(tmp_path):
     engine._fails_local_quality_gate(str(src_path), str(out_path), [20, 5, 100, 35], edit_kind="text")
     assert called["ssim"] is False
     assert called["clip"] is False
+
+
+def _engine_with_artifact_gate(artifact_gate: dict) -> RealizationEngine:
+    from src.realization.config_loader import load_realization_config
+
+    engine = RealizationEngine.__new__(RealizationEngine)
+    engine.config = load_realization_config({"artifact_gate": artifact_gate})
+    engine._artifact_gate_config = engine.config["artifact_gate"]
+    return engine
+
+
+def test_artifact_gate_rejects_near_black_fill(tmp_path):
+    src_path = tmp_path / "src.png"
+    out_path = tmp_path / "out.png"
+    Image.fromarray(np.full((40, 40, 3), 120, dtype=np.uint8)).save(src_path)
+    Image.fromarray(np.zeros((40, 40, 3), dtype=np.uint8)).save(out_path)
+    engine = _engine_with_artifact_gate({"enabled": True})
+    assert engine._fails_generation_artifact_gate(str(out_path), [0, 0, 40, 40], source_path=str(src_path))
+
+
+def test_artifact_gate_allows_dark_region_with_meaningful_change(tmp_path):
+    src_path = tmp_path / "src.png"
+    out_path = tmp_path / "out.png"
+    src = np.full((40, 40, 3), 12, dtype=np.uint8)
+    out = src.copy()
+    out[5:35, 5:35, :] = 90
+    Image.fromarray(src).save(src_path)
+    Image.fromarray(out).save(out_path)
+    engine = _engine_with_artifact_gate({"enabled": True, "min_mean_abs_change": 8.0})
+    assert not engine._fails_generation_artifact_gate(
+        str(out_path), [0, 0, 40, 40], source_path=str(src_path)
+    )
+
+
+def test_artifact_gate_rejects_unchanged_dark_region(tmp_path):
+    src_path = tmp_path / "src.png"
+    out_path = tmp_path / "out.png"
+    dark = np.full((40, 40, 3), 10, dtype=np.uint8)
+    Image.fromarray(dark).save(src_path)
+    Image.fromarray(dark.copy()).save(out_path)
+    engine = _engine_with_artifact_gate({"enabled": True})
+    assert engine._fails_generation_artifact_gate(str(out_path), [0, 0, 40, 40], source_path=str(src_path))
+
+
+def test_artifact_gate_allows_small_localized_edit_in_large_dark_bbox(tmp_path):
+    """Large dark bbox with a small bright edit should pass (infographic case)."""
+    src_path = tmp_path / "src.png"
+    out_path = tmp_path / "out.png"
+    src = np.full((200, 300, 3), 10, dtype=np.uint8)
+    out = src.copy()
+    out[85:115, 120:180, :] = 210
+    Image.fromarray(src).save(src_path)
+    Image.fromarray(out).save(out_path)
+    engine = _engine_with_artifact_gate(
+        {
+            "enabled": True,
+            "min_mean_abs_change": 5.0,
+            "min_changed_pixel_ratio": 0.012,
+            "min_p95_channel_change": 10.0,
+        }
+    )
+    assert not engine._fails_generation_artifact_gate(
+        str(out_path), [0, 0, 300, 200], source_path=str(src_path)
+    )

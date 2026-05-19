@@ -8,6 +8,7 @@ import tempfile
 import base64
 import io
 import time
+import re
 from pathlib import Path
 from abc import ABC, abstractmethod
 from typing import Optional, List
@@ -21,6 +22,7 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 # Default size for inpainting (SD models often expect 512)
 INPAINT_SIZE = 512
+DEFAULT_GPT_IMAGE_MIN_PIXELS = 1_048_576
 
 
 def _clamp_bbox(bbox: List[int], width: int, height: int, pad_pct: float = 0.0) -> Optional[List[int]]:
@@ -105,6 +107,7 @@ def _parse_size(size_text: str) -> Optional[tuple[int, int]]:
 def _normalize_gpt_image_size(
     width: int,
     height: int,
+    min_pixels: int = DEFAULT_GPT_IMAGE_MIN_PIXELS,
     max_edge: int = 3840,
     max_pixels: int = 8_294_400,
 ) -> tuple[int, int]:
@@ -130,7 +133,37 @@ def _normalize_gpt_image_size(
     while (new_w * new_h) > max_pixels and new_w > 16 and new_h > 16:
         new_w = max(16, new_w - 16)
         new_h = max(16, new_h - 16)
+    # Azure gpt-image edits enforce a minimum pixel budget; upscale when needed.
+    current_pixels = new_w * new_h
+    if min_pixels > 0 and current_pixels < min_pixels:
+        upscale = (float(min_pixels) / float(current_pixels)) ** 0.5
+        up_w = min(max_edge, max(16, int(round(new_w * upscale))))
+        up_h = min(max_edge, max(16, int(round(new_h * upscale))))
+        up_w = max(16, up_w - (up_w % 16))
+        up_h = max(16, up_h - (up_h % 16))
+        if (up_w * up_h) <= max_pixels:
+            new_w, new_h = up_w, up_h
     return (new_w, new_h)
+
+
+def _extract_retry_after_seconds(response: Optional[requests.Response]) -> Optional[float]:
+    """Read wait duration from Retry-After header or Azure error message."""
+    if response is None:
+        return None
+    retry_after = response.headers.get("retry-after")
+    if retry_after:
+        try:
+            return max(0.0, float(retry_after))
+        except (TypeError, ValueError):
+            pass
+    body = (response.text or "").strip()
+    match = re.search(r"retry after\s+(\d+)\s+seconds", body, flags=re.IGNORECASE)
+    if match:
+        try:
+            return max(0.0, float(match.group(1)))
+        except (TypeError, ValueError):
+            return None
+    return None
 
 
 def _build_inpaint_prompt(original_label: str, new_label: str, target_culture: str = "target") -> str:
@@ -431,6 +464,12 @@ def _get_gpt_image_inpainter(config: dict) -> Optional[Inpainter]:
     composite_bbox_only = bool(config.get("gpt_image_composite_bbox_only", True))
     max_edge = int(config.get("gpt_image_max_edge", os.getenv("GPT_IMAGE_MAX_EDGE", 3840)))
     max_pixels = int(config.get("gpt_image_max_pixels", os.getenv("GPT_IMAGE_MAX_PIXELS", 8294400)))
+    min_pixels = int(
+        config.get(
+            "gpt_image_min_pixels",
+            os.getenv("GPT_IMAGE_MIN_PIXELS", DEFAULT_GPT_IMAGE_MIN_PIXELS),
+        )
+    )
 
     if not endpoint or not api_key:
         logger.warning(
@@ -450,9 +489,19 @@ def _get_gpt_image_inpainter(config: dict) -> Optional[Inpainter]:
                 parsed = _parse_size(configured)
                 if parsed:
                     return _normalize_gpt_image_size(
-                        parsed[0], parsed[1], max_edge=max_edge, max_pixels=max_pixels
+                        parsed[0],
+                        parsed[1],
+                        min_pixels=min_pixels,
+                        max_edge=max_edge,
+                        max_pixels=max_pixels,
                     )
-            return _normalize_gpt_image_size(width, height, max_edge=max_edge, max_pixels=max_pixels)
+            return _normalize_gpt_image_size(
+                width,
+                height,
+                min_pixels=min_pixels,
+                max_edge=max_edge,
+                max_pixels=max_pixels,
+            )
 
         def _build_retry_sizes(self, width: int, height: int) -> List[tuple[int, int]]:
             scales = [1.0, 0.85, 0.72, 0.6, 0.5, 0.42, 0.34]
@@ -461,6 +510,7 @@ def _get_gpt_image_inpainter(config: dict) -> Optional[Inpainter]:
                 candidate = _normalize_gpt_image_size(
                     int(round(width * scale)),
                     int(round(height * scale)),
+                    min_pixels=min_pixels,
                     max_edge=max_edge,
                     max_pixels=max_pixels,
                 )
@@ -522,6 +572,17 @@ def _get_gpt_image_inpainter(config: dict) -> Optional[Inpainter]:
                         files=files,
                         timeout=timeout_s,
                     )
+                    if response.status_code == 429 and attempt < request_retries:
+                        wait_s = _extract_retry_after_seconds(response)
+                        backoff_s = max(retry_delay_s * attempt, wait_s or 0.0)
+                        logger.warning(
+                            "Azure gpt-image edit rate limited (attempt %s/%s), waiting %.1fs before retry.",
+                            attempt,
+                            request_retries,
+                            backoff_s,
+                        )
+                        time.sleep(backoff_s)
+                        continue
                     break
                 except requests.exceptions.RequestException as req_err:
                     if attempt >= request_retries:

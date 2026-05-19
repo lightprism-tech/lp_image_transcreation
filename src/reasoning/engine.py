@@ -10,6 +10,13 @@ from src.reasoning.schemas import (
 from src.reasoning.knowledge_loader import KnowledgeLoader
 from src.reasoning.llm_client import LLMClient
 from src.reasoning.prompt_config import get_prompt, get_prompt_list
+from src.reasoning.policy_config import (
+    get_policy_int,
+    get_policy_set,
+    get_policy,
+    get_policy_dict,
+    get_policy_list,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -140,6 +147,9 @@ def _infer_cultural_type(
         return "CLOTHING"
     if isinstance(clothing, str) and clothing:
         return "CLOTHING"
+    semantic_type = str(obj.get("semantic_type") or "").strip().lower()
+    if semantic_type in {"icon", "symbol", "logo"}:
+        return "SYMBOL"
     return None
 
 
@@ -418,6 +428,369 @@ def _normalize_key(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", " ", _normalize_text(value).lower()).strip()
 
 
+def _tokenize_label(value: Any) -> List[str]:
+    return [t for t in _normalize_key(value).split() if t]
+
+
+def _scope_excluded_types() -> Set[str]:
+    """Node types that are too coarse for bbox-level visual substitution."""
+    return get_policy_set("scope_excluded_types")
+
+
+def _fallback_localized_obj_type() -> str:
+    return str(get_policy("fallback_localized_obj_type")).strip().upper()
+
+
+def _semantic_type_fallback(semantic_type: str) -> Optional[str]:
+    mapping = get_policy("semantic_type_fallbacks")
+    if not isinstance(mapping, dict):
+        return None
+    value = mapping.get((semantic_type or "").strip().lower())
+    if not value:
+        return None
+    return str(value).strip().upper()
+
+
+def _type_inference_stopwords() -> Set[str]:
+    return {str(t).strip().lower() for t in get_policy_list("type_inference_stopwords") if str(t).strip()}
+
+
+def _filter_type_tokens(tokens: Set[str]) -> Set[str]:
+    stopwords = _type_inference_stopwords()
+    return {t for t in tokens if t and t not in stopwords and len(t) > 1}
+
+
+def _infer_type_from_label_cues(obj: Dict[str, Any], source_label: str = "") -> Optional[str]:
+    """Map perception label/caption tokens to a cultural type using policy keyword cues."""
+    cues = get_policy_dict("type_label_cues")
+    if not cues:
+        return None
+    tokens = _filter_type_tokens(set(_tokenize_label(_object_signal_text(obj, source_label))))
+    best_type = None
+    best_len = 0
+    for cue, node_type in cues.items():
+        if cue in tokens and len(cue) > best_len:
+            best_type = node_type
+            best_len = len(cue)
+    return best_type
+
+
+def _build_type_token_index(kg_loader: KnowledgeLoader) -> Dict[str, Set[str]]:
+    """
+    Build a dynamic index of cultural-type -> tokens from KB node labels.
+    Used to infer object types from captions/labels without hardcoded maps.
+    """
+    index: Dict[str, Set[str]] = {}
+    excluded = _scope_excluded_types()
+    raw_labels = kg_loader.get_all_labels()
+    if not isinstance(raw_labels, list):
+        return index
+    for label in raw_labels:
+        if not isinstance(label, str) or not label.strip():
+            continue
+        node = kg_loader.find_node(label)
+        if not node:
+            continue
+        node_type = str(node.type or "").upper()
+        if not node_type or node_type in excluded:
+            continue
+        bucket = index.setdefault(node_type, set())
+        bucket.update(_tokenize_label(label))
+    return index
+
+
+def _object_signal_text(obj: Dict[str, Any], label: str = "") -> str:
+    parts: List[str] = []
+    for field in ("label", "class_name", "original_class_name", "detector_label", "caption"):
+        value = _normalize_text(obj.get(field))
+        if value:
+            parts.append(value)
+    if label:
+        parts.append(label)
+    for item in obj.get("caption_candidates") or []:
+        if isinstance(item, dict):
+            value = _normalize_text(item.get("caption"))
+            if value:
+                parts.append(value)
+    return " ".join(parts)
+
+
+def _infer_cultural_type_from_kb_signals(
+    obj: Dict[str, Any],
+    type_token_index: Dict[str, Set[str]],
+    label_to_type: Optional[Dict[str, str]] = None,
+) -> Optional[str]:
+    """
+    Infer a cultural type by matching object text tokens against KB-derived type vocabularies.
+    """
+    label_to_type = label_to_type or {}
+    label_text = _normalize_text(obj.get("label") or obj.get("class_name"))
+    label_lower = label_text.lower()
+    if label_lower in label_to_type:
+        mapped = str(label_to_type[label_lower] or "").upper()
+        if mapped and mapped not in _scope_excluded_types():
+            return mapped
+    for token in _tokenize_label(label_text):
+        if token in label_to_type:
+            mapped = str(label_to_type[token] or "").upper()
+            if mapped and mapped not in _scope_excluded_types():
+                return mapped
+
+    tokens = _filter_type_tokens(set(_tokenize_label(_object_signal_text(obj))))
+    if not tokens or not type_token_index:
+        return None
+
+    best_type = None
+    best_score = 0
+    for node_type, hint_tokens in type_token_index.items():
+        if not hint_tokens:
+            continue
+        score = len(tokens.intersection(_filter_type_tokens(hint_tokens)))
+        if score > best_score:
+            best_score = score
+            best_type = node_type
+    min_overlap = get_policy_int("type_inference_min_token_overlap")
+    if best_score >= min_overlap and best_type:
+        return best_type
+    return None
+
+
+def _resolve_obj_type_for_localized_edit(
+    obj: Dict[str, Any],
+    source_label: str,
+    kg_loader: KnowledgeLoader,
+    type_token_index: Dict[str, Set[str]],
+) -> Tuple[str, str]:
+    """
+    Resolve object type and source culture from the original perception label/caption.
+    Returns (obj_type, source_culture).
+    """
+    label_to_type = kg_loader.get_label_to_type()
+    cued_type = _infer_type_from_label_cues(obj, source_label)
+    inferred_kb = _infer_cultural_type_from_kb_signals(obj, type_token_index, label_to_type)
+    inferred_from_attrs = _infer_cultural_type(source_label, obj, label_to_type)
+    if inferred_from_attrs and inferred_from_attrs.upper() in _scope_excluded_types():
+        inferred_from_attrs = None
+
+    source_culture = "Unknown"
+    obj_type = "object"
+    source_node = kg_loader.find_node(source_label)
+    if source_node:
+        node_type = str(source_node.type or "").upper()
+        source_culture = kg_loader.get_culture_of_node(source_node.id) or "Unknown"
+        if node_type in _scope_excluded_types():
+            obj_type = cued_type or inferred_kb or inferred_from_attrs or _fallback_localized_obj_type()
+        else:
+            obj_type = node_type
+    elif cued_type:
+        obj_type = cued_type
+    elif inferred_kb:
+        obj_type = inferred_kb
+    elif inferred_from_attrs:
+        obj_type = inferred_from_attrs
+
+    semantic_type = str(obj.get("semantic_type") or "").strip().lower()
+    semantic_fallback = _semantic_type_fallback(semantic_type)
+    if semantic_fallback and obj_type in {"object", ""}:
+        obj_type = semantic_fallback
+    elif semantic_fallback and obj_type == "FOOD" and cued_type and cued_type != "FOOD":
+        obj_type = cued_type
+    elif semantic_fallback and obj_type == "FOOD" and not cued_type:
+        semantic_tokens = _filter_type_tokens(set(_tokenize_label(_object_signal_text(obj, source_label))))
+        food_tokens = _filter_type_tokens(type_token_index.get("FOOD") or set())
+        if len(semantic_tokens.intersection(food_tokens)) < get_policy_int("type_inference_min_token_overlap"):
+            obj_type = semantic_fallback
+    return obj_type, source_culture
+
+
+def _filter_labels_for_grounding(
+    known_labels: List[str],
+    kg_loader: KnowledgeLoader,
+    exclude_types: Optional[Set[str]] = None,
+    allowed_types: Optional[Set[str]] = None,
+) -> List[str]:
+    excluded = exclude_types or _scope_excluded_types()
+    allowed = {str(t).upper() for t in (allowed_types or set()) if str(t).strip()}
+    filtered: List[str] = []
+    for label in known_labels:
+        node = kg_loader.find_node(label)
+        if not node:
+            continue
+        node_type = str(node.type or "").upper()
+        if node_type in excluded:
+            continue
+        if allowed and node_type not in allowed:
+            continue
+        filtered.append(label)
+    return filtered
+
+
+def _embedding_grounding_enabled() -> bool:
+    value = get_policy("use_embedding_label_grounding")
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _prioritize_unused_candidates(
+    candidates: List[str],
+    used_targets: Optional[Set[str]] = None,
+) -> List[str]:
+    """Deprioritize targets already chosen for other objects in the same plan."""
+    if not candidates:
+        return []
+    used_keys = {_normalize_key(t) for t in (used_targets or set()) if _normalize_key(t)}
+    if not used_keys:
+        return list(candidates)
+    fresh = [c for c in candidates if _normalize_key(c) not in used_keys]
+    reused = [c for c in candidates if _normalize_key(c) in used_keys]
+    return fresh + reused
+
+
+def _select_target_with_diversity(
+    candidates: List[str],
+    raw_target: Any,
+    used_targets: Optional[Set[str]] = None,
+) -> Optional[str]:
+    ranked = _prioritize_unused_candidates(candidates, used_targets)
+    used_keys = {_normalize_key(t) for t in (used_targets or set()) if _normalize_key(t)}
+    grounded = _select_grounded_target(raw_target, ranked)
+    if grounded and _normalize_key(grounded) not in used_keys:
+        return grounded
+    for candidate in ranked:
+        if _normalize_key(candidate) not in used_keys:
+            return candidate
+    return ranked[0] if ranked else None
+
+
+def _dedupe_transformations_by_original(transformations: List[Transformation]) -> List[Transformation]:
+    seen: Set[str] = set()
+    deduped: List[Transformation] = []
+    for item in transformations:
+        key = _normalize_key(item.original_object)
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        deduped.append(item)
+    return deduped
+
+
+def _recover_grounded_label(
+    obj: Dict[str, Any],
+    kg_loader: KnowledgeLoader,
+    *,
+    exclude_scope_types: bool = False,
+    allowed_types: Optional[Set[str]] = None,
+) -> Optional[str]:
+    """
+    Recover a KB label hint for noisy detector outputs.
+
+    Returns a label only when token evidence supports it. Embedding fallback is optional,
+    type-filtered, and never used without token overlap to the source object text.
+    """
+    raw_candidates: List[str] = []
+    for field in ("label", "class_name", "original_class_name", "detector_label", "caption"):
+        value = _normalize_text(obj.get(field))
+        if value:
+            raw_candidates.append(value)
+    for item in obj.get("caption_candidates") or []:
+        if isinstance(item, dict):
+            value = _normalize_text(item.get("caption"))
+            if value:
+                raw_candidates.append(value)
+    if not raw_candidates:
+        return None
+
+    known_labels = kg_loader.get_all_labels()
+    if not known_labels:
+        return None
+    excluded_types = _scope_excluded_types() if exclude_scope_types else None
+    searchable_labels = _filter_labels_for_grounding(
+        known_labels,
+        kg_loader,
+        exclude_types=excluded_types,
+        allowed_types=allowed_types,
+    )
+    if not searchable_labels:
+        return None
+    source_tokens = _filter_type_tokens(set(_tokenize_label(" ".join(raw_candidates))))
+    known_map = {_normalize_key(label): label for label in searchable_labels if _normalize_key(label)}
+
+    # Pass 1: exact normalized match
+    for candidate in raw_candidates:
+        key = _normalize_key(candidate)
+        if key in known_map:
+            return known_map[key]
+
+    # Pass 2: token overlap (dynamic matching to KB labels)
+    for candidate in raw_candidates:
+        c_tokens = _filter_type_tokens(set(_tokenize_label(candidate)))
+        if not c_tokens:
+            continue
+        best_label = None
+        best_overlap = 0
+        for known in searchable_labels:
+            k_tokens = _filter_type_tokens(set(_tokenize_label(known)))
+            if not k_tokens:
+                continue
+            overlap = len(c_tokens.intersection(k_tokens))
+            if overlap > best_overlap:
+                best_overlap = overlap
+                best_label = known
+        min_overlap = get_policy_int("grounding_min_label_token_overlap")
+        if best_label and best_overlap >= min_overlap:
+            return best_label
+
+    if not _embedding_grounding_enabled():
+        return None
+
+    # Pass 3: embedding ranking only when token overlap confirms the match
+    ranked = kg_loader.rank_candidates_by_embedding(" ".join(raw_candidates[:4]), searchable_labels)
+    min_emb_overlap = get_policy_int("grounding_min_embedding_token_overlap")
+    for label in ranked[:8]:
+        if not isinstance(label, str) or not label.strip():
+            continue
+        label_tokens = _filter_type_tokens(set(_tokenize_label(label)))
+        if len(source_tokens.intersection(label_tokens)) >= min_emb_overlap:
+            return label
+    return None
+
+
+def _reasoning_strategy() -> str:
+    value = str(get_policy("reasoning_strategy")).strip().lower()
+    if value in {"llm_first", "kg_first"}:
+        return value
+    return "llm_first"
+
+
+def _ground_llm_target_to_kb(
+    raw_target: str,
+    kg_loader: KnowledgeLoader,
+    kb_pool: List[str],
+    rank_query: str = "",
+) -> Optional[str]:
+    """
+    Map a free-form LLM target to a knowledge-base label after LLM-first reasoning.
+    """
+    target = _normalize_text(raw_target)
+    if not target or not kb_pool:
+        return None
+    exact = _select_grounded_target(target, kb_pool)
+    if exact:
+        return exact
+    node = kg_loader.find_node(target)
+    if node and node.label in kb_pool:
+        return node.label
+    query = f"{target} {rank_query}".strip()
+    ranked = kg_loader.rank_candidates_by_embedding(query, kb_pool)
+    if not isinstance(ranked, list) or not ranked:
+        return None
+    matched = _select_grounded_target(target, ranked)
+    if matched:
+        return matched
+    return ranked[0] if ranked else None
+
+
 def _select_grounded_target(raw_target: Any, candidates: List[str]) -> Optional[str]:
     """
     Map LLM target output to one of grounded candidates.
@@ -445,6 +818,7 @@ def _normalize_reasoning_result(
     reasoning_result: Dict[str, Any],
     candidates: List[str],
     original_label: str,
+    used_targets: Optional[Set[str]] = None,
 ) -> Dict[str, Any]:
     """
     Enforce grounded and actionable decisions for downstream realization.
@@ -458,14 +832,15 @@ def _normalize_reasoning_result(
     confidence = max(0.0, min(1.0, confidence))
     rationale = _normalize_text(reasoning_result.get("rationale")) or "No rationale provided."
 
+    ranked_candidates = _prioritize_unused_candidates(candidates, used_targets)
     target_object = _normalize_text(reasoning_result.get("target_object"))
-    grounded_target = _select_grounded_target(target_object, candidates)
+    grounded_target = _select_target_with_diversity(ranked_candidates, target_object, used_targets)
     if action == "transform":
         if grounded_target:
             target_object = grounded_target
-        elif candidates:
+        elif ranked_candidates:
             # Keep realization actionable and KG-grounded.
-            target_object = candidates[0]
+            target_object = ranked_candidates[0]
             rationale = f"{rationale} Grounded to top KB candidate for reliability."
             confidence = max(confidence, 0.55)
         elif not target_object:
@@ -1034,11 +1409,253 @@ class CulturalReasoningEngine:
         self.debug_plan = debug_plan
         self.debug_kg_selection = debug_kg_selection
         self.strict_mode = strict_mode
+        self._type_token_index = _build_type_token_index(self.kg_loader)
         self._debug_trace: Dict[str, Any] = {
             "raw_plan": [],
             "normalized_plan": [],
             "kg_selections": [],
         }
+
+    def _collect_kb_candidate_pool(
+        self,
+        *,
+        target_culture: str,
+        source_obj_label: str,
+        obj_type: str,
+        obj_label: str,
+        grounded_hint: Optional[str],
+        avoid_list: List[str],
+        obj: Dict[str, Any],
+        scene_context: str,
+        used_targets: Set[str],
+    ) -> Tuple[List[str], List[str]]:
+        candidate_labels = self.kg_loader.get_candidates_from_kb(
+            target_culture, source_obj_label, obj_type
+        )
+        if grounded_hint and grounded_hint != source_obj_label:
+            hint_candidates = self.kg_loader.get_candidates_from_kb(
+                target_culture, grounded_hint, obj_type
+            )
+            for label in hint_candidates:
+                if label not in candidate_labels:
+                    candidate_labels.append(label)
+        if not candidate_labels:
+            nodes = self.kg_loader.get_nodes_by_type_and_culture(obj_type, target_culture)
+            candidate_labels = [c.label for c in nodes]
+        preferred = self.kg_loader.get_preferred_substitution(obj_label, target_culture)
+        if preferred and preferred in candidate_labels:
+            candidate_labels = [preferred] + [c for c in candidate_labels if c != preferred]
+        candidate_labels, notes = _filter_candidates_by_avoid(candidate_labels, avoid_list)
+        if candidate_labels:
+            rank_query = f"{_object_signal_text(obj, obj_label)} {obj_type} {scene_context}".strip()
+            ranked = self.kg_loader.rank_candidates_by_embedding(rank_query, candidate_labels)
+            if isinstance(ranked, list) and all(isinstance(x, str) for x in ranked):
+                candidate_labels = ranked
+        candidate_labels = _prioritize_unused_candidates(candidate_labels, used_targets)
+        return candidate_labels, notes
+
+    def _run_kg_first_object_reasoning(
+        self,
+        *,
+        obj: Dict[str, Any],
+        obj_label: str,
+        source_obj_label: str,
+        obj_type: str,
+        source_culture: str,
+        target_culture: str,
+        grounded_hint: Optional[str],
+        avoid_list: List[str],
+        scene_context: str,
+        used_targets: Set[str],
+        has_local_edit_region: bool,
+        context: str,
+        style_priors: Optional[StylePriors],
+        sensitivity_notes: List[str],
+    ) -> Tuple[Optional[Dict[str, Any]], List[str], List[str]]:
+        candidate_labels, notes = self._collect_kb_candidate_pool(
+            target_culture=target_culture,
+            source_obj_label=source_obj_label,
+            obj_type=obj_type,
+            obj_label=obj_label,
+            grounded_hint=grounded_hint,
+            avoid_list=avoid_list,
+            obj=obj,
+            scene_context=scene_context,
+            used_targets=used_targets,
+        )
+        if candidate_labels:
+            logger.info(
+                "KB candidates found: label=%s, type=%s, count=%d, top=%s",
+                obj_label,
+                obj_type,
+                len(candidate_labels),
+                candidate_labels[0],
+            )
+        if not candidate_labels and (STRICT_KB_GROUNDED_TRANSFORMS or not has_local_edit_region):
+            logger.info(
+                "Reasoning preserve: %s (no KB candidates for type=%s, KB-first policy)",
+                obj_label,
+                obj_type,
+            )
+            return None, [], notes
+        if not candidate_labels:
+            logger.info(
+                "No KB candidates for label=%s, type=%s. Requesting LLM candidate generation.",
+                obj_label,
+                obj_type,
+            )
+            candidate_labels = self.llm_client.generate_candidates(
+                obj_label=obj_label,
+                obj_type=obj_type,
+                target_culture=target_culture,
+                context=context,
+                avoid_list=avoid_list,
+            )
+            if not isinstance(candidate_labels, list):
+                candidate_labels = []
+        logger.info(
+            "Candidates after avoid filter: label=%s, count=%d",
+            obj_label,
+            len(candidate_labels),
+        )
+        prompt = self._construct_prompt(
+            obj_label=obj_label,
+            obj_type=obj_type,
+            source_culture=source_culture,
+            target_culture=target_culture,
+            candidates=candidate_labels,
+            context=context,
+            avoid_list=avoid_list,
+            style_priors=style_priors,
+            sensitivity_notes=sensitivity_notes,
+            used_targets=used_targets,
+            reasoning_strategy="kg_first",
+        )
+        reasoning_result = self.llm_client.generate_reasoning(prompt)
+        if self.debug_plan:
+            self._debug_trace["raw_plan"].append({"object": obj_label, "raw_result": reasoning_result})
+        reasoning_result = _normalize_reasoning_result(
+            reasoning_result=reasoning_result,
+            candidates=candidate_labels,
+            original_label=obj_label,
+            used_targets=used_targets,
+        )
+        if self.strict_mode:
+            _enforce_candidate_constrained_target(
+                action=str(reasoning_result.get("action", "")),
+                target=str(reasoning_result.get("target_object", "")),
+                candidate_names=candidate_labels,
+            )
+        if self.debug_plan:
+            self._debug_trace["normalized_plan"].append(
+                {"object": obj_label, "normalized_result": reasoning_result}
+            )
+        return reasoning_result, candidate_labels, notes
+
+    def _run_llm_first_object_reasoning(
+        self,
+        *,
+        obj: Dict[str, Any],
+        obj_label: str,
+        source_obj_label: str,
+        obj_type: str,
+        source_culture: str,
+        target_culture: str,
+        grounded_hint: Optional[str],
+        avoid_list: List[str],
+        scene_context: str,
+        used_targets: Set[str],
+        has_local_edit_region: bool,
+        context: str,
+        style_priors: Optional[StylePriors],
+        sensitivity_notes: List[str],
+    ) -> Tuple[Optional[Dict[str, Any]], List[str], List[str]]:
+        candidate_labels, notes = self._collect_kb_candidate_pool(
+            target_culture=target_culture,
+            source_obj_label=source_obj_label,
+            obj_type=obj_type,
+            obj_label=obj_label,
+            grounded_hint=grounded_hint,
+            avoid_list=avoid_list,
+            obj=obj,
+            scene_context=scene_context,
+            used_targets=used_targets,
+        )
+        if not candidate_labels and (STRICT_KB_GROUNDED_TRANSFORMS or not has_local_edit_region):
+            logger.info(
+                "Reasoning preserve: %s (no KB pool for grounding, LLM-first policy)",
+                obj_label,
+            )
+            return None, [], notes
+        prompt = self._construct_prompt(
+            obj_label=obj_label,
+            obj_type=obj_type,
+            source_culture=source_culture,
+            target_culture=target_culture,
+            candidates=[],
+            context=context,
+            avoid_list=avoid_list,
+            style_priors=style_priors,
+            sensitivity_notes=sensitivity_notes or [],
+            used_targets=used_targets,
+            reasoning_strategy="llm_first",
+        )
+        raw_result = self.llm_client.generate_reasoning(prompt)
+        if self.debug_plan:
+            self._debug_trace["raw_plan"].append({"object": obj_label, "raw_result": raw_result})
+        llm_target = _normalize_text(raw_result.get("target_object"))
+        action_raw = _normalize_key(raw_result.get("action"))
+        if action_raw == "transform" and llm_target:
+            rank_query = f"{_object_signal_text(obj, obj_label)} {obj_type} {scene_context}".strip()
+            grounded = _ground_llm_target_to_kb(
+                llm_target,
+                self.kg_loader,
+                candidate_labels,
+                rank_query=rank_query,
+            )
+            if grounded:
+                logger.info(
+                    "LLM-first KB grounding: label=%s, llm_target=%s, grounded=%s",
+                    obj_label,
+                    llm_target,
+                    grounded,
+                )
+                raw_result["target_object"] = grounded
+            elif candidate_labels:
+                raw_result["target_object"] = candidate_labels[0]
+                note = " KB catalog nearest match applied after LLM suggestion."
+                raw_result["rationale"] = (_normalize_text(raw_result.get("rationale")) or "") + note
+                logger.info(
+                    "LLM-first KB fallback: label=%s, llm_target=%s, catalog=%s",
+                    obj_label,
+                    llm_target,
+                    candidate_labels[0],
+                )
+            else:
+                raw_result["action"] = "preserve"
+                raw_result["target_object"] = obj_label
+                logger.info(
+                    "LLM-first preserve: label=%s (LLM target '%s' not in KB catalog)",
+                    obj_label,
+                    llm_target,
+                )
+        reasoning_result = _normalize_reasoning_result(
+            reasoning_result=raw_result,
+            candidates=candidate_labels,
+            original_label=obj_label,
+            used_targets=used_targets,
+        )
+        if self.strict_mode and candidate_labels:
+            _enforce_candidate_constrained_target(
+                action=str(reasoning_result.get("action", "")),
+                target=str(reasoning_result.get("target_object", "")),
+                candidate_names=candidate_labels,
+            )
+        if self.debug_plan:
+            self._debug_trace["normalized_plan"].append(
+                {"object": obj_label, "normalized_result": reasoning_result}
+            )
+        return reasoning_result, candidate_labels, notes
 
     def analyze_image(self, input_data: ReasoningInput) -> TranscreationPlan:
         logger.info("Starting analysis for target culture: %s", input_data.target_culture)
@@ -1072,13 +1689,45 @@ class CulturalReasoningEngine:
             if a and a not in avoid_list:
                 avoid_list.append(a)
 
+        used_targets: Set[str] = set()
         for obj in scene_objects:
-            obj_label = obj.get("label") or obj.get("class_name")
-            if not obj_label:
+            source_obj_label = obj.get("label") or obj.get("class_name")
+            if not source_obj_label:
                 continue
+            obj_label = source_obj_label
+            source_has_kg_match = self.kg_loader.find_node(source_obj_label) is not None
+            needs_grounding = (not source_has_kg_match) and (
+                "detector_caption_mismatch" in (obj.get("quality_flags") or [])
+                or "uncertain_label" in (obj.get("quality_flags") or [])
+                or str(obj.get("semantic_type") or "").lower() in {"icon", "symbol", "logo"}
+            )
+            has_local_edit_region = isinstance(obj.get("bbox"), list) and len(obj.get("bbox") or []) >= 4
+            obj_type, source_culture = _resolve_obj_type_for_localized_edit(
+                obj=obj,
+                source_label=source_obj_label,
+                kg_loader=self.kg_loader,
+                type_token_index=self._type_token_index,
+            )
+            grounded_hint = None
+            if needs_grounding:
+                allowed_types = {obj_type} if obj_type and obj_type not in {"object", ""} else None
+                grounded_hint = _recover_grounded_label(
+                    obj,
+                    self.kg_loader,
+                    exclude_scope_types=has_local_edit_region,
+                    allowed_types=allowed_types,
+                )
+                if grounded_hint and _normalize_key(grounded_hint) != _normalize_key(source_obj_label):
+                    logger.info(
+                        "Grounding hint for source=%s (type=%s): %s",
+                        source_obj_label,
+                        obj_type,
+                        grounded_hint,
+                    )
             logger.info(
-                "Reasoning object start: label=%s, confidence=%s",
+                "Reasoning object start: label=%s, type=%s, confidence=%s",
                 obj_label,
+                obj_type,
                 obj.get("confidence"),
             )
             if _is_ambiguous_person_in_infographic(infographic_mode, obj_label, obj, scene_context):
@@ -1089,26 +1738,6 @@ class CulturalReasoningEngine:
                 logger.info("Reasoning preserve: %s (ambiguous infographic person policy)", obj_label)
                 continue
 
-            # (1) Identify type and source culture: from graph node or infer from KB label_to_type / attributes
-            kg_node = self.kg_loader.find_node(obj_label)
-            source_culture = "Unknown"
-            obj_type = "object"
-            label_to_type = self.kg_loader.get_label_to_type()
-            if kg_node:
-                obj_type = kg_node.type
-                source_culture = self.kg_loader.get_culture_of_node(kg_node.id) or "Unknown"
-                logger.info(
-                    "KB node matched: label=%s, type=%s, source_culture=%s",
-                    obj_label,
-                    obj_type,
-                    source_culture,
-                )
-            else:
-                inferred = _infer_cultural_type(obj_label, obj, label_to_type)
-                if inferred:
-                    obj_type = inferred
-                    logger.info("Type inferred from mapping/heuristics: label=%s -> type=%s", obj_label, obj_type)
-
             if _should_preserve_non_text_in_infographic(infographic_mode, obj_type, obj):
                 preservations.append(Preservation(
                     original_object=obj_label,
@@ -1117,131 +1746,58 @@ class CulturalReasoningEngine:
                 logger.info("Reasoning preserve: %s (infographic COCO-style policy)", obj_label)
                 continue
 
-            # Do not hard-gate by cultural type. We still require grounded KB candidates
-            # (or strict fallback logic) before creating a transform.
-
-            # (2) Retrieve candidate substitutes from KB first (or from graph by type + culture)
-            candidate_labels = self.kg_loader.get_candidates_from_kb(target_culture, obj_label, obj_type)
-            if candidate_labels:
-                logger.info(
-                    "KB candidates found: label=%s, type=%s, count=%d, top=%s",
-                    obj_label,
-                    obj_type,
-                    len(candidate_labels),
-                    candidate_labels[0],
-                )
-            if not candidate_labels:
-                candidates = self.kg_loader.get_nodes_by_type_and_culture(obj_type, target_culture)
-                candidate_labels = [c.label for c in candidates]
-                if candidate_labels:
-                    logger.info(
-                        "Type+culture candidates found: label=%s, type=%s, count=%d, top=%s",
-                        obj_label,
-                        obj_type,
-                        len(candidate_labels),
-                        candidate_labels[0],
-                    )
-            has_local_edit_region = isinstance(obj.get("bbox"), list) and len(obj.get("bbox") or []) >= 4
-            # Do not synthesize object replacements when there is no localized region
-            # for Stage 3 to edit safely.
-            if not candidate_labels and (STRICT_KB_GROUNDED_TRANSFORMS or not has_local_edit_region):
-                preservations.append(Preservation(
-                    original_object=obj_label,
-                    rationale="No grounded KB candidates; preserved by KB-first policy.",
-                ))
-                logger.info(
-                    "Reasoning preserve: %s (no KB candidates for type=%s, strict KB-first policy)",
-                    obj_label,
-                    obj_type,
-                )
-                continue
-            # Optional legacy fallback path if strict policy is disabled.
-            if not candidate_labels:
-                logger.info(
-                    "No KB candidates for label=%s, type=%s. Requesting LLM candidate generation.",
-                    obj_label,
-                    obj_type,
-                )
-                candidate_labels = self.llm_client.generate_candidates(
-                    obj_label=obj_label,
-                    obj_type=obj_type,
-                    target_culture=target_culture,
-                    context=input_data.scene_graph.get("scene", {}).get("description", ""),
-                    avoid_list=avoid_list,
-                )
-                if not isinstance(candidate_labels, list):
-                    candidate_labels = []
-                logger.info(
-                    "LLM candidates received: label=%s, count=%d, sample=%s",
-                    obj_label,
-                    len(candidate_labels),
-                    candidate_labels[:3],
-                )
-            # Prefer substitute from KB when defined (e.g. bicycle + India -> Cricket)
-            preferred = self.kg_loader.get_preferred_substitution(obj_label, target_culture)
-            if preferred and preferred in candidate_labels:
-                candidate_labels = [preferred] + [c for c in candidate_labels if c != preferred]
-                logger.info("Preferred substitution applied: label=%s -> %s", obj_label, preferred)
-
-            # (3) Filter candidates using avoid lists and context compatibility
-            candidate_labels, notes = _filter_candidates_by_avoid(candidate_labels, avoid_list)
-            if candidate_labels:
-                rank_query = f"{obj_label} {obj_type} {scene_context}".strip()
-                ranked = self.kg_loader.rank_candidates_by_embedding(rank_query, candidate_labels)
-                if isinstance(ranked, list) and all(isinstance(x, str) for x in ranked):
-                    candidate_labels = ranked
-            avoidance_adherence.extend(notes)
-            logger.info(
-                "Candidates after avoid filter: label=%s, count=%d",
-                obj_label,
-                len(candidate_labels),
-            )
-
             context = input_data.scene_graph.get("scene", {}).get("description", "")
             style_priors = self.kg_loader.get_style_priors(target_culture)
-            sensitivity_notes = self.kg_loader.get_sensitivity_notes(target_culture)
+            sensitivity_notes = self.kg_loader.get_sensitivity_notes(target_culture) or []
+            strategy = _reasoning_strategy()
+            logger.info("Reasoning strategy: %s for label=%s", strategy, obj_label)
 
-            prompt = self._construct_prompt(
-                obj_label=obj_label,
-                obj_type=obj_type,
-                source_culture=source_culture,
-                target_culture=target_culture,
-                candidates=candidate_labels,
-                context=context,
-                avoid_list=avoid_list,
-                style_priors=style_priors,
-                sensitivity_notes=sensitivity_notes or [],
-            )
+            if strategy == "llm_first":
+                reasoning_result, candidate_labels, avoid_notes = self._run_llm_first_object_reasoning(
+                    obj=obj,
+                    obj_label=obj_label,
+                    source_obj_label=source_obj_label,
+                    obj_type=obj_type,
+                    source_culture=source_culture,
+                    target_culture=target_culture,
+                    grounded_hint=grounded_hint,
+                    avoid_list=avoid_list,
+                    scene_context=scene_context,
+                    used_targets=used_targets,
+                    has_local_edit_region=has_local_edit_region,
+                    context=context,
+                    style_priors=style_priors,
+                    sensitivity_notes=sensitivity_notes,
+                )
+            else:
+                reasoning_result, candidate_labels, avoid_notes = self._run_kg_first_object_reasoning(
+                    obj=obj,
+                    obj_label=obj_label,
+                    source_obj_label=source_obj_label,
+                    obj_type=obj_type,
+                    source_culture=source_culture,
+                    target_culture=target_culture,
+                    grounded_hint=grounded_hint,
+                    avoid_list=avoid_list,
+                    scene_context=scene_context,
+                    used_targets=used_targets,
+                    has_local_edit_region=has_local_edit_region,
+                    context=context,
+                    style_priors=style_priors,
+                    sensitivity_notes=sensitivity_notes,
+                )
 
-            # (4) LLM decides transform vs preserve
-            reasoning_result = self.llm_client.generate_reasoning(prompt)
-            if self.debug_plan:
-                self._debug_trace["raw_plan"].append(
-                    {
-                        "object": obj_label,
-                        "raw_result": reasoning_result,
-                    }
-                )
-            reasoning_result = _normalize_reasoning_result(
-                reasoning_result=reasoning_result,
-                candidates=candidate_labels,
-                original_label=obj_label,
-            )
-            if self.strict_mode:
-                _enforce_candidate_constrained_target(
-                    action=str(reasoning_result.get("action", "")),
-                    target=str(reasoning_result.get("target_object", "")),
-                    candidate_names=candidate_labels,
-                )
-            if self.debug_plan:
-                self._debug_trace["normalized_plan"].append(
-                    {
-                        "object": obj_label,
-                        "normalized_result": reasoning_result,
-                    }
-                )
+            if reasoning_result is None:
+                preservations.append(Preservation(
+                    original_object=source_obj_label,
+                    rationale="No grounded KB catalog entries; preserved by reasoning policy.",
+                ))
+                continue
+            avoidance_adherence.extend(avoid_notes)
+
             logger.info(
-                "LLM reasoning result: label=%s, action=%s, target=%s, confidence=%s",
+                "LLM reasoning result (%s): label=%s, action=%s, target=%s, confidence=%s",
+                strategy,
                 obj_label,
                 reasoning_result.get("action"),
                 reasoning_result.get("target_object"),
@@ -1265,13 +1821,14 @@ class CulturalReasoningEngine:
                         "context": f"placed in {target_culture} local context",
                     }
                 transformations.append(Transformation(
-                    original_object=obj_label,
+                    original_object=source_obj_label,
                     original_type=obj_type,
                     target_object=selected_target,
                     rationale=reasoning_result.get("rationale", "No rationale provided."),
                     confidence=float(reasoning_result.get("confidence", 0.0)),
                     visual_attributes=visual_attributes,
                 ))
+                used_targets.add(selected_target)
                 logger.info(
                     "Reasoning transform: %s (%s) -> %s",
                     obj_label,
@@ -1292,7 +1849,11 @@ class CulturalReasoningEngine:
             elif candidate_labels and (infographic_mode or self.strict_mode):
                 # Deterministic fallback: if grounded candidates exist but model preserves,
                 # select top grounded candidate so downstream realization has actionable edits.
-                fallback_target = candidate_labels[0]
+                fallback_target = _select_target_with_diversity(
+                    candidate_labels,
+                    candidate_labels[0],
+                    used_targets,
+                ) or candidate_labels[0]
                 fallback_visual_attributes = self.kg_loader.get_visual_attributes(
                     label=fallback_target,
                     obj_type=obj_type,
@@ -1306,13 +1867,14 @@ class CulturalReasoningEngine:
                         "context": f"placed in {target_culture} local context",
                     }
                 transformations.append(Transformation(
-                    original_object=obj_label,
+                    original_object=source_obj_label,
                     original_type=obj_type,
                     target_object=fallback_target,
                     rationale="Grounded fallback: candidates available in KB; selected top candidate.",
                     confidence=0.55,
                     visual_attributes=fallback_visual_attributes,
                 ))
+                used_targets.add(fallback_target)
                 logger.info(
                     "Applied grounded fallback transform for '%s' -> '%s' (type=%s)",
                     obj_label,
@@ -1333,7 +1895,7 @@ class CulturalReasoningEngine:
                 if isinstance(rationale, str) and "LLM Service Unavailable" in rationale:
                     rationale = "No grounded candidates in KB for this object; preserved."
                 preservations.append(Preservation(
-                    original_object=obj_label,
+                    original_object=source_obj_label,
                     rationale=rationale,
                 ))
                 logger.info("Reasoning preserve: %s (rationale=%s)", obj_label, rationale)
@@ -1344,6 +1906,7 @@ class CulturalReasoningEngine:
             len(preservations),
             len(avoidance_adherence),
         )
+        transformations = _dedupe_transformations_by_original(transformations)
         transformations = _enforce_multi_object_coordination(transformations, scene_adaptation)
         dynamic_min_density = MIN_CULTURAL_DENSITY if len(scene_objects) > 1 else 1
         density = len(transformations)
@@ -1600,6 +2163,8 @@ class CulturalReasoningEngine:
         avoid_list: List[str],
         style_priors: Optional[StylePriors] = None,
         sensitivity_notes: Optional[List[str]] = None,
+        used_targets: Optional[Set[str]] = None,
+        reasoning_strategy: Optional[str] = None,
     ) -> str:
         sensitivity_notes = sensitivity_notes or []
         style_block = ""
@@ -1611,12 +2176,44 @@ class CulturalReasoningEngine:
         sensitivity_block = ""
         if sensitivity_notes:
             sensitivity_block = "Sensitivity notes (follow these): " + "; ".join(sensitivity_notes) + "\n"
+        diversity_block = ""
+        if used_targets:
+            diversity_block = (
+                "Already used targets in this image plan (prefer a different candidate when possible): "
+                + ", ".join(sorted(used_targets))
+                + ".\n"
+            )
+
+        strategy = (reasoning_strategy or _reasoning_strategy()).strip().lower()
+        if strategy == "llm_first":
+            template = get_prompt(
+                "object_reasoning_llm_first.template",
+                (
+                    "You are a cultural adaptation expert for {target_culture}. "
+                    "Object: '{obj_label}' (type: {obj_type}). Scene: {context}\n"
+                    "{style_block}{sensitivity_block}{diversity_block}"
+                    "Avoid: {avoid_list}\n"
+                    'Return JSON: {{"action":"transform|preserve","target_object":"...","rationale":"...","confidence":0.0-1.0}}'
+                ),
+            )
+            return template.format(
+                target_culture=target_culture,
+                obj_label=obj_label,
+                obj_type=obj_type,
+                source_culture=source_culture,
+                context=context,
+                style_block=style_block,
+                sensitivity_block=sensitivity_block,
+                diversity_block=diversity_block,
+                avoid_list=avoid_list,
+            )
 
         if candidates:
             candidate_instruction = (
                 "Grounded candidates for substitution (you MUST choose one of these if you transform): %s. "
-                "When candidates are provided, prefer action 'transform' and set target_object to one of them."
-                % candidates
+                "When candidates are provided, prefer action 'transform' and set target_object to one of them. "
+                "Prefer candidates that match the object type (%s) and are not already used for other regions."
+                % (candidates, obj_type)
             )
         else:
             candidate_instruction = "No grounded candidates in the knowledge base for this type. Use action 'preserve' unless you have a strong reason to suggest a different substitute."
@@ -1627,7 +2224,7 @@ class CulturalReasoningEngine:
                 "You are a cultural adaptation expert. For an image adapted to {target_culture}, decide for the object '{obj_label}' (type: {obj_type}).\n"
                 "Source culture: {source_culture}\n\n"
                 "Scene: {context}\n"
-                "{style_block}{sensitivity_block}{candidate_instruction}\n"
+                "{style_block}{sensitivity_block}{diversity_block}{candidate_instruction}\n"
                 "Avoid (do not use): {avoid_list}\n"
                 "Decision policy:\n"
                 "- Prefer substitutes that are commonly recognized in {target_culture} for this scene context.\n"
@@ -1652,6 +2249,7 @@ class CulturalReasoningEngine:
             context=context,
             style_block=style_block,
             sensitivity_block=sensitivity_block,
+            diversity_block=diversity_block,
             candidate_instruction=candidate_instruction,
             avoid_list=avoid_list,
         )

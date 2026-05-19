@@ -18,6 +18,8 @@ def _engine(tmp_path):
         engine.kg_loader.get_style_priors.return_value = None
         engine.kg_loader.get_sensitivity_notes.return_value = []
         engine.kg_loader.get_preferred_substitution.return_value = None
+        engine.kg_loader.get_all_labels.return_value = []
+        engine.kg_loader.rank_candidates_by_embedding.side_effect = lambda _q, cands: list(cands)
         engine.llm_client.generate_candidates.return_value = []
         engine.llm_client.generate_reasoning.return_value = {"action": "preserve", "rationale": "test"}
         return engine

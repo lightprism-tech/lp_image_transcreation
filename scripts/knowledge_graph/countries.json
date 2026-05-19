@@ -183,7 +183,35 @@
                 "Digital Payments",
                 "Pharmaceuticals"
             ]
-        }
+        },
+        "cultures": [
+            {
+                "id": "TN",
+                "label": "Tamil Nadu",
+                "attributes": {
+                    "food": ["Chettinad cuisine", "Filter coffee"],
+                    "dance": ["Bharatanatyam"]
+                },
+                "cultures": [
+                    {
+                        "id": "TN_RURAL",
+                        "label": "Tamil Nadu rural",
+                        "attributes": {
+                            "festival": ["Pongal"],
+                            "living_style": ["Agricultural village life"]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "PB",
+                "label": "Punjab",
+                "attributes": {
+                    "food": ["Amritsari kulcha"],
+                    "dance": ["Bhangra"]
+                }
+            }
+        ]
     },
     {
         "id": "USA",

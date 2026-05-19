@@ -163,6 +163,15 @@ def load_settings(config_path: Path | None = None) -> "Settings":
     DETR_CONFIDENCE_THRESHOLD = _env_float("DETR_THRESHOLD", detr_cfg.get("conf_threshold", 0.5))
     ENABLE_VIT_DETECTOR = _env_bool("ENABLE_VIT_DETECTOR", vit_cfg.get("enabled", False))
     VIT_CONFIDENCE_THRESHOLD = _env_float("VIT_THRESHOLD", vit_cfg.get("conf_threshold", 0.3))
+    VIT_CONTEXTUAL_FALLBACK_ENABLED = _env_bool(
+        "VIT_CONTEXTUAL_FALLBACK_ENABLED",
+        vit_cfg.get("contextual_fallback_enabled", True),
+    )
+    VIT_CONTEXTUAL_FALLBACK_IMAGE_TYPES: List[str] = [
+        str(v).strip().lower()
+        for v in vit_cfg.get("contextual_fallback_image_types", [])
+        if str(v).strip()
+    ]
     VIT_DETECTOR_LABELS: List[str] = [
         str(v).strip()
         for v in vit_cfg.get("labels", [])
@@ -241,6 +250,8 @@ def load_settings(config_path: Path | None = None) -> "Settings":
         DETR_CONFIDENCE_THRESHOLD=DETR_CONFIDENCE_THRESHOLD,
         ENABLE_VIT_DETECTOR=ENABLE_VIT_DETECTOR,
         VIT_CONFIDENCE_THRESHOLD=VIT_CONFIDENCE_THRESHOLD,
+        VIT_CONTEXTUAL_FALLBACK_ENABLED=VIT_CONTEXTUAL_FALLBACK_ENABLED,
+        VIT_CONTEXTUAL_FALLBACK_IMAGE_TYPES=VIT_CONTEXTUAL_FALLBACK_IMAGE_TYPES,
         VIT_DETECTOR_LABELS=VIT_DETECTOR_LABELS,
         TEXT_DETECT_RETRY_UPSCALE_FACTOR=TEXT_DETECT_RETRY_UPSCALE_FACTOR,
         TEXT_DETECT_MAX_RETRIES=TEXT_DETECT_MAX_RETRIES,

@@ -1,0 +1,22 @@
+# Baseline realization settings (merged under data/config/realization_config.json).
+artifact_gate:
+  enabled: true
+  solid_dark_luma: 18.0
+  solid_bright_luma: 245.0
+  solid_max_std: 12.0
+  absolute_black_luma: 8.0
+  absolute_white_luma: 248.0
+  compare_to_source: true
+  min_mean_abs_change: 5.0
+  min_changed_pixel_ratio: 0.012
+  min_p95_channel_change: 10.0
+  min_luma_std_delta: 1.5
+  changed_pixel_threshold: 12.0
+
+inpaint_mask_pad_pct: 0.05
+max_inpaint_prompt_passes: 2
+
+edit_region_policy:
+  allow_full_frame_replace: false
+  skip_scene_region_replace: true
+  max_replace_area_ratio: 0.45

@@ -6,6 +6,14 @@ from src.reasoning.engine import (
     _normalize_reasoning_result,
     _extract_food_terms_from_text,
     _build_scene_override_region,
+    _recover_grounded_label,
+    _prioritize_unused_candidates,
+    _infer_cultural_type_from_kb_signals,
+    _infer_type_from_label_cues,
+    _resolve_obj_type_for_localized_edit,
+    _dedupe_transformations_by_original,
+    _ground_llm_target_to_kb,
+    _reasoning_strategy,
 )
 from src.reasoning.schemas import (
     ReasoningInput,
@@ -41,6 +49,8 @@ def engine_with_mocks(mock_loader, mock_llm, tmp_path):
         mock_loader.get_style_priors.return_value = None
         mock_loader.get_sensitivity_notes.return_value = []
         mock_loader.get_kb_entry.return_value = None
+        mock_loader.get_all_labels.return_value = []
+        mock_loader.rank_candidates_by_embedding.side_effect = lambda _q, cands: list(cands)
         mock_llm.generate_candidates.return_value = []
         return engine
 
@@ -136,6 +146,7 @@ def test_construct_prompt_contains_object_and_culture(engine_with_mocks):
         candidates=["Sushi", "Ramen"],
         context="A meal scene",
         avoid_list=["pork"],
+        reasoning_strategy="kg_first",
     )
     assert "Burger" in prompt
     assert "FOOD" in prompt
@@ -159,7 +170,7 @@ def test_analyze_image_uses_llm_candidates_when_kb_missing(engine_with_mocks, mo
     plan = engine_with_mocks.analyze_image(inp)
     assert len(plan.transformations) == 0
     assert len(plan.preservations) == 1
-    assert "No grounded KB candidates" in plan.preservations[0].rationale
+    assert "preserved" in plan.preservations[0].rationale.lower()
     assert mock_llm.generate_candidates.call_count == 0
 
 
@@ -333,3 +344,188 @@ def test_scene_override_region_infers_canvas_from_text_and_object_boxes():
 
     assert region["bbox"] == [0, 0, 4421, 5271]
     assert region["new"] == "India Fort cultural infographic with Fort details, India local context"
+
+
+def test_prioritize_unused_candidates_moves_used_targets_to_end():
+    candidates = ["Taj Mahal", "Biryani", "Red Fort"]
+    ranked = _prioritize_unused_candidates(candidates, {"Taj Mahal"})
+    assert ranked[0] in {"Biryani", "Red Fort"}
+    assert ranked[-1] == "Taj Mahal"
+
+
+def test_normalize_reasoning_result_prefers_unused_candidate():
+    result = _normalize_reasoning_result(
+        reasoning_result={
+            "action": "transform",
+            "target_object": "Taj Mahal",
+            "confidence": 0.9,
+            "rationale": "iconic",
+        },
+        candidates=["Taj Mahal", "Biryani", "Samosa"],
+        original_label="plate_sushi",
+        used_targets={"Taj Mahal"},
+    )
+    assert result["action"] == "transform"
+    assert result["target_object"] == "Biryani"
+
+
+def test_reasoning_strategy_defaults_to_llm_first():
+    assert _reasoning_strategy() == "llm_first"
+
+
+def test_ground_llm_target_to_kb_maps_fuzzy_llm_name():
+    loader = MagicMock()
+    loader.find_node.return_value = None
+    loader.rank_candidates_by_embedding.return_value = ["Taj Mahal", "Red Fort"]
+    grounded = _ground_llm_target_to_kb(
+        "taj mahal monument",
+        loader,
+        ["Taj Mahal", "Red Fort", "Chapati"],
+    )
+    assert grounded == "Taj Mahal"
+
+
+def test_infer_type_from_label_cues_maps_building_to_landmark():
+    obj = {
+        "label": "illustration_japanese_building",
+        "caption": "illustration of a japanese building with a tree",
+        "semantic_type": "symbol",
+    }
+    assert _infer_type_from_label_cues(obj, "illustration_japanese_building") == "LANDMARK"
+
+
+def test_infer_cultural_type_from_kb_signals_ignores_stopword_food_matches():
+    obj = {
+        "label": "illustration_japanese_building",
+        "caption": "illustration of a japanese building with a tree and a tree in front of it",
+        "semantic_type": "symbol",
+    }
+    type_index = {
+        "FOOD": {"a", "and", "in", "on", "burger"},
+        "LANDMARK": {"building", "taj", "mahal"},
+    }
+    inferred = _infer_cultural_type_from_kb_signals(obj, type_index)
+    assert inferred == "LANDMARK"
+
+
+def test_infer_cultural_type_from_kb_signals_uses_dynamic_type_tokens():
+    obj = {
+        "label": "plate_sushi",
+        "caption": "there is a plate of sushi with a bowl of sauce on it",
+        "semantic_type": "icon",
+    }
+    type_index = {
+        "FOOD": {"sushi", "biryani", "samosa", "plate"},
+        "LANDMARK": {"taj", "mahal", "fort"},
+    }
+    inferred = _infer_cultural_type_from_kb_signals(obj, type_index)
+    assert inferred == "FOOD"
+
+
+def test_recover_grounded_label_rejects_embedding_without_token_overlap(monkeypatch):
+    monkeypatch.setattr(
+        "src.reasoning.engine.get_policy_int",
+        lambda key, default=0: 2 if key == "grounding_min_embedding_token_overlap" else 1,
+    )
+    class _Node:
+        def __init__(self, label, node_type):
+            self.label = label
+            self.type = node_type
+            self.id = label
+
+    loader = MagicMock()
+    loader.get_all_labels.return_value = ["Chapati", "Ninja", "Samurai"]
+    loader.find_node.side_effect = lambda label: {
+        "chapati": _Node("Chapati", "FOOD"),
+        "ninja": _Node("Ninja", "SYMBOL"),
+        "samurai": _Node("Samurai", "SYMBOL"),
+    }.get(label.lower())
+    loader.rank_candidates_by_embedding.return_value = ["Chapati", "Ninja"]
+
+    obj = {
+        "label": "red_fan",
+        "caption": "a decorative red folding fan on white background",
+        "semantic_type": "icon",
+        "bbox": [10, 10, 100, 100],
+    }
+    grounded = _recover_grounded_label(
+        obj,
+        loader,
+        exclude_scope_types=True,
+        allowed_types={"FOOD"},
+    )
+    assert grounded is None
+
+
+def test_recover_grounded_label_excludes_country_nodes_for_localized_icons():
+    class _Node:
+        def __init__(self, label, node_type):
+            self.label = label
+            self.type = node_type
+            self.id = label
+
+    loader = MagicMock()
+    loader.get_all_labels.return_value = ["Japan", "Sushi", "Taj Mahal"]
+    loader.find_node.side_effect = lambda label: {
+        "japan": _Node("Japan", "COUNTRY"),
+        "sushi": _Node("Sushi", "FOOD"),
+        "taj mahal": _Node("Taj Mahal", "LANDMARK"),
+    }.get(label.lower())
+    loader.rank_candidates_by_embedding.return_value = ["Sushi"]
+
+    obj = {
+        "label": "plate_sushi",
+        "caption": "plate of sushi on a table",
+        "bbox": [10, 10, 100, 100],
+    }
+    grounded = _recover_grounded_label(obj, loader, exclude_scope_types=True)
+    assert grounded == "Sushi"
+
+
+def test_resolve_obj_type_avoids_country_node_type_for_bbox_icons():
+    class _Node:
+        def __init__(self, label, node_type):
+            self.label = label
+            self.type = node_type
+            self.id = label
+
+    loader = MagicMock()
+    loader.find_node.return_value = _Node("Japan", "COUNTRY")
+    loader.get_culture_of_node.return_value = "Japan"
+    loader.get_label_to_type.return_value = {}
+
+    obj = {
+        "label": "Japan",
+        "caption": "plate of sushi with sauce",
+        "semantic_type": "icon",
+        "bbox": [1, 2, 3, 4],
+    }
+    obj_type, _ = _resolve_obj_type_for_localized_edit(
+        obj=obj,
+        source_label="Japan",
+        kg_loader=loader,
+        type_token_index={"FOOD": {"sushi", "sauce", "plate"}, "LANDMARK": {"fort"}},
+    )
+    assert obj_type == "FOOD"
+
+
+def test_dedupe_transformations_by_original():
+    items = [
+        Transformation(
+            original_object="red_origami_bird",
+            original_type="SYMBOL",
+            target_object="Peacock",
+            rationale="a",
+            confidence=0.8,
+        ),
+        Transformation(
+            original_object="red_origami_bird",
+            original_type="SYMBOL",
+            target_object="Taj Mahal",
+            rationale="b",
+            confidence=0.8,
+        ),
+    ]
+    deduped = _dedupe_transformations_by_original(items)
+    assert len(deduped) == 1
+    assert deduped[0].target_object == "Peacock"

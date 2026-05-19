@@ -53,13 +53,28 @@ class ObjectDetector:
         self.enable_detr = bool(getattr(settings, "ENABLE_DETR", False))
         self.detr_model_name = str(getattr(settings, "DETR_MODEL_NAME", "facebook/detr-resnet-50"))
         self.detr_threshold = float(getattr(settings, "DETR_CONFIDENCE_THRESHOLD", self.threshold))
+        self._context = context or {}
         self.enable_vit = bool(getattr(settings, "ENABLE_VIT_DETECTOR", False))
+        self.vit_contextual_fallback_enabled = bool(
+            getattr(settings, "VIT_CONTEXTUAL_FALLBACK_ENABLED", True)
+        )
+        self.vit_contextual_fallback_image_types = {
+            str(item).strip().lower()
+            for item in getattr(settings, "VIT_CONTEXTUAL_FALLBACK_IMAGE_TYPES", [])
+            if str(item).strip()
+        }
         self.vit_model_name = str(
             getattr(settings, "VIT_DETECTOR_MODEL_NAME", "google/owlv2-large-patch14-ensemble")
         )
         self.vit_threshold = float(getattr(settings, "VIT_CONFIDENCE_THRESHOLD", 0.3))
         self.open_vocab_cfg = getattr(settings, "OPEN_VOCABULARY_DETECTOR", {})
-        self.vit_labels = self._build_open_vocabulary_prompts(context or {})
+        self.vit_labels = self._build_open_vocabulary_prompts(self._context)
+        if (not self.enable_vit) and self._should_enable_contextual_vit():
+            self.enable_vit = True
+            logger.info(
+                "ViT detector auto-enabled via contextual fallback for image_type=%s",
+                str((self._context.get("image_type") or {}).get("type", "unknown")),
+            )
         self.hybrid_mode = str(getattr(settings, "DETECTOR_HYBRID_MODE", "yolo_only")).lower()
         self.model = None
         self.detr_model = None
@@ -356,6 +371,22 @@ class ObjectDetector:
                     prompts.append(prompt)
                     seen_prompts.add(prompt.lower())
         return prompts
+
+    def _should_enable_contextual_vit(self) -> bool:
+        """Enable open-vocabulary ViT for context-heavy images when explicitly configured."""
+        if not self.vit_contextual_fallback_enabled:
+            return False
+        if not self.vit_labels:
+            return False
+        image_type = str((self._context.get("image_type") or {}).get("type", "")).strip().lower()
+        # If no allow-list is configured, fallback applies to all image types.
+        if not self.vit_contextual_fallback_image_types:
+            return True
+        if not image_type:
+            return False
+        if self.vit_contextual_fallback_image_types and image_type not in self.vit_contextual_fallback_image_types:
+            return False
+        return True
 
     def _extract_context_terms(self, context: dict) -> list:
         cfg = self.open_vocab_cfg

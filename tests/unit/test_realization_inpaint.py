@@ -76,12 +76,12 @@ def test_get_inpainter_uses_gpt_image_edits_with_plan_bbox(tmp_path, monkeypatch
     assert result_path
     assert "/images/edits?api-version=2025-04-01-preview" in captured["url"]
     assert captured["data"]["quality"] == "medium"
-    assert captured["data"]["size"] == "64x64"
+    assert captured["data"]["size"] == "1024x1024"
     mask_tuple = captured["files"]["mask"]
     mask = Image.open(io.BytesIO(mask_tuple[1])).convert("RGBA")
     mask_arr = np.array(mask)
-    assert mask_arr[20, 20, 3] == 0
-    assert mask_arr[5, 5, 3] == 255
+    assert mask_arr[250, 250, 3] == 0
+    assert mask_arr[50, 50, 3] == 255
 
 
 def test_normalize_gpt_image_size_caps_long_edge():

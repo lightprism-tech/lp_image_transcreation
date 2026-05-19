@@ -1,59 +1,3 @@
-policy:
-  # llm_first: LLM decides substitute from scene context, then KB grounds the target.
-  # kg_first: KB builds candidate list first, then LLM picks from that list.
-  reasoning_strategy: llm_first
-  scope_excluded_types:
-    - COUNTRY
-    - CULTURE
-  fallback_localized_obj_type: SYMBOL
-  semantic_type_fallbacks:
-    icon: SYMBOL
-    symbol: SYMBOL
-    logo: SYMBOL
-  grounding_min_label_token_overlap: 1
-  grounding_min_embedding_token_overlap: 2
-  type_inference_min_token_overlap: 1
-  use_embedding_label_grounding: true
-  type_inference_stopwords:
-    - a
-    - an
-    - the
-    - and
-    - or
-    - in
-    - on
-    - at
-    - to
-    - of
-    - for
-    - with
-    - it
-    - is
-    - are
-    - by
-    - from
-    - as
-    - front
-    - la
-    - de
-  type_label_cues:
-    building: LANDMARK
-    temple: LANDMARK
-    fort: LANDMARK
-    gate: LANDMARK
-    tower: LANDMARK
-    palace: LANDMARK
-    monument: LANDMARK
-    ninja: SYMBOL
-    origami: SYMBOL
-    fan: SYMBOL
-    plant: SYMBOL
-    silhouette: SYMBOL
-    sushi: FOOD
-    ramen: FOOD
-    burger: FOOD
-    kimono: CLOTHING
-
 prompts:
   tokens:
     scene_override:
@@ -168,32 +112,13 @@ prompts:
       - Select one grounded candidate that is common and visually recognizable in {target_culture}.
       - Prefer candidates that can be rendered cleanly at small icon sizes.
       - Avoid candidates that imply broad scene replacement.
-  object_reasoning_llm_first:
-    template: |
-      You are a cultural adaptation expert. For an image adapted to {target_culture}, decide for the object '{obj_label}' (type: {obj_type}).
-      Source culture: {source_culture}
-
-      Scene: {context}
-      {style_block}{sensitivity_block}{diversity_block}
-      Avoid (do not use): {avoid_list}
-
-      LLM-first decision policy:
-      - Use scene context and cultural knowledge to choose the best substitute for {target_culture}.
-      - Prefer concrete, visually drawable nouns suitable for a bounded image edit (icon/landmark/food/object).
-      - Set action to "transform" when a clear, culturally appropriate substitute exists; otherwise "preserve".
-      - target_object should name the substitute you want (e.g. "Taj Mahal", "Samosa", "Peacock") — a later step will map it to the knowledge base catalog.
-      - Do not use broad abstractions ("culture", "tradition", "lifestyle") as target_object.
-      - Confidence: >=0.75 strong fit, 0.55-0.74 usable, <0.55 preserve.
-
-      Respond with exactly one JSON object, no markdown:
-      {{"action": "transform" or "preserve", "target_object": "substitute or same as original", "rationale": "one sentence", "confidence": 0.0 to 1.0}}
   object_reasoning:
     template: |
       You are a cultural adaptation expert. For an image adapted to {target_culture}, decide for the object '{obj_label}' (type: {obj_type}).
       Source culture: {source_culture}
 
       Scene: {context}
-      {style_block}{sensitivity_block}{diversity_block}{candidate_instruction}
+      {style_block}{sensitivity_block}{candidate_instruction}
       Avoid (do not use): {avoid_list}
       Decision policy:
       - Use a hybrid strategy: prefer grounded KB evidence first, then LLM contextual reasoning when KB is missing or sparse.
@@ -209,7 +134,6 @@ prompts:
       KG-first planning rubric:
       1) If grounded candidates exist, rank them by: (a) scene fit, (b) cultural salience, (c) visual editability.
       2) Choose the top-ranked grounded candidate for target_object when action is "transform".
-      2b) If other regions already use a target, prefer a different grounded candidate when one fits this object type.
       3) If all grounded candidates are unsuitable, set action to "preserve" and explain why.
       4) Never invent a new target_object outside grounded candidates when they are provided.
       5) Confidence guidance: >=0.75 for strong grounded fit, 0.55-0.74 for usable fit, <0.55 for preserve.

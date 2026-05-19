@@ -8,6 +8,7 @@ from src.reasoning.schemas import CulturalNode, CulturalKBEntry, StylePriors, Su
 logger = logging.getLogger(__name__)
 
 CULTURAL_MAPPINGS_FILENAME = "cultural_mappings.json"
+REL_PART_OF = "PART_OF"
 
 
 def _is_cultural_kb_format(data: dict) -> bool:
@@ -38,6 +39,7 @@ class KnowledgeLoader:
         self._preferred_substitutions: List[Dict[str, str]] = []
         self._cultural_types: Set[str] = set()
         self._embedding_components = None
+        self._part_of: Dict[str, str] = {}
 
         self._load(graph_path)
         self._load_cultural_mappings(graph_path)
@@ -104,6 +106,27 @@ class KnowledgeLoader:
         """Return label -> cultural type mapping from KB (e.g. bicycle -> SPORT)."""
         return dict(self._label_to_type)
 
+    def get_all_labels(self) -> List[str]:
+        """Return all unique known labels from graph nodes and mapping keys."""
+        labels: List[str] = []
+        seen = set()
+        for node in self.nodes.values():
+            label = str(node.get("label") or "").strip()
+            if not label:
+                continue
+            key = label.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            labels.append(label)
+        for label in self._label_to_type.keys():
+            key = str(label or "").strip().lower()
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            labels.append(str(label).strip())
+        return labels
+
     def get_preferred_substitution(self, object_label: str, target_culture: str) -> Optional[str]:
         """Return preferred target_object for (object_label, target_culture) from KB, or None."""
         obj_lower = (object_label or "").lower()
@@ -124,23 +147,72 @@ class KnowledgeLoader:
         # 2. Load Edges and Build Indexes
         edges = data.get("edges") or data.get("links") or []
         country_nodes = {nid: n["label"] for nid, n in self.nodes.items() if n.get("type") == "COUNTRY"}
+        self._part_of = {}
+        for edge in edges:
+            if (edge.get("relation") or "") == REL_PART_OF:
+                child, parent = edge.get("source"), edge.get("target")
+                if child and parent:
+                    self._part_of[child] = parent
+
+        def country_label_for_scope(scope_id: str) -> Optional[str]:
+            node = self.nodes.get(scope_id)
+            if not node:
+                return None
+            if node.get("type") == "COUNTRY":
+                return str(node.get("label") or "")
+            if node.get("type") == "CULTURE":
+                embedded = node.get("country_label")
+                if embedded:
+                    return str(embedded)
+            cur, seen = scope_id, set()
+            while cur and cur not in seen:
+                seen.add(cur)
+                n = self.nodes.get(cur)
+                if not n:
+                    break
+                if n.get("type") == "COUNTRY":
+                    return str(n.get("label") or "")
+                if n.get("type") == "CULTURE" and n.get("country_label"):
+                    return str(n.get("country_label"))
+                cur = self._part_of.get(cur)
+            return None
 
         for edge in edges:
+            if (edge.get("relation") or "") == REL_PART_OF:
+                continue
             source = edge.get("source")
             target = edge.get("target")
-            if source in country_nodes:
-                self._node_to_country[target] = country_nodes[source]
-                country_label = country_nodes[source]
-                target_node = self.nodes.get(target)
-                if target_node:
-                    t_type = target_node.get("type", "UNKNOWN")
-                    if country_label not in self._country_type_index:
-                        self._country_type_index[country_label] = {}
-                    if t_type not in self._country_type_index[country_label]:
-                        self._country_type_index[country_label][t_type] = []
-                    self._country_type_index[country_label][t_type].append(target_node)
-                    if t_type != "COUNTRY":
-                        self._cultural_types.add(t_type)
+            if not source or not target:
+                continue
+            if source not in self.nodes:
+                continue
+            source_node = self.nodes[source]
+            src_type = source_node.get("type")
+            if src_type == "COUNTRY":
+                country_label = country_nodes.get(source)
+            elif src_type == "CULTURE":
+                country_label = country_label_for_scope(source)
+            else:
+                continue
+            if not country_label:
+                continue
+            target_node = self.nodes.get(target)
+            if not target_node:
+                continue
+            t_type = target_node.get("type", "UNKNOWN")
+            if t_type in {"COUNTRY", "CULTURE"}:
+                continue
+            self._node_to_country[target] = country_label
+            if country_label not in self._country_type_index:
+                self._country_type_index[country_label] = {}
+            if t_type not in self._country_type_index[country_label]:
+                self._country_type_index[country_label][t_type] = []
+            bucket = self._country_type_index[country_label][t_type]
+            tid = target_node.get("id")
+            if not any(str(x.get("id")) == str(tid) for x in bucket):
+                bucket.append(target_node)
+            if t_type != "COUNTRY":
+                self._cultural_types.add(t_type)
 
         # Mappings may be embedded in the graph file (same as countries_graph.json schema)
         if data.get("label_to_type"):

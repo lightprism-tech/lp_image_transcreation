@@ -10,6 +10,7 @@ from src.realization.inpaint import get_inpainter, _build_inpaint_prompt
 from src.realization.prompt_refiner import refine_inpaint_prompt
 from src.realization.prompt_builder import build_prompt
 from src.realization.metrics import cultural_score, object_presence_score
+from src.realization.config_loader import load_realization_config, section_value
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ class RealizationEngine:
     """
 
     def __init__(self, config: Dict[str, Any] = None):
-        self.config = config or {}
+        self.config = load_realization_config(config)
         self._inpainter = get_inpainter(self.config)
         self._quality_gate_config = self.config.get("quality_gate", {})
         self._text_quality_config = self.config.get("text_quality_gate", {})
@@ -38,6 +39,9 @@ class RealizationEngine:
         self._edit_region_policy = self.config.get("edit_region_policy", {})
         self._last_replace_status = ""
         self._last_replace_reason = ""
+
+    def _artifact_cfg(self, key: str) -> Any:
+        return section_value(self.config, "artifact_gate", key)
 
     def generate(self, plan: EditPlan, input_image_path: str) -> str:
         """
@@ -174,9 +178,10 @@ class RealizationEngine:
             )
             if not candidate_path:
                 continue
-            if self._fails_generation_artifact_gate(candidate_path, bbox):
+            if self._fails_generation_artifact_gate(candidate_path, bbox, source_path=image_path):
                 logger.warning(
-                    "Rejected replacement for object_id=%s because generated bbox looked blank/solid.",
+                    "Rejected replacement for object_id=%s because generated bbox looked blank/solid "
+                    "(no meaningful pixel change vs source).",
                     action.object_id,
                 )
                 try:
@@ -201,9 +206,64 @@ class RealizationEngine:
         self._last_replace_reason = "inpaint_backend_failed"
         return None
 
-    def _fails_generation_artifact_gate(self, output_path: str, bbox: List[int]) -> bool:
-        """Reject obvious failed generations such as solid black/white bbox patches."""
-        if not self._artifact_gate_config.get("enabled", True):
+    def _measure_bbox_edit_change(
+        self,
+        src_region: np.ndarray,
+        out_region: np.ndarray,
+    ) -> Dict[str, float]:
+        """Summarize how much a bbox changed after inpainting (robust for large dark regions)."""
+        if src_region.shape != out_region.shape or src_region.size == 0:
+            return {
+                "mean_abs_change": 0.0,
+                "changed_pixel_ratio": 0.0,
+                "p95_channel_change": 0.0,
+                "luma_std_delta": 0.0,
+            }
+        diff = np.linalg.norm(out_region - src_region, axis=2)
+        pixel_threshold = float(self._artifact_cfg("changed_pixel_threshold"))
+        src_luma = (
+            0.2126 * src_region[:, :, 0]
+            + 0.7152 * src_region[:, :, 1]
+            + 0.0722 * src_region[:, :, 2]
+        )
+        out_luma = (
+            0.2126 * out_region[:, :, 0]
+            + 0.7152 * out_region[:, :, 1]
+            + 0.0722 * out_region[:, :, 2]
+        )
+        return {
+            "mean_abs_change": float(np.abs(out_region - src_region).mean()),
+            "changed_pixel_ratio": float((diff > pixel_threshold).mean()),
+            "p95_channel_change": float(np.percentile(diff, 95)),
+            "luma_std_delta": float(out_luma.std() - src_luma.std()),
+        }
+
+    def _bbox_edit_has_meaningful_change(self, metrics: Dict[str, float]) -> bool:
+        """Return True when any change signal indicates a real localized edit."""
+        min_mean = float(self._artifact_cfg("min_mean_abs_change"))
+        min_ratio = float(self._artifact_cfg("min_changed_pixel_ratio"))
+        min_p95 = float(self._artifact_cfg("min_p95_channel_change"))
+        min_std_delta = float(self._artifact_cfg("min_luma_std_delta"))
+        return (
+            metrics.get("mean_abs_change", 0.0) >= min_mean
+            or metrics.get("changed_pixel_ratio", 0.0) >= min_ratio
+            or metrics.get("p95_channel_change", 0.0) >= min_p95
+            or metrics.get("luma_std_delta", 0.0) >= min_std_delta
+        )
+
+    def _fails_generation_artifact_gate(
+        self,
+        output_path: str,
+        bbox: List[int],
+        source_path: Optional[str] = None,
+    ) -> bool:
+        """
+        Reject obvious failed generations such as solid black/white bbox patches.
+
+        Uses multiple change signals so large dark illustration regions are not
+        rejected when only part of the bbox changed (common for infographic icons).
+        """
+        if not bool(self._artifact_cfg("enabled")):
             return False
         try:
             from PIL import Image
@@ -222,10 +282,55 @@ class RealizationEngine:
             )
             mean_luma = float(luminance.mean())
             std_luma = float(luminance.std())
-            dark_threshold = float(self._artifact_gate_config.get("solid_dark_luma", 18.0))
-            bright_threshold = float(self._artifact_gate_config.get("solid_bright_luma", 245.0))
-            max_std = float(self._artifact_gate_config.get("solid_max_std", 12.0))
-            return (mean_luma <= dark_threshold or mean_luma >= bright_threshold) and std_luma <= max_std
+            dark_threshold = float(self._artifact_cfg("solid_dark_luma"))
+            bright_threshold = float(self._artifact_cfg("solid_bright_luma"))
+            max_std = float(self._artifact_cfg("solid_max_std"))
+            absolute_black_luma = float(self._artifact_cfg("absolute_black_luma"))
+            absolute_white_luma = float(self._artifact_cfg("absolute_white_luma"))
+            compare_source = bool(self._artifact_cfg("compare_to_source"))
+
+            is_solid = (mean_luma <= dark_threshold or mean_luma >= bright_threshold) and std_luma <= max_std
+            if not is_solid:
+                return False
+
+            if mean_luma <= absolute_black_luma or mean_luma >= absolute_white_luma:
+                logger.info(
+                    "Artifact gate reject: near-uniform fill (mean_luma=%.2f, std_luma=%.2f).",
+                    mean_luma,
+                    std_luma,
+                )
+                return True
+
+            if compare_source and source_path:
+                src = np.array(Image.open(source_path).convert("RGB"))
+                sx1, sx2 = max(0, min(x1, x2)), min(src.shape[1], max(x1, x2))
+                sy1, sy2 = max(0, min(y1, y2)), min(src.shape[0], max(y1, y2))
+                if sx2 > sx1 and sy2 > sy1:
+                    src_region = src[sy1:sy2, sx1:sx2].astype(np.float32)
+                    out_region = region[: (sy2 - sy1), : (sx2 - sx1)]
+                    if src_region.shape == out_region.shape and src_region.size > 0:
+                        metrics = self._measure_bbox_edit_change(src_region, out_region)
+                        if self._bbox_edit_has_meaningful_change(metrics):
+                            logger.info(
+                                "Artifact gate allow: edit detected in solid-looking bbox "
+                                "(mean_abs_change=%.2f, changed_ratio=%.4f, p95=%.2f, luma_std_delta=%.2f).",
+                                metrics["mean_abs_change"],
+                                metrics["changed_pixel_ratio"],
+                                metrics["p95_channel_change"],
+                                metrics["luma_std_delta"],
+                            )
+                            return False
+                        logger.warning(
+                            "Artifact gate reject: solid-looking bbox unchanged from source "
+                            "(mean_abs_change=%.2f, changed_ratio=%.4f, p95=%.2f, luma_std_delta=%.2f).",
+                            metrics["mean_abs_change"],
+                            metrics["changed_pixel_ratio"],
+                            metrics["p95_channel_change"],
+                            metrics["luma_std_delta"],
+                        )
+                        return True
+
+            return True
         except Exception as e:
             logger.warning("Artifact gate check failed; allowing output. Reason: %s", e)
             return False

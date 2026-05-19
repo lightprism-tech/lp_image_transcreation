@@ -7,6 +7,7 @@
   "gpt_image_quality": "medium",
   "gpt_image_output_format": "png",
   "gpt_image_size": "auto",
+  "gpt_image_min_pixels": 1048576,
   "gpt_image_timeout_seconds": 180,
   "gpt_image_request_retries": 3,
   "gpt_image_retry_delay_seconds": 2,
@@ -17,9 +18,9 @@
   "flux_height": 1024,
   "flux_timeout_seconds": 120,
   "inpaint_steps": 25,
-  "max_inpaint_prompt_passes": 1,
+  "max_inpaint_prompt_passes": 2,
   "use_llm_prompt_refinement": false,
-  "inpaint_mask_pad_pct": 0.0,
+  "inpaint_mask_pad_pct": 0.05,
   "edit_region_policy": {
     "allow_full_frame_replace": false,
     "skip_scene_region_replace": true,
@@ -29,7 +30,15 @@
     "enabled": true,
     "solid_dark_luma": 18.0,
     "solid_bright_luma": 245.0,
-    "solid_max_std": 12.0
+    "solid_max_std": 12.0,
+    "absolute_black_luma": 8.0,
+    "absolute_white_luma": 248.0,
+    "compare_to_source": true,
+    "min_mean_abs_change": 5.0,
+    "min_changed_pixel_ratio": 0.012,
+    "min_p95_channel_change": 10.0,
+    "min_luma_std_delta": 1.5,
+    "changed_pixel_threshold": 12.0
   },
   "text_render": {
     "fill_background": false

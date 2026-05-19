@@ -1,8 +1,8 @@
 """Pytest for reasoning knowledge_loader: one test per method."""
 import json
-import os
 import pytest
-from src.reasoning.knowledge_loader import KnowledgeLoader
+
+from src.reasoning.knowledge_loader import KnowledgeLoader, REL_PART_OF
 from src.reasoning.schemas import CulturalNode
 
 
@@ -110,3 +110,50 @@ def test_knowledge_loader_links_uses_links_key(tmp_path):
     path.write_text(json.dumps(data), encoding="utf-8")
     loader = KnowledgeLoader(str(path))
     assert loader.get_culture_of_node("O1") == "X"
+
+
+@pytest.fixture
+def temp_kg_hierarchy_path(tmp_path):
+    data = {
+        "nodes": [
+            {"id": "C_IND", "label": "India", "type": "COUNTRY"},
+            {
+                "id": "CU_IND_ROOT",
+                "label": "India (national)",
+                "type": "CULTURE",
+                "country_id": "IND",
+                "country_label": "India",
+            },
+            {
+                "id": "CU_IND_RG",
+                "label": "Example region",
+                "type": "CULTURE",
+                "country_id": "IND",
+                "country_label": "India",
+            },
+            {"id": "F_BIRYANI", "label": "Biryani", "type": "FOOD"},
+            {"id": "F_DOSA", "label": "Dosa", "type": "FOOD"},
+        ],
+        "edges": [
+            {"source": "CU_IND_ROOT", "target": "C_IND", "relation": REL_PART_OF},
+            {"source": "CU_IND_RG", "target": "CU_IND_ROOT", "relation": REL_PART_OF},
+            {"source": "CU_IND_ROOT", "target": "F_BIRYANI", "relation": "ASSOCIATED_WITH", "domain": "food"},
+            {"source": "CU_IND_RG", "target": "F_DOSA", "relation": "ASSOCIATED_WITH", "domain": "food"},
+        ],
+    }
+    path = tmp_path / "kg_h.json"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    return str(path)
+
+
+def test_knowledge_loader_hierarchy_maps_food_to_country(temp_kg_hierarchy_path):
+    loader = KnowledgeLoader(temp_kg_hierarchy_path)
+    assert loader.get_culture_of_node("F_BIRYANI") == "India"
+    assert loader.get_culture_of_node("F_DOSA") == "India"
+
+
+def test_knowledge_loader_hierarchy_aggregates_foods_by_country(temp_kg_hierarchy_path):
+    loader = KnowledgeLoader(temp_kg_hierarchy_path)
+    nodes = loader.get_nodes_by_type_and_culture("FOOD", "India")
+    labels = {n.label for n in nodes}
+    assert labels == {"Biryani", "Dosa"}

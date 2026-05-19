@@ -1,0 +1,296 @@
+{
+  "metadata": {
+    "image_path": "/app/data/input/samples/statue_of_liberty.jpg",
+    "image_name": "statue_of_liberty.jpg",
+    "timestamp": "2026-04-29T14:41:09.456994",
+    "pipeline_version": "1.0"
+  },
+  "image_type": {
+    "type": "document",
+    "confidence": 0.2849906384944916,
+    "all_scores": {
+      "ad": 0.019044844433665276,
+      "poster": 0.2280905842781067,
+      "infographic": 0.00248440052382648,
+      "ui": 0.04105847701430321,
+      "product": 0.0012839226983487606,
+      "social_media": 0.22333914041519165,
+      "document": 0.2849906384944916,
+      "other": 0.19970794022083282
+    },
+    "quality_flags": [
+      "low_confidence_image_type"
+    ]
+  },
+  "scene": {
+    "description": "the statue of liberty",
+    "setting": "the statue of liberty",
+    "mood": "ly",
+    "activity": "a statue of liberty holding a torch",
+    "confidence": 1.0,
+    "visual_context": {
+      "source": "blip",
+      "generated_fields": {
+        "description": "the statue of liberty",
+        "setting": "the statue of liberty",
+        "mood": "ly",
+        "activity": "a statue of liberty holding a torch",
+        "style": "the statue of liberty",
+        "salient_elements": "are the statue of liberty",
+        "layout": "of the statue of liberty"
+      },
+      "image_type_hint": "document",
+      "ocr_text_sample": "",
+      "prompt_context": "the statue of liberty the statue of liberty ly a statue of liberty holding a torch the statue of liberty are the statue of liberty of the statue of liberty"
+    }
+  },
+  "visual_regions": [
+    {
+      "id": 0,
+      "type": "photo_object",
+      "description": "arafed statue of liberty holding a torch in the air",
+      "semantic_role": "photo_object visual element",
+      "bbox": [
+        917.3944702148438,
+        208.96142578125,
+        1691.28857421875,
+        1189.5465087890625
+      ],
+      "confidence": 0.5676,
+      "quality_flags": [
+        "detector_caption_mismatch"
+      ],
+      "source": {
+        "detector_backend": "unknown",
+        "detector_label": "person",
+        "caption_first": true
+      }
+    }
+  ],
+  "text_regions": [],
+  "layout": {
+    "structure": "visual regions",
+    "image_type": "document",
+    "text_role_counts": {},
+    "visual_region_type_counts": {
+      "photo_object": 1
+    },
+    "image_shape": [
+      1200,
+      1920,
+      3
+    ]
+  },
+  "objects": [
+    {
+      "id": 0,
+      "bbox": [
+        917.3944702148438,
+        208.96142578125,
+        1691.28857421875,
+        1189.5465087890625
+      ],
+      "class_name": "Tirupati Balaji idol",
+      "label": "Tirupati Balaji idol",
+      "original_class_name": "arafed_statue_liberty",
+      "detector_label": "person",
+      "detector_backend": "unknown",
+      "confidence": 0.8952346444129944,
+      "fused_confidence": 0.5676,
+      "quality_flags": [
+        "detector_caption_mismatch"
+      ],
+      "semantic_type": "photo_object",
+      "semantic_score": 0.6821948885917664,
+      "icon_cluster_id": -1,
+      "segmentation": {
+        "enabled": true,
+        "source": "sam",
+        "score": 0.9313482046127319,
+        "area_px": 363607,
+        "area_ratio": 0.15781553819444444,
+        "polygon": [
+          [
+            935.0,
+            202.0
+          ],
+          [
+            1054.0,
+            619.0
+          ],
+          [
+            1120.0,
+            602.0
+          ],
+          [
+            1105.0,
+            1192.0
+          ],
+          [
+            1618.0,
+            1195.0
+          ],
+          [
+            1582.0,
+            948.0
+          ],
+          [
+            1451.0,
+            806.0
+          ],
+          [
+            1481.0,
+            648.0
+          ],
+          [
+            1632.0,
+            831.0
+          ],
+          [
+            1570.0,
+            580.0
+          ],
+          [
+            1401.0,
+            528.0
+          ],
+          [
+            1265.0,
+            325.0
+          ],
+          [
+            1187.0,
+            393.0
+          ],
+          [
+            1249.0,
+            559.0
+          ],
+          [
+            1096.0,
+            562.0
+          ],
+          [
+            1113.0,
+            432.0
+          ]
+        ]
+      },
+      "caption": "arafed statue of liberty holding a torch in the air",
+      "caption_candidates": [
+        {
+          "prompt": "",
+          "caption": "arafed statue of liberty holding a torch in the air",
+          "source": "blip"
+        },
+        {
+          "prompt": "Describe this visual region precisely.",
+          "caption": "to the statue of liberty",
+          "source": "blip"
+        },
+        {
+          "prompt": "What object, icon, text-bearing element, or symbol is visible in this region?",
+          "caption": "what object, icon, text - bearing element, or symbol is visible in this region?",
+          "source": "blip"
+        }
+      ],
+      "caption_source": "blip",
+      "attributes": {
+        "colors": [],
+        "emotion": "neutral",
+        "clothing": [],
+        "pose": "unknown",
+        "age": "unknown",
+        "gender": "unknown"
+      },
+      "visual_attributes": {
+        "shape": "recognizable local form",
+        "color": "multicolor",
+        "texture": "natural material texture",
+        "context": "placed naturally in a India cultural setting, featuring tirupati"
+      }
+    }
+  ],
+  "faces": [],
+  "text": {
+    "regions": [],
+    "extracted": [],
+    "full_text": "",
+    "typography": {
+      "font_families": [],
+      "font_weights": {
+        "normal": 0,
+        "bold": 0
+      },
+      "avg_font_size": 0.0,
+      "styled_regions": 0
+    },
+    "object_links": []
+  },
+  "quality_summary": {
+    "object_count": 1,
+    "face_count": 0,
+    "text_region_count": 0,
+    "ocr_text_count": 0,
+    "linked_text_count": 0,
+    "object_avg_confidence": 0.8952,
+    "text_region_avg_confidence": 0.0,
+    "ocr_avg_confidence": 0.0,
+    "sam_enabled": true,
+    "sam_available": true,
+    "sam_reason": "ready",
+    "sam_segmented_object_count": 1,
+    "visual_region_count": 1,
+    "uncertain_visual_region_count": 0
+  },
+  "infographic_analysis": {
+    "enabled": true,
+    "mode": "infographic",
+    "icon_cluster_count": 0,
+    "text_region_count": 0,
+    "semantic_focus": "mixed"
+  },
+  "edit_plan": {
+    "target_culture": "India",
+    "transformations": [
+      {
+        "original_object": "arafed_statue_liberty",
+        "original_type": "object",
+        "target_object": "Tirupati Balaji idol",
+        "rationale": "Tirupati Balaji idol is a commonly recognized and culturally significant symbol in India, making it a suitable substitute for the Statue of Liberty",
+        "confidence": 0.85,
+        "visual_attributes": {
+          "shape": "recognizable local form",
+          "color": "multicolor",
+          "texture": "natural material texture",
+          "context": "placed naturally in a India cultural setting, featuring tirupati"
+        }
+      }
+    ],
+    "preservations": [],
+    "edit_text": [],
+    "region_replace": [],
+    "scene_adaptation": {
+      "scene": "Fort",
+      "elements": [
+        "Fort details",
+        "India local context"
+      ],
+      "lighting": "natural",
+      "style": "vibrant",
+      "override_mode": "none",
+      "override_reason": "localized_object_transforms_present",
+      "consistency_graph": {
+        "nodes": [
+          {
+            "id": "obj:tirupati balaji idol",
+            "label": "Tirupati Balaji idol",
+            "culture": "India",
+            "category": "object"
+          }
+        ],
+        "edges": []
+      }
+    }
+  }
+}
