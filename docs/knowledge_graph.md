@@ -1,6 +1,8 @@
 # Knowledge Graph Data
 
-This document contains documentation for the Knowledge Graph component of the Image Transcreation Pipeline.
+This document describes the knowledge graph used in **Stage 2 (Reasoning)** to ground LLM suggestions and supply substitute candidates, avoid lists, and visual attributes for Stage 3.
+
+**How the graph is used in reasoning:** [REASONING.md](REASONING.md) (LLM-first grounding, type inference, configuration).
 
 ## Dataset Overview
 

@@ -4,6 +4,15 @@ Short- and medium-term improvements for code quality, performance, usability, an
 
 ---
 
+## Recently addressed (documented in May 2026)
+
+- **LLM-first reasoning** with KB grounding (`policy.reasoning_strategy`, [REASONING.md](REASONING.md)).
+- **Type inference** via `type_label_cues`, stopword filtering, and semantic-type fallback.
+- **Stage 3 artifact gate** tunable via `realization_config.json` / `REALIZATION_*` env.
+- Full pipeline CLI, `--no-cache`, and infographic `region_replace` (see root [README.md](../README.md)).
+
+---
+
 ## Code and Architecture
 
 ### Testing

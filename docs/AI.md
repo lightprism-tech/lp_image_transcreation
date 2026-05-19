@@ -212,13 +212,35 @@ project_root/
 
 ### Stage 2: Cultural Reasoning
 
-**Purpose:** Decide what to change and how, using grounded cultural knowledge
+**Purpose:** Decide what to change and how, using grounded cultural knowledge plus LLM scene reasoning.
+
+**Implementation status:** Production pipeline uses a **hybrid** design (see [REASONING.md](REASONING.md)):
+
+| Mode | Order | Default |
+|------|--------|---------|
+| `llm_first` | LLM proposes substitute → KG grounds to catalog | Yes |
+| `kg_first` | KG builds candidate list → LLM picks from list | Legacy |
+
+```mermaid
+sequenceDiagram
+  participant S1 as Stage 1
+  participant LLM as LLM
+  participant KG as Knowledge graph
+  participant S3 as Stage 3
+  S1->>LLM: Object label, caption, scene
+  LLM->>LLM: transform/preserve + target name
+  LLM->>KG: Ground target (type + culture pool)
+  KG->>S3: edit_plan + visual_attributes
+```
+
+Object **type** (`FOOD`, `LANDMARK`, `SYMBOL`, …) is inferred before grounding using configurable label cues, stopword-filtered KB token matching, and perception `semantic_type`. Perception labels are kept as `original_object` in the plan.
 
 #### Why External Knowledge Base?
 
 - LLMs alone: prone to hallucination and stereotype amplification
-- Explicit KB: auditable, correctable, updatable by domain experts
+- Explicit KB: auditable, correctable, updatable by domain experts; Stage 3 needs concrete catalog labels and visual attributes
 - No retraining needed for cultural knowledge updates
+- LLM-first mode still **requires** KB grounding before realization
 
 #### Knowledge Base Schema
 
@@ -242,15 +264,18 @@ project_root/
 }
 ```
 
-#### Reasoning Process
+#### Reasoning Process (implemented)
 
-1. Identify culturally misaligned objects/text from S(I_s)
-2. Retrieve candidate substitutes from K(c_t)
-3. Filter using avoid lists and context compatibility
-4. Decide preservation constraints to prevent drift
-5. Output structured edit plan
+1. Identify objects/text regions from S(I_s); infer cultural type per object.
+2. **LLM-first (default):** LLM decides transform/preserve and suggests `target_object` from scene context.
+3. **KG grounding:** Map LLM target to K(c_t) node (exact, fuzzy, or embedding nearest neighbor within type+culture); apply avoid lists.
+4. **KG-first (optional):** Retrieve candidate list first, then LLM selects from list.
+5. Build `edit_text` for OCR regions; optional `region_replace` for infographic grids.
+6. Output structured edit plan J with preserved layout metadata (bboxes, `original_class_name`).
 
-**Output:** Edit-plan JSON J
+**Output:** Edit-plan JSON J — see [REASONING.md](REASONING.md) for schema and configuration.
+
+**Configuration:** `src/reasoning/config/reasoning.yaml` and `REASONING_POLICY_*` environment variables.
 
 ---
 
@@ -605,8 +630,10 @@ The reference implementation runs perception and realization with downloadable v
 
 **For implementation details, see:**
 - [Main README](../README.md)
+- [Reasoning (Stage 2)](REASONING.md)
 - [Quick Start Guide](QUICKSTART.md)
 - [Perception Pipeline Documentation](../src/perception/README.md)
+- [Realization (Stage 3)](../src/realization/README.md)
 - [Knowledge Graph](knowledge_graph.md)
 
 **Contact:** research@lightprism.tech

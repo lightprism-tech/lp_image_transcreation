@@ -97,6 +97,16 @@ python -m perception path/to/image.jpg --output data/output/json/result.json
 
 ### Step 4: Run Cultural Reasoning (Stage 2)
 
+Stage 2 uses an LLM plus the knowledge graph. Default strategy is **`llm_first`**: the LLM proposes substitutes, then the graph grounds them to catalog labels. See [REASONING.md](REASONING.md).
+
+Set in `.env` before running:
+
+```env
+LLM_PROVIDER=groq
+GROQ_API_KEY=your_key
+REASONING_POLICY_REASONING_STRATEGY=llm_first
+```
+
 ```bash
 # Generate a transcreation plan (use Stage 1 JSON from --output)
 python src/reasoning/main.py \
@@ -105,6 +115,8 @@ python src/reasoning/main.py \
   --kg data/knowledge_base/countries_graph.json \
   --output data/output/plan.json
 ```
+
+After changing reasoning policy or code, delete cached `*_stage2_reasoning.json` or run the full pipeline with `--no-cache`.
 
 ### Step 5: Run Visual Realization (Stage 3)
 
@@ -175,7 +187,17 @@ OUTPUT_DIR=./data/output  # Output location
 # Performance
 BATCH_SIZE=1              # Images per batch
 OCR_GPU=false            # Enable GPU for OCR
+
+# Stage 2 reasoning (see docs/REASONING.md)
+LLM_PROVIDER=groq
+GROQ_API_KEY=your_key
+REASONING_POLICY_REASONING_STRATEGY=llm_first
+
+# Stage 3 realization overrides (optional)
+# REALIZATION_INPAINT_MASK_PAD_PCT=0.08
 ```
+
+Full reasoning and realization config: [REASONING.md](REASONING.md), [../src/realization/README.md](../src/realization/README.md).
 
 ## Usage Examples
 

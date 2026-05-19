@@ -146,21 +146,24 @@ Quality tips:
 
 ## Stage 2: Edit-plan generation (Reasoning LLM)
 
-Recommended order:
+Default pipeline behavior: **`llm_first`** — LLM proposes substitutes from scene context; knowledge graph grounds targets before Stage 3. See [REASONING.md](REASONING.md). Legacy **`kg_first`** (candidates before LLM) via `REASONING_POLICY_REASONING_STRATEGY=kg_first`.
 
-1. **Primary (low cost):** `groq` + `llama-3.1-8b-instant`
+Recommended model order:
+
+1. **Primary (low cost):** `groq` + `llama-3.1-8b-instant` or `llama-3.3-70b-versatile`
 2. **Escalation (hard samples):** stronger reasoning model (OpenAI or higher-tier Groq model available in your environment)
 
 Why this works:
 
 - Stage 2 is structured JSON reasoning, not long-form generation.
-- most easy/medium cases do not need expensive LLMs.
+- KB grounding limits off-catalog targets for realization.
 - hard cases can be selectively escalated after Stage-1 hybrid verification.
 
 Practical controls:
 
 - keep strict JSON output enforcement
-- log and monitor empty or low-confidence plans
+- log `Reasoning strategy:` and `LLM-first KB grounding:` lines; monitor empty or low-confidence plans
+- use `--no-cache` after policy changes
 - escalate only flagged samples
 
 ---

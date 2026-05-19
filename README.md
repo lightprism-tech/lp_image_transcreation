@@ -13,7 +13,7 @@
 
 **Developed by [LightPrism.tech]**
 
-[Quick Start](docs/QUICKSTART.md) • [AI Research](docs/AI.md) • [API Docs](src/perception/README.md) • [Contributing](#contributing)
+[Quick Start](docs/QUICKSTART.md) • [Reasoning](docs/REASONING.md) • [AI Research](docs/AI.md) • [Perception API](src/perception/README.md) • [Contributing](#contributing)
 
 </div>
 
@@ -23,55 +23,25 @@
 
 Image transcreation adapts visual content for different cultural contexts while preserving semantic intent and layout. The pipeline is organized as explicit stages: Perception, Reasoning, and Realization.
 
-## Current updates (Apr 2026)
+## Current updates (May 2026)
 
-- Added unified full-pipeline entrypoint in `src/main.py` with two run modes:
-  - full run: Stage 1 -> Stage 2 -> Stage 3
-  - realization-only run from existing Stage-2 JSON via `--stage2-json`.
-- Full pipeline CLI: only `--img` and `--target` are required; defaults are `--kg data/knowledge_base/countries_graph.json`, `--output-dir data/output`, `--run-name my_run`.
-- Added stage and model caching controls in full pipeline CLI:
-  - `--no-cache` disables stage output reuse
-  - `--no-model-cache` disables in-process model/engine reuse.
-- Improved Stage-2 output robustness by normalizing object fields (`class_name`, `original_class_name`, `bbox`) for downstream compatibility.
-- Added Stage-3 fail-fast checks for non-actionable plans (unless `--allow-empty-plan` is set).
-- Added better Stage-3 fallback rendering:
-  - per-instance tinted bbox + label overlays when replacements contain bboxes
-  - text-region replacement fallback when `edit_text` actions are present
-  - mock text rendering fallback (`_apply_mock_text_changes`) that draws translated strings into original text bboxes when the full inpaint backend is unavailable
-  - simple adaptation label overlay only when no bbox/text action is available.
-- Improved Stage-3 text rendering quality:
-  - preserves OCR-inferred style family and weight more reliably
-  - auto-fits translated text to original text bbox to reduce overflow/layout drift
-  - high-contrast foreground color auto-selection against the sampled background.
-- Added a text-aware post-realization quality gate with one automatic retry:
-  - checks bbox occupancy, foreground/background contrast ratio, and color delta
-  - retries with adjusted font size and color before accepting the edit
-  - SSIM / CLIP-local checks are now disabled for text edits (configurable via `realization_config.json -> quality_gate.text_use_ssim` and `text_use_clip_local`).
-- Improved transcreation prompt quality:
-  - inpaint prompt refinement now enforces explicit target-culture grounding
-  - non-grounded LLM prompt outputs are rejected and replaced with safe fallback prompts (`_is_culturally_grounded_prompt`).
-- Strengthened Stage-2 reasoning:
-  - explicit "Decision policy" and "KG-first planning rubric" in the LLM prompt
-  - normalization enforces grounded, actionable decisions, mapping LLM `target_object` back to KG candidates (or the top candidate) instead of free-text output
-  - confidence parsing and safer defaulting for weak / ambiguous LLM responses.
-- Removed hardcoded object names, food lists, and weekday tokens from Stage-2:
-  - cultural-type inference is driven entirely by KG `label_to_type` + detected attributes
-  - food terms are discovered dynamically from KG `label_to_type` and KB substitutions for `FOOD` entries
-  - infographic row anchors are detected geometrically from OCR regions via `_infer_row_label_bboxes` instead of a fixed day-of-week list.
-- Added `region_replace` action type for infographic / icon-grid layouts:
-  - `build_region_replacements` uses KG candidates plus an LLM pass to pick the best source food term and the best target replacement
-  - `region_replace` actions flow through `adapt_plan_to_edit_format` and are honored by Stage-3 even when Stage-1 returned zero detected objects.
+- **Stage 2: LLM-first reasoning (default)** — LLM proposes culturally appropriate substitutes from scene context; the knowledge graph **grounds** the target to a catalog label before Stage 3. Switch to legacy order with `REASONING_POLICY_REASONING_STRATEGY=kg_first`. See [docs/REASONING.md](docs/REASONING.md).
+- **Stage 2: type inference** — Configurable `type_label_cues` and stopword filtering fix mis-typing (e.g. infographic building icons classified as `FOOD`). Perception labels are preserved in `original_object`; grounding hints do not overwrite labels.
+- **Stage 3: artifact gate** — Object inpaint outputs are rejected only when truly blank/unchanged (configurable via `data/config/realization_config.json` and `REALIZATION_*` env overrides).
+- Unified full-pipeline entrypoint in `src/main.py` (Stages 1–3, or realization-only via `--stage2-json`).
+- CLI defaults: `--kg data/knowledge_base/countries_graph.json`, `--output-dir data/output`, `--run-name my_run`; use `--no-cache` after policy or code changes.
+- Stage-3 text quality gate with automatic retry; SSIM/CLIP-local off by default for text edits (`quality_gate` in realization config).
+- `region_replace` for infographic layouts when object detection is sparse; OCR-driven row inference (no hardcoded weekday lists).
 
 ### Key Features (Current)
 
 - Structured 3-stage pipeline with JSON handoff between stages.
-- Grounded cultural reasoning with KB candidates and avoid lists; no hardcoded object/food/day lists.
-- KG-first planning rubric with LLM-assisted candidate selection for both object and region replacements.
-- Infographic-aware policy with dynamic row/region detection to reduce unsafe/object-drift substitutions.
-- OCR-region-aware text rewrite with layout constraints.
-- Style-family-aware text replacement (font family/weight/size fit) in realization.
-- Stage-3 mask-based edit/inpaint flow with object and text quality gates, including an automatic retry pass for text edits.
-- Robust multi-level Stage-3 fallback (bbox overlay -> mock text -> adaptation label) so runs produce a meaningful output even without a full inpaint backend.
+- **Hybrid reasoning:** LLM contextual decisions + KB-grounded targets, avoid lists, and visual attributes ([docs/REASONING.md](docs/REASONING.md)).
+- Configurable **`llm_first`** vs **`kg_first`** reasoning strategies.
+- Infographic-aware type cues, placeholder OCR skipping, and target diversity across regions.
+- OCR-region-aware text rewrite with layout and style-family constraints.
+- Stage-3 mask-based inpaint (Azure gpt-image / FLUX / diffusers) with artifact and text quality gates.
+- Multi-level Stage-3 fallback (bbox overlay, mock text, adaptation label) when inpaint is unavailable.
 
 ---
 
@@ -157,10 +127,10 @@ graph LR
 | Stage | Purpose | Status |
 |-------|---------|--------|
 | **1. Perception** | Structured scene, OCR, infographic semantics | Implemented |
-| **2. Reasoning** | KB-grounded transformations and text rewrite plan | Implemented |
+| **2. Reasoning** | LLM-first (default) or KG-first cultural plan + text rewrite | Implemented |
 | **3. Realization** | Inpaint/edit + text rendering + quality gates | Implemented |
 
-**Technical details:** [docs/AI.md](docs/AI.md)
+**Technical details:** [docs/AI.md](docs/AI.md) · **Reasoning guide:** [docs/REASONING.md](docs/REASONING.md)
 
 ---
 
@@ -183,6 +153,7 @@ image-transcreation-pipeline/
 │   │   └── utils/               # Bbox, image load, logging
 │   ├── reasoning/               # Stage 2: Cultural Reasoning
 │   │   ├── engine.py
+│   │   ├── config/reasoning.yaml  # Policy + prompts (llm_first, type cues)
 │   │   ├── knowledge_loader.py
 │   │   ├── llm_client.py
 │   │   ├── main.py
@@ -194,6 +165,7 @@ image-transcreation-pipeline/
 │       ├── schema.py
 │       └── README.md
 ├── data/
+│   ├── config/                  # realization_config.json (Stage 3 overrides)
 │   ├── input/                   # Input images (e.g. input/samples/)
 │   ├── knowledge_base/          # Cultural knowledge graph (.json, .pkl, .jsonl)
 │   └── output/
@@ -380,7 +352,7 @@ Annotated images with bounding boxes, labels, and confidence scores saved to `da
 
 ## Configuration
 
-Use `.env` for runtime configuration. Recommended Stage-2 LLM setup:
+Use `.env` for runtime configuration. Recommended Stage-2 setup:
 
 ```bash
 # Copy template and edit
@@ -391,7 +363,10 @@ cp .env.example .env   # Linux/Mac  |  copy .env.example .env   # Windows
 LLM_PROVIDER=groq
 GROQ_API_KEY=your_key
 LLM_MODEL=llama-3.3-70b-versatile
+REASONING_POLICY_REASONING_STRATEGY=llm_first
 ```
+
+**Reasoning policy** (full list): [docs/REASONING.md](docs/REASONING.md#configuration). Source: `src/reasoning/config/reasoning.yaml`, overrides via `REASONING_POLICY_*`.
 
 Key variables:
 
@@ -422,8 +397,23 @@ Key variables:
 | `LLM_PROVIDER` | Reasoning provider (`groq` or `openai`) | groq/openai |
 | `GROQ_API_KEY` | Groq API key | (set in .env) |
 | `LLM_API_KEY` | Generic key fallback (Groq/OpenAI) | (set in .env) |
+| `REASONING_POLICY_REASONING_STRATEGY` | `llm_first` (LLM then KB ground) or `kg_first` | `llm_first` |
+| `REASONING_POLICY_GROUNDING_MIN_LABEL_TOKEN_OVERLAP` | Token overlap for label grounding | `1` |
+| `REASONING_POLICY_GROUNDING_MIN_EMBEDDING_TOKEN_OVERLAP` | Token overlap for embedding grounding | `2` |
 
-Realization quality-gate tuning lives in `data/config/realization_config.json` under `quality_gate`:
+Realization tuning: `data/config/realization_config.json` (merged over `src/realization/config/defaults.yaml`; env prefix `REALIZATION_`).
+
+Object **artifact gate** (reject blank/unchanged inpaint regions):
+
+| Key | Purpose |
+|-----|---------|
+| `artifact_gate.min_mean_abs_change` | Minimum mean pixel change vs source crop |
+| `artifact_gate.min_changed_pixel_ratio` | Fraction of pixels that must change |
+| `artifact_gate.min_p95_channel_change` | Strong local change threshold |
+| `inpaint_mask_pad_pct` | Mask padding for edits |
+
+Text **quality_gate** in the same file:
+
 
 | Key | Purpose | Default |
 |-----|---------|---------|
@@ -518,14 +508,12 @@ On Windows PowerShell, replace `$(pwd)` with `${PWD}` (or use `%cd%` in `cmd.exe
 
 ## Current Technical Notes
 
-- Stage-1 now includes infographic-focused icon semantics and OCR style extraction.
-- Stage-2 includes constrained OCR text rewrite candidate selection with stronger cultural rewrite rules (tone preservation, brand-name preservation, anti-stereotype guidance).
-- Stage-2 decision-making is fully KG-driven: there are no hardcoded object names, food lists, or weekday/row tokens; cultural-type inference and food-term discovery flow from `label_to_type` and KB substitutions, and row anchors are inferred geometrically from OCR regions.
-- Stage-2 emits an additional `region_replace` action kind, letting Stage-3 patch icon-grid / infographic regions even when Stage-1 detects zero objects in those cells. Target terms for `region_replace` are selected by an LLM pass restricted to KG candidates for the input culture.
-- Stage-2 inpaint prompt refinement rejects non-grounded prompts (`_is_culturally_grounded_prompt`) and substitutes a deterministic culture-grounded fallback to avoid generic / off-target outputs.
-- Stage-3 includes richer object-edit quality gates (distribution + SSIM + optional CLIP local consistency) and a separate, relaxed text-edit quality gate (bbox occupancy, contrast ratio, color delta) with one automatic retry and no SSIM/CLIP-local dependency.
-- Stage-3 text edits now include better style-family matching, bold-variant selection, bbox-aware font fitting, and high-contrast foreground color picking against the sampled background.
-- Stage-3 falls back gracefully through bbox overlays, `region_replace` overlays, and mock text rendering so a realized output is always produced even without a full inpainting backend.
+- **Stage 2 default:** `llm_first` — Groq/OpenAI reasons on scene + object context; KB grounds `target_object` and supplies `visual_attributes`. Use `--no-cache` after changing `reasoning.yaml` or `.env` policy keys.
+- **Stage 2 type inference:** `type_label_cues` + stopword-filtered KB token index; `icon`/`symbol` semantic types map to `SYMBOL` when type is ambiguous.
+- **Stage 2 legacy:** `REASONING_POLICY_REASONING_STRATEGY=kg_first` restores candidate-list-first behavior.
+- Stage-1: infographic icon semantics, OCR style metadata, SAM segmentation when enabled.
+- Stage-2: `edit_text`, `region_replace`, placeholder OCR skip, target diversity across objects.
+- Stage-3: artifact gate for object edits; text gate with retry; Azure `gpt-image-2` / FLUX / diffusers inpaint paths documented in [src/realization/README.md](src/realization/README.md).
 
 ---
 
@@ -546,10 +534,11 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## Documentation
 
 - **[Quick Start Guide](docs/QUICKSTART.md)** - Get running in 3 minutes
+- **[Reasoning (Stage 2)](docs/REASONING.md)** - LLM-first vs KG-first, type inference, configuration, troubleshooting
 - **[AI Research](docs/AI.md)** - Technical foundation and architecture
 - **[Perception API](src/perception/README.md)** - Stage 1 implementation details
-- **[Reasoning](src/reasoning/README.md)** - Stage 2 cultural reasoning
-- **[Realization](src/realization/README.md)** - Stage 3 visual realization
+- **[Reasoning module](src/reasoning/README.md)** - Stage 2 module entry point
+- **[Realization](src/realization/README.md)** - Stage 3 visual realization and artifact gate
 - **[Knowledge Graph](docs/knowledge_graph.md)** - Knowledge base and generation
 - **[LICENSE](LICENSE)** - MIT License with trademark notice
 

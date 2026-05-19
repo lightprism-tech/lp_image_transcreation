@@ -14,9 +14,11 @@ The Visual Realization module applies Stage-2 edit plans to images with mask-bas
   - fails fast when plan has no actionable edits unless `--allow-empty-plan` is passed
   - warns when replacements exist but no bbox is available for inpainting.
 - Quality gates:
+  - **Object artifact gate** — rejects inpaint crops that are blank or unchanged vs source (tunable in `data/config/realization_config.json` → `artifact_gate`; env `REALIZATION_ARTIFACT_GATE__*`)
   - local mean/std distribution checks
   - optional SSIM neighborhood gate
-  - optional CLIP local-consistency gate.
+  - optional CLIP local-consistency gate
+  - **Text gate** — bbox occupancy, contrast, color delta; one automatic retry (SSIM/CLIP-local off by default for text).
 - Fallback visuals:
   - per-instance tinted bbox overlays with labels when replacement actions include bboxes
   - simple adaptation-label overlay when only non-actionable edits are present.
@@ -166,12 +168,30 @@ python -m src.realization.main \
   --output data/output/realized_india.png
 ```
 
+## Configuration
+
+Merged load order: `src/realization/config/defaults.yaml` → `data/config/realization_config.json` → `REALIZATION_*` env (env wins).
+
+| Area | Keys | Notes |
+|------|------|--------|
+| Artifact gate | `artifact_gate.min_mean_abs_change`, `min_changed_pixel_ratio`, `min_p95_channel_change` | Avoid rejecting valid dark illustration edits |
+| Inpaint | `inpaint_mask_pad_pct`, `max_inpaint_prompt_passes` | Mask padding and prompt retries |
+| Text gate | `quality_gate.text_*` | Occupancy, contrast, color delta |
+
+Example `.env`:
+
+```env
+REALIZATION_INPAINT_MASK_PAD_PCT=0.08
+REALIZATION_ARTIFACT_GATE__MIN_MEAN_ABS_CHANGE=6
+```
+
 ## Why output may still be mock-like
 
 - `use_inpainting` disabled
-- no working diffusers/FLUX backend
+- no working diffusers/FLUX/Azure gpt-image backend
 - plan has no actionable bbox replacements
-- quality gate rejected generated region and fallback path was used.
+- **artifact gate** rejected generated region (check logs for `Artifact gate reject`)
+- text quality gate failed after retry
 
 ## Inpainting (real object replacement)
 
